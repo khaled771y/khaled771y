@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temu Yemen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+            padding-bottom: 60px; /* لإفساح المجال للشريط السفلي */
+        }
+        header {
+            background-color: #FF5733;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            direction: rtl; /* لضبط الاتجاه من اليمين إلى اليسار */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            padding: 5px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px; /* تعديل الاتجاه */
+        }
+        nav {
+            display: flex;
+            justify-content: flex-start; /* ضبط المحتوى على اليسار */
+            background-color: #FF7043;
+            padding: 10px 0;
+            overflow-x: auto; /* السماح بالتحريك الأفقي */
+            white-space: nowrap; /* منع التفاف النص */
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 0 10px;
+            cursor: pointer;
+            display: inline-block; /* لضمان التواجد في نفس السطر */
+        }
+        nav a:hover {
+            background-color: #FFDAB9;
+            color: black;
+            transform: scale(1.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .section {
+            display: none;
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section.active {
+            display: block;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #FF5733;
+        }
+        .about img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .services ul {
+            list-style: none;
+            padding: 0;
+        }
+        .services li {
+            margin: 10px 0;
+        }
+        .services li:before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #FF5733;
+            margin-right: 10px;
+        }
+        .contact p {
+            margin: 5px 0;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .product {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 200px;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .product h3 {
+            color: #FF5733;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #FF5733;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            background-color: #FF7043;
+            transform: scale(1.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #FF5733;
+            color: white;
+        }
+        /* شريط سفلي */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #FF7043;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto; /* السماح بالتحريك الأفقي */
+            white-space: nowrap; /* منع التفاف النص */
+        }
+        .bottom-nav a {
+            padding: 10px;
+            color: white;
+            text-align: center;
+            flex-grow: 1;
+            font-size: 0.8em; /* تصغير حجم الأيقونات */
+            display: inline-block; /* لضمان التواجد في نفس السطر */
+        }
+        .bottom-nav a i {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px; /* تخفيض بعض التباعد بين الأيقونة والنص */
+        }
+        .slideshow img {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        .slideshow img.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Temu Yemen</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="بحث...">
+        <i class="fas fa-search"></i>
+    </div>
+</header>
+
+<nav>
+    <a onclick="showSection('men')"><i class="fas fa-male"></i> الرجال</a>
+    <a onclick="showSection('women')"><i class="fas fa-female"></i> النساء</a>
+    <a onclick="showSection('kids')"><i class="fas fa-child"></i> الأطفال</a>
+    <a onclick="showSection('home')"><i class="fas fa-home"></i> المنزل</a>
+    <a onclick="showSection('accessories')"><i class="fas fa-gem"></i> الإكسسوارات</a>
+    <a onclick="showSection('phones')"><i class="fas fa-mobile-alt"></i> الهواتف</a>
+    <a onclick="showSection('girls')"><i class="fas fa-girl"></i> البنات</a>
+    <a onclick="showSection('boys')"><i class="fas fa-boy"></i> الأولاد</a>
+    <a onclick="showSection('baby')"><i class="fas fa-baby"></i> البيبي</a>
+    <a onclick="showSection('shoes')"><i class="fas fa-shoe-prints"></i> الأحذية</a>
+    <a onclick="showSection('household')"><i class="fas fa-couch"></i> المنتجات المنزلية</a>
+    <a onclick="showSection('brands')"><i class="fas fa-tags"></i> الماركات</a>
+    <a onclick="showSection('beauty')"><i class="fas fa-spa"></i> مستلزمات التجميل</a>
+    <a onclick="showSection('appliances')"><i class="fas fa-blender"></i> الاجهزة الكهربائية</a>
+    <a onclick="showSection('electronics')"><i class="fas fa-tv"></i> الالكترونيات</a>
+</nav>
+
+<div class="container">
+    <section id="welcome" class="section active">
+        <h2>مرحبًا بك في متجر Temu Yemen!</h2>
+        <p>نحن نقدم أفضل المنتجات وأجودها لكم. تفضلوا بزيارة متجرنا واستمتعوا بتجربة تسوق رائعة.</p>
+        <p>إعلان: عروض خاصة لفترة محدودة!</p>
+        <div class="slideshow">
+            <img src="slide1.jpg" alt="صورة 1" class="active">
+            <img src="slide2.jpg" alt="صورة 2">
+            <img src="slide3.jpg" alt="صورة 3">
+            <img src="slide4.jpg" alt="صورة 4">
+        </div>
+    </section>
+
+    <section id="men" class="section">
+        <h2><i class="fas fa-male"></i> الرجال</h2>
+        <p>منتجات مخصصة للرجال.</p>
+    </section>
+
+    <section id="women" class="section">
+        <h2><i class="fas fa-female"></i> النساء</h2>
+        <p>منتجات مخصصة للنساء.</p>
+    </section>
+
+    <section id="kids" class="section">
+        <h2><i class="fas fa-child"></i> الأطفال</h2>
+        <p>منتجات مخصصة للأطفال.</p>
+    </section>
+
+    <section id="home" class="section">
+        <h2><i class="fas fa-home"></i> المنزل</h2>
+        <p>منتجات مخصصة للمنزل.</p>
+    </section>
+
+    <section id="accessories" class="section">
+        <h2><i class="fas fa-gem"></i> الإكسسوارات</h2>
+        <p>إكسسوارات متنوعة.</p>
+    </section>
+
+    <section id="phones" class="section">
+        <h2><i class="fas fa-mobile-alt"></i> الهواتف</h2>
+        <p>أحدث الهواتف.</p>
+    </section>
+
+    <section id="girls" class="section">
+        <h2><i class="fas fa-girl"></i> البنات</h2>
+        <p>منتجات مخصصة للبنات.</p>
+    </section>
+
+    <section id="boys" class="section">
+        <h2><i class="fas fa-boy"></i> الأولاد</h2>
+        <p>منتجات مخصصة للأولاد.</p>
+    </section>
+
+    <section id="baby" class="section">
+        <h2><i class="fas fa-baby"></i> البيبي</h2>
+        <p>منتجات مخصصة للبيبي.</p>
+    </section>
+
+    <section id="shoes" class="section">
+        <h2><i class="fas fa-shoe-prints"></i> الأحذية</h2>
+        <p>منتجات مخصصة للأحذية.</p>
+    </section>
+
+    <section id="household" class="section">
+        <h2><i class="fas fa-couch"></i> المنتجات المنزلية</h2>
+        <p>منتجات منزلية متنوعة.</p>
+    </section>
+
+    <section id="brands" class="section">
+        <h2><i class="fas fa-tags"></i> الماركات</h2>
+        <p>منتجات من ماركات متنوعة.</p>
+    </section>
+
+    <section id="beauty" class="section">
+        <h2><i class="fas fa-spa"></i> مستلزمات التجميل</h2>
+        <p>منتجات مستلزمات التجميل.</p>
+    </section>
+
+    <section id="appliances" class="section">
+        <h2><i class="fas fa-blender"></i> الاجهزة الكهربائية</h2>
+        <p>أجهزة كهربائية متنوعة.</p>
+    </section>
+
+    <section id="electronics" class="section">
+        <h2><i class="fas fa-tv"></i> الالكترونيات</h2>
+        <p>منتجات إلكترونية متنوعة.</p>
+    </section>
+
+    <section id="favorites" class="section">
+        <h2><i class="fas fa-heart"></i> المفضلات</h2>
+        <p>قائمة المنتجات المفضلة لديك.</p>
+    </section>
+
+    <section id="cart" class="section">
+        <h2><i class="fas fa-shopping-cart"></i> سلة المشتريات</h2>
+        <p>عربة التسوق الخاصة بك.</p>
+    </section>
+
+    <section id="account" class="section">
+        <h2><i class="fas fa-user"></i> الحساب</h2>
+        <p>معلومات حسابك.</p>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 متجر Temu Yemen. جميع الحقوق محفوظة.</p>
+</footer>
+
+<div class="bottom-nav">
+    <a onclick="showSection('welcome')"><i class="fas fa-home"></i> الصفحة الرئيسية</a>
+    <a onclick="showSection('men')"><i class="fas fa-th"></i> الفئات</a>
+    <a onclick="showSection('favorites')"><i class="fas fa-heart"></i> المفضلات</a>
+    <a onclick="showSection('cart')"><i class="fas fa-shopping-cart"></i> سلة المشتريات</a>
+    <a onclick="showSection('account')"><i class="fas fa-user"></i> الحساب</a>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        var sections = document.querySelectorAll('.section');
+        sections.forEach(function(section) {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    // Slideshow functionality
+    var slideIndex = 0;
+    function showSlides() {
+        var slides = document.querySelectorAll('.slideshow img');
+        slides.forEach(function(slide, index) {
+            slide.classList.remove('active');
+            if (index === slideIndex) {
+                slide.classList.add('active');
+            }
+        });
+        slideIndex = (slideIndex + 1) % slides.length;
+        setTimeout(showSlides, 3000); // Change image every 3 seconds
+    }
+
+    // Start the slideshow
+    showSlides();
+</script>
+
+</body>
+</html>
