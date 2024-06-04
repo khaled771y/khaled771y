@@ -2,7 +2,8 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Temu Yemen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
@@ -59,6 +60,7 @@
         .cart-icon {
             font-size: 1.2em;
             position: relative;
+            cursor: pointer;
         }
         .cart-icon .cart-count {
             position: absolute;
@@ -291,211 +293,224 @@
         .cart-item-details p {
             margin: 5px 0;
             font-size: 0.9em;
-            color: #666;
+            color: #555;
         }
         .cart-total {
             margin-top: 20px;
-            text-align: right;
             font-size: 1.2em;
-            color: #FF5733;
-        }
-        .cart-share {
-            margin-top: 20px;
             text-align: right;
         }
-        .cart-share a {
-            background-color: #25D366;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
+        .cart-discount {
+            margin-top: 10px;
+            font-size: 1em;
+            text-align: right;
+            color: green;
         }
-        .cart-share a:hover {
-            background-color: #20b358;
+        .cart-final-total {
+            margin-top: 5px;
+            font-size: 1.3em;
+            text-align: right;
+            font-weight: bold;
         }
     </style>
-    <!-- Firebase Integration -->
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <!-- Firebase Messaging -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
-    <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const messaging = firebase.messaging();
-
-        // Request permission and get token
-        messaging.requestPermission()
-        .then(() => {
-            console.log('Notification permission granted.');
-            return messaging.getToken();
-        })
-        .then((token) => {
-            console.log('FCM Token:', token);
-            // You can send this token to your server and use it to send notifications to this user
-        })
-        .catch((err) => {
-            console.log('Unable to get permission to notify.', err);
-        });
-
-        // Handle incoming messages
-        messaging.onMessage((payload) => {
-            console.log('Message received. ', payload);
-            // Customize notification handling here
-        });
-    </script>
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="logo.jpg" alt="Logo">
-            <h1>تيمو اليمن</h1>
+            <img src="https://via.placeholder.com/30" alt="Logo">
+            <h1>Temu Yemen</h1>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="بحث">
-            <i class="fa fa-search"></i>
+            <input type="text" placeholder="ابحث عن منتجات">
+            <i class="fas fa-search"></i>
         </div>
-        <div class="cart-icon" onclick="showSection('cart')">
-            <i class="fa fa-shopping-cart"></i>
-            <span id="cart-count" class="cart-count">0</span>
+        <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <div class="cart-count">0</div>
         </div>
     </header>
     <nav>
-        <a href="#" onclick="showSection('home')">الرئيسية</a>
-        <a href="#" onclick="showSection('featured')">المميزة</a>
-        <a href="#" onclick="showSection('discounts')">الخصومات</a>
-        <a href="#" onclick="showSection('categories')">الأقسام</a>
+        <a href="#" data-target="section1">ملابس</a>
+        <a href="#" data-target="section2">أجهزة إلكترونية</a>
+        <a href="#" data-target="section3">مطبخ</a>
+        <a href="#" data-target="section4">منزل وحديقة</a>
+        <a href="#" data-target="section5">منتجات التجميل</a>
     </nav>
     <div class="container">
-        <div id="home" class="section active">
-            <div class="slideshow">
-                <img src="slide1.jpg" class="active" alt="Slide 1">
-                <img src="slide2.jpg" alt="Slide 2">
-                <img src="slide3.jpg" alt="Slide 3">
-            </div>
-            <div class="banner">
-                <p>مرحبا بكم في موقع تيمو اليمن</p>
-            </div>
-            <div class="featured-products">
-                <!-- أضف منتجات مميزة هنا -->
-            </div>
+        <div class="banner">
+            <p>مرحبًا بكم في متجر Temu Yemen! استمتعوا بأفضل العروض والتخفيضات.</p>
         </div>
-        <div id="featured" class="section">
-            <h2>المنتجات المميزة</h2>
+        <div class="slideshow">
+            <img src="https://via.placeholder.com/1200x400" alt="عرض 1" class="active">
+            <img src="https://via.placeholder.com/1200x400" alt="عرض 2">
+            <img src="https://via.placeholder.com/1200x400" alt="عرض 3">
+        </div>
+        <div class="discount-banner">
+            <p>احصل على خصم 20% عند شراء 3 منتجات أو أكثر!</p>
+        </div>
+        <div id="section1" class="section active">
+            <h2>ملابس</h2>
             <div class="products">
-                <!-- أضف المنتجات المميزة هنا -->
+                <div class="product" onclick="showProductDetails('img/product1.jpg', 'تي شيرت', 'تي شيرت قطن مريح بألوان متعددة.', 15)">
+                    <img src="img/product1.jpg" alt="تي شيرت">
+                    <h3>تي شيرت</h3>
+                    <p>15 دولار</p>
+                </div>
+                <div class="product" onclick="showProductDetails('img/product2.jpg', 'جينز', 'جينز عالي الجودة بألوان متعددة.', 25)">
+                    <img src="img/product2.jpg" alt="جينز">
+                    <h3>جينز</h3>
+                    <p>25 دولار</p>
+                </div>
             </div>
         </div>
-        <div id="discounts" class="section">
-            <h2>الخصومات والعروض</h2>
-            <div class="discount-banner">
-                <p>خصم 20% على جميع المنتجات!</p>
-            </div>
+        <div id="section2" class="section">
+            <h2>أجهزة إلكترونية</h2>
             <div class="products">
-                <!-- أضف المنتجات المخفضة هنا -->
+                <div class="product" onclick="showProductDetails('img/product3.jpg', 'هاتف ذكي', 'هاتف ذكي بشاشة عالية الدقة وكاميرا متقدمة.', 300)">
+                    <img src="img/product3.jpg" alt="هاتف ذكي">
+                    <h3>هاتف ذكي</h3>
+                    <p>300 دولار</p>
+                </div>
+                <div class="product" onclick="showProductDetails('img/product4.jpg', 'لابتوب', 'لابتوب بأداء عالي وبطارية تدوم طويلاً.', 700)">
+                    <img src="img/product4.jpg" alt="لابتوب">
+                    <h3>لابتوب</h3>
+                    <p>700 دولار</p>
+                </div>
             </div>
         </div>
-        <div id="categories" class="section">
-            <h2>الأقسام</h2>
+        <div id="section3" class="section">
+            <h2>مطبخ</h2>
             <div class="products">
-                <!-- أضف الأقسام هنا -->
+                <div class="product" onclick="showProductDetails('img/product5.jpg', 'خلاط كهربائي', 'خلاط كهربائي بقوة 1000 واط.', 50)">
+                    <img src="img/product5.jpg" alt="خلاط كهربائي">
+                    <h3>خلاط كهربائي</h3>
+                    <p>50 دولار</p>
+                </div>
+                <div class="product" onclick="showProductDetails('img/product6.jpg', 'ميكروويف', 'ميكروويف سريع وفعال بسعة 20 لتر.', 80)">
+                    <img src="img/product6.jpg" alt="ميكروويف">
+                    <h3>ميكروويف</h3>
+                    <p>80 دولار</p>
+                </div>
             </div>
         </div>
-        <div id="cart" class="section">
-            <h2>سلة التسوق</h2>
-            <div id="cart-items"></div>
-            <div id="cart-total" class="cart-total">إجمالي السعر: 0 ريال</div>
-            <div class="cart-share">
-                <a id="cart-share-link" href="#">مشاركة السلة عبر الواتساب</a>
+        <div id="section4" class="section">
+            <h2>منزل وحديقة</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('img/product7.jpg', 'كنبة', 'كنبة مريحة وعصرية بألوان متعددة.', 200)">
+                    <img src="img/product7.jpg" alt="كنبة">
+                    <h3>كنبة</h3>
+                    <p>200 دولار</p>
+                </div>
+                <div class="product" onclick="showProductDetails('img/product8.jpg', 'طاولة طعام', 'طاولة طعام خشبية بأناقة فائقة.', 150)">
+                    <img src="img/product8.jpg" alt="طاولة طعام">
+                    <h3>طاولة طعام</h3>
+                    <p>150 دولار</p>
+                </div>
             </div>
         </div>
-        <div id="product-details" class="section">
-            <img src="product.jpg" alt="Product Image">
-            <h3>اسم المنتج</h3>
-            <p>وصف المنتج</p>
-            <p>السعر: <span id="product-price">0</span> ريال</p>
+        <div id="section5" class="section">
+            <h2>منتجات التجميل</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('img/product9.jpg', 'مرطب بشرة', 'مرطب بشرة طبيعي وخفيف.', 10)">
+                    <img src="img/product9.jpg" alt="مرطب بشرة">
+                    <h3>مرطب بشرة</h3>
+                    <p>10 دولار</p>
+                </div>
+                <div class="product" onclick="showProductDetails('img/product10.jpg', 'عطر', 'عطر فرنسي برائحة زهرية منعشة.', 50)">
+                    <img src="img/product10.jpg" alt="عطر">
+                    <h3>عطر</h3>
+                    <p>50 دولار</p>
+                </div>
+            </div>
+        </div>
+        <div id="product-details">
+            <img id="product-image" src="" alt="صورة المنتج">
+            <h3 id="product-name"></h3>
+            <p id="product-description"></p>
+            <p id="product-price"></p>
             <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
         </div>
+        <div id="cart-details">
+    <h2>سلة المشتريات</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">المجموع: <span id="cart-total">0</span> دولار</div>
+    <div class="cart-discount" id="cart-discount" style="display: none;">الخصم: <span id="cart-discount-amount">0</span> دولار</div>
+    <div class="cart-final-total" id="cart-final-total" style="display: none;">المجموع النهائي: <span id="cart-final-total-amount">0</span> دولار</div>
+    <button class="btn" onclick="shareCart()">شارك السلة على واتساب</button>
+</div>
+
     </div>
     <footer>
-        <p>جميع الحقوق محفوظة &copy; 2023 تيمو اليمن</p>
+        <p>&copy; 2023 Temu Yemen. جميع الحقوق محفوظة.</p>
     </footer>
     <div class="bottom-nav">
-        <a href="#" onclick="showSection('home')">
-            <i class="fa fa-home"></i> الرئيسية
-        </a>
-        <a href="#" onclick="showSection('featured')">
-            <i class="fa fa-star"></i> المميزة
-        </a>
-        <a href="#" onclick="showSection('discounts')">
-            <i class="fa fa-tags"></i> الخصومات
-        </a>
-        <a href="#" onclick="showSection('categories')">
-            <i class="fa fa-list"></i> الأقسام
-        </a>
-        <a href="#" onclick="showSection('cart')">
-            <i class="fa fa-shopping-cart"></i> السلة
-        </a>
+        <a href="#" data-target="section1"><i class="fas fa-tshirt"></i><span>ملابس</span></a>
+        <a href="#" data-target="section2"><i class="fas fa-laptop"></i><span>إلكترونيات</span></a>
+        <a href="#" data-target="section3"><i class="fas fa-blender"></i><span>مطبخ</span></a>
+        <a href="#" data-target="section4"><i class="fas fa-couch"></i><span>منزل وحديقة</span></a>
+        <a href="#" data-target="section5"><i class="fas fa-magic"></i><span>تجميل</span></a>
     </div>
     <script>
         let cart = [];
-        
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
+        let cartCountElement = document.querySelector('.cart-count');
+        let cartItemsElement = document.getElementById('cart-items');
+        let cartTotalElement = document.getElementById('cart-total');
+        let cartDiscountElement = document.getElementById('cart-discount');
+        let cartDiscountAmountElement = document.getElementById('cart-discount-amount');
+        let cartFinalTotalElement = document.getElementById('cart-final-total');
+        let cartFinalTotalAmountElement = document.getElementById('cart-final-total-amount');
+        let selectedProduct = {};
+
+        document.querySelectorAll('nav a, .bottom-nav a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                document.getElementById(this.dataset.target).classList.add('active');
             });
-            document.getElementById(sectionId).classList.add('active');
+        });
+
+        function showProductDetails(image, name, description, price) {
+            selectedProduct = { image, name, description, price };
+            document.getElementById('product-image').src = image;
+            document.getElementById('product-name').textContent = name;
+            document.getElementById('product-description').textContent = description;
+            document.getElementById('product-price').textContent = `${price} دولار`;
+            document.getElementById('product-details').style.display = 'block';
         }
 
         function addToCart() {
-            const title = document.querySelector('#product-details h3').innerText;
-            const price = parseFloat(document.getElementById('product-price').innerText);
-            const description = document.querySelector('#product-details p').innerText;
-            const item = { title, price, description };
-            cart.push(item);
-            updateCart();
-            showSection('cart');
+            cart.push(selectedProduct);
+            cartCountElement.textContent = cart.length;
+            updateCartDetails();
         }
 
-        function updateCart() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            cartItemsContainer.innerHTML = '';
+        function updateCartDetails() {
+            cartItemsElement.innerHTML = '';
             let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price;
-                cartItemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <div class="cart-item-details">
-                            <h4>${item.title}</h4>
-                            <p>${item.description}</p>
-                            <p>سعر: ${item.price} ريال</p>
-                        </div>
-                        <button class="btn" onclick="removeFromCart(${index})">إزالة</button>
-                    </div>
+            cart.forEach(product => {
+                const item = document.createElement('div');
+                item.className = 'cart-item';
+                item.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} دولار</p>
                 `;
+                cartItemsElement.appendChild(item);
+                total += product.price;
             });
-            document.getElementById('cart-total').innerText = `إجمالي السعر: ${total} ريال`;
-            document.getElementById('cart-count').innerText = cart.length;
+            cartTotalElement.textContent = total;
 
-            const cartDetails = cart.map(item => `${item.title} - ${item.price} ريال`).join('\n');
-            const shareLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(`تفاصيل السلة:\n${cartDetails}\nإجمالي السعر: ${total} ريال`)}`;
-            document.getElementById('cart-share-link').href = shareLink;
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
+            if (cart.length >= 3) {
+                const discount = total * 0.2;
+                const finalTotal = total - discount;
+                cartDiscountElement.style.display = 'block';
+                cartDiscountAmountElement.textContent = discount.toFixed(2);
+                cartFinalTotalElement.style.display = 'block';
+                cartFinalTotalAmountElement.textContent = finalTotal.toFixed(2);
+            } else {
+                cartDiscountElement.style.display = 'none';
+                cartFinalTotalElement.style.display = 'none';
+            }
         }
     </script>
 </body>
