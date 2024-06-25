@@ -3,209 +3,557 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر إلكتروني</title>
-    <!-- Firebase App (Firebase SDK) -->
+    <title>Temu Yemen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- إضافة Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <!-- Firebase Authentication -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            direction: rtl;
+            text-align: right;
             margin: 0;
-            padding: 0;
+            padding-bottom: 60px; /* For bottom navigation bar */
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #FF5733; /* Orange background color */
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .header {
-            background-color: #ff8c00;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
+        .top-bar .logo {
+            display: flex;
+            align-items: center;
         }
-        .header h1 {
-            margin: 0;
+        .top-bar .logo i {
+            font-size: 28px;
+            color: #fff; /* White icon color */
         }
-        .auth-container {
+        .top-bar .logo span {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff; /* White text color */
+        }
+        .top-bar .search-bar {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 80vh;
+            margin: 0 20px;
         }
-        .auth-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        .auth-form h2 {
-            margin: 0 0 20px 0;
-            color: #ff8c00;
-        }
-        .auth-form input {
+        .top-bar .search-bar input[type="text"] {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            max-width: 800px; /* Adjusted size for 4K screens */
+            padding: 7px 20px; /* Larger size */
+            border: none;
+            border-radius: 11px; /* Rounded corners */
+            font-size: 20px; /* Larger font */
+            background-color: #fff; /* White background */
+            color: #FF5733; /* Orange text color */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .auth-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #ff8c00;
+        .top-bar .search-bar input[type="text"]::placeholder {
+            color: #FF5733; /* Orange placeholder text color */
+        }
+        .top-bar .search-bar input[type="text"]:focus {
+            outline: none;
+        }
+        .top-bar .icons {
+            display: flex;
+            align-items: center;
+        }
+        .top-bar .icons div {
+            margin-left: 20px;
+        }
+        .top-bar .icons i {
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .top-bar .cart-count {
+            position: relative;
+            top: -10px;
+            right: -10px;
+            background-color: red;
             color: white;
+            font-size: 14px;
+            padding: 5px 8px;
+            border-radius: 50%;
+        }
+        nav {
+            background-color: #FF7043;
+            padding: 10px;
+            display: flex;
+            overflow-x: auto;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+        nav a i {
+            margin-left: 5px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .banner {
+            background-color: #FFC300;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .slideshow {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .slideshow img {
+            width: 100%;
+            display: none;
+        }
+        .slideshow img.active {
+            display: block;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .products, .featured-products {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .product, .featured-product {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 5px;
+            margin: 6px;
+            flex: 1 1 calc(40% - 20px);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .product img, .featured-product img {
+            width: 100%;
+            height: auto;
+        }
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            gap: 10px;
+            scroll-behavior: smooth;
+        }
+        .carousel img {
+            flex: 0 0 auto;
+            width: 80px;
+            height: 80px;
+            margin: 0 5px;
+            border-radius: 50%;
+            animation: slide 30s linear infinite;
+        }
+        @keyframes slide {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        #product-details, #cart-details {
+            display: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .cart-item img {
+            width: 50px;
+            height: auto;
+        }
+        .cart-total, .cart-share {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #FF5733;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-        }
-        .auth-form p {
-            text-align: center;
-        }
-        .auth-form a {
-            color: #ff8c00;
             text-decoration: none;
         }
-        .auth-form a:hover {
-            text-decoration: underline;
+        .cart-share a:hover {
+            background-color: #FF7043;
         }
-        .user-section {
-            text-align: center;
-            padding: 20px;
-        }
-        .user-section button {
-            padding: 10px 20px;
-            background-color: #ff8c00;
-            color: white;
-            border: none;
+        .size-options button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: #fff;
             cursor: pointer;
+        }
+        .size-options button.active {
+            background-color: #FF5733;
+            color: #fff;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #FF5733;
+            color: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 60px;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+        }
+        .bottom-nav a {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+        }
+        .bottom-nav a i {
+            display: block;
+            font-size: 24px;
+        }
+        .bottom-nav a span {
+            display: block;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>متجر إلكتروني</h1>
+    <div class="top-bar">
+        <div class="logo">
+            <i class="fas fa-store"></i>
+            <span>Temu Yemen</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="ابحث عن المنتجات...">
+        </div>
+        <div class="icons">
+            <div><i class="fas fa-user" onclick="showSection('login')"></i></div>
+            <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
+        </div>
     </div>
+    <nav>
+        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
+        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
+        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
+        <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
+        <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
+        <a href="#newborn" onclick="showSection('newborn')"><i class="fas fa-baby"></i>مواليد</a>
+        <a href="#electronics" onclick="showSection('electronics')"><i class="fas fa-tv"></i>إلكترونيات</a>
+    </nav>
 
     <div class="container">
-        <div id="auth-section" class="auth-container">
-            <div id="login-form" class="auth-form">
-                <h2>تسجيل الدخول</h2>
-                <input type="email" id="login-email" placeholder="البريد الإلكتروني">
-                <input type="password" id="login-password" placeholder="كلمة المرور">
-                <button onclick="login()">تسجيل الدخول</button>
-                <p>ليس لديك حساب؟ <a href="#" onclick="showRegisterForm()">إنشاء حساب جديد</a></p>
+        <div id="home" class="section active">
+            <div class="banner">مرحبًا بكم في Temu Yemen</div>
+            <div class="slideshow">
+                <img src="images/slide1.jpg" class="active">
+                <img src="images/slide2.jpg">
+                <img src="images/slide3.jpg">
             </div>
-            <div id="register-form" class="auth-form" style="display: none;">
-                <h2>إنشاء حساب</h2>
-                <input type="text" id="register-name" placeholder="الاسم الكامل">
-                <input type="email" id="register-email" placeholder="البريد الإلكتروني">
-                <input type="password" id="register-password" placeholder="كلمة المرور">
-                <button onclick="register()">إنشاء حساب</button>
-                <p>لديك حساب بالفعل؟ <a href="#" onclick="showLoginForm()">تسجيل الدخول</a></p>
+            <h2>المنتجات المميزة</h2>
+            <div class="featured-products">
+                <div class="featured-product" onclick="showProductDetails('P001')">
+                    <img src="images/women2.jpeg">
+                    <p>فستان نسائي - 120 ريال</p>
+                </div>
+                <div class="featured-product" onclick="showProductDetails('P002')">
+                    <img src="images/men1.jpeg">
+                    <p>بدلة رجالية - 150 ريال</p>
+                </div>
+                <div class="featured-product" onclick="showProductDetails('P003')">
+                    <img src="images/women3.jpeg">
+                    <p>فستان سهرة - 180 ريال</p>
+                </div>
+                <div class="featured-product" onclick="showProductDetails('P004')">
+                    <img src="images/men2.jpeg">
+                    <p>تي شيرت رجالي - 80 ريال</p>
+                </div>
             </div>
         </div>
 
-        <div id="user-section" class="user-section" style="display: none;">
-            <h2>مرحبًا بك</h2>
-            <p>لقد تم تسجيل دخولك بنجاح.</p>
-            <button onclick="logout()">تسجيل الخروج</button>
+        <div id="men" class="section">
+            <h2>منتجات رجالية</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('P002')">
+                    <img src="images/men1.jpeg">
+                    <p>بدلة رجالية - 150 ريال</p>
+                </div>
+                <div class="product" onclick="showProductDetails('P004')">
+                    <img src="images/men2.jpeg">
+                    <p>تي شيرت رجالي - 80 ريال</p>
+                </div>
+            </div>
         </div>
+
+        <div id="women" class="section">
+            <h2>منتجات نسائية</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('P001')">
+                    <img src="images/women2.jpeg">
+                    <p>فستان نسائي - 120 ريال</p>
+                </div>
+                <div class="product" onclick="showProductDetails('P003')">
+                    <img src="images/women3.jpeg">
+                    <p>فستان سهرة - 180 ريال</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- إضافة باقي الأقسام بنفس الطريقة -->
+
+        <div id="product-details" class="section">
+            <h2 id="product-name"></h2>
+            <img id="product-image" src="" alt="صورة المنتج">
+            <p id="product-description"></p>
+            <p id="product-price"></p>
+            <div class="size-options">
+                <button onclick="selectSize('S')">S</button>
+                <button onclick="selectSize('M')">M</button>
+                <button onclick="selectSize('L')">L</button>
+                <button onclick="selectSize('XL')">XL</button>
+            </div>
+            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
+        </div>
+
+        <div id="cart-details" class="section">
+            <h2>سلة التسوق</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <p>الإجمالي: <span id="cart-total">0 ريال</span></p>
+            </div>
+            <div class="cart-share">
+                <button class="btn" onclick="shareCart()">مشاركة السلة</button>
+                <button class="btn" onclick="emptyCart()">تفريغ السلة</button>
+            </div>
+        </div>
+
+        <div id="login" class="section">
+            <h2>تسجيل الدخول</h2>
+            <div>
+                <input type="email" id="email" placeholder="البريد الإلكتروني">
+                <input type="password" id="password" placeholder="كلمة المرور">
+                <button class="btn" onclick="login()">تسجيل الدخول</button>
+                <button class="btn" onclick="register()">إنشاء حساب جديد</button>
+                <p id="auth-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
+        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
+        <a href="#cart-details" onclick="showCart()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
+        <a href="#login" onclick="showSection('login')"><i class="fas fa-user"></i><span>حسابي</span></a>
     </div>
 
     <script>
-        // Your web app's Firebase configuration
+        // إعدادات Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
             projectId: "temu-yemen",
             storageBucket: "temu-yemen.appspot.com",
             messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea"
+            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
+            measurementId: "G-NLSSTZM62R"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        function showLoginForm() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
+        let cart = [];
+        let selectedSize = '';
+        let currentUser = null;
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
         }
 
-        function showRegisterForm() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
+        function showProductDetails(productId) {
+            const product = {
+                'P001': { name: 'فستان نسائي', price: '120 ريال', description: 'وصف المنتج', image: 'images/women2.jpeg' },
+                'P002': { name: 'بدلة رجالية', price: '150 ريال', description: 'وصف المنتج', image: 'images/men1.jpeg' },
+                'P003': { name: 'فستان سهرة', price: '180 ريال', description: 'وصف المنتج', image: 'images/women3.jpeg' },
+                'P004': { name: 'تي شيرت رجالي', price: '80 ريال', description: 'وصف المنتج', image: 'images/men2.jpeg' }
+            }[productId];
+            
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-description').textContent = product.description;
+            document.getElementById('product-price').textContent = product.price;
+
+            showSection('product-details');
         }
 
-        function register() {
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    const user = userCredential.user;
-                    return db.collection('users').doc(user.uid).set({
-                        name: name,
-                        email: email
-                    });
-                })
-                .then(() => {
-                    alert('تم إنشاء الحساب بنجاح!');
-                    showLoginForm();
-                })
-                .catch(error => {
-                    console.error('Error creating account: ', error);
-                    alert('حدث خطأ أثناء إنشاء الحساب: ' + error.message);
-                });
+        function selectSize(size) {
+            selectedSize = size;
         }
 
-        function login() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+        function addToCart() {
+            if (!currentUser) {
+                alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة.');
+                return;
+            }
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    alert('تم تسجيل الدخول بنجاح!');
-                    showUserSection();
-                })
-                .catch(error => {
-                    console.error('Error logging in: ', error);
-                    alert('حدث خطأ أثناء تسجيل الدخول: ' + error.message);
-                });
+            const name = document.getElementById('product-name').textContent;
+            const price = document.getElementById('product-price').textContent;
+            if (!selectedSize) {
+                alert('يرجى اختيار حجم المنتج قبل الإضافة إلى السلة.');
+                return;
+            }
+
+            const item = { name, price, size: selectedSize };
+            cart.push(item);
+            saveCart();
+            alert('تمت إضافة المنتج إلى السلة.');
         }
 
-        function logout() {
-            auth.signOut().then(() => {
-                alert('تم تسجيل الخروج بنجاح!');
-                showLoginForm();
-            }).catch(error => {
-                console.error('Error logging out: ', error);
-                alert('حدث خطأ أثناء تسجيل الخروج: ' + error.message);
+        function showCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <p>${item.name} - ${item.price} - الحجم: 
+                        <select onchange="updateCartItemSize(${index}, this.value)">
+                            <option value="S" ${item.size === 'S' ? 'selected' : ''}>S</option>
+                            <option value="M" ${item.size === 'M' ? 'selected' : ''}>M</option>
+                            <option value="L" ${item.size === 'L' ? 'selected' : ''}>L</option>
+                            <option value="XL" ${item.size === 'XL' ? 'selected' : ''}>XL</option>
+                        </select>
+                    </p>
+                `;
+                cartItems.appendChild(itemElement);
+            });
+
+            const cartTotal = cart.reduce((total, item) => total + parseInt(item.price.replace('ريال', '')), 0);
+            document.getElementById('cart-total').textContent = `${cartTotal} ريال`;
+
+            showSection('cart-details');
+        }
+
+        function updateCartItemSize(index, size) {
+            cart[index].size = size;
+            saveCart();
+        }
+
+        function saveCart() {
+            if (!currentUser) return;
+
+            db.collection('carts').doc(currentUser.uid).set({ items: cart });
+        }
+
+        function loadCart() {
+            if (!currentUser) return;
+
+            db.collection('carts').doc(currentUser.uid).get().then(doc => {
+                if (doc.exists) {
+                    cart = doc.data().items;
+                }
             });
         }
 
-        function showUserSection() {
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('user-section').style.display = 'block';
+        function emptyCart() {
+            cart = [];
+            saveCart();
+            showCart();
+        }
+
+        function shareCart() {
+            const shareData = {
+                title: 'Temu Yemen',
+                text: 'انظر إلى هذه المنتجات في سلة تسوقي!',
+                url: 'https://temu-yemen.firebaseapp.com'
+            };
+
+            try {
+                navigator.share(shareData);
+            } catch (err) {
+                alert('تعذر مشاركة السلة.');
+            }
+        }
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    currentUser = userCredential.user;
+                    document.getElementById('auth-message').textContent = 'تم تسجيل الدخول بنجاح.';
+                    loadCart();
+                })
+                .catch(error => {
+                    document.getElementById('auth-message').textContent = `خطأ: ${error.message}`;
+                });
+        }
+
+        function register() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    currentUser = userCredential.user;
+                    document.getElementById('auth-message').textContent = 'تم إنشاء الحساب وتسجيل الدخول بنجاح.';
+                })
+                .catch(error => {
+                    document.getElementById('auth-message').textContent = `خطأ: ${error.message}`;
+                });
         }
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                // المستخدم مسجل دخول
-                showUserSection();
+                currentUser = user;
+                loadCart();
             } else {
-                // المستخدم غير مسجل دخول
-                showLoginForm();
+                currentUser = null;
+                cart = [];
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('home');
+            setInterval(() => {
+                const activeSlide = document.querySelector('.slideshow img.active');
+                const nextSlide = activeSlide.nextElementSibling || document.querySelector('.slideshow img:first-child');
+                activeSlide.classList.remove('active');
+                nextSlide.classList.add('active');
+            }, 5000);
         });
     </script>
 </body>
