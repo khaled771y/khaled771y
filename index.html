@@ -8,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -245,136 +246,200 @@
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-store"></i>
-            <span>Temu Yemen</span>
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>Temu Yemen</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن المنتجات...">
+            </div>
+            <div class="icons">
+                <div><i class="fas fa-user" onclick="showSection('login')"></i></div>
+                <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
+            </div>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="ابحث عن المنتجات...">
-        </div>
-        <div class="icons">
-            <div><i class="fas fa-user" onclick="showSection('login')"></i></div>
-            <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
-        </div>
-    </div>
-    <nav>
-        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
-        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
-        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
-        <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
-        <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
-        <a href="#newborn" onclick="showSection('newborn')"><i class="fas fa-baby"></i>مواليد</a>
-        <a href="#electronics" onclick="showSection('electronics')"><i class="fas fa-tv"></i>إلكترونيات</a>
-    </nav>
-
+        <nav>
+            <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
+            <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
+            <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
+            <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
+            <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
+            <a href="#newborn" onclick="showSection('newborn')"><i class="fas fa-baby"></i>مواليد</a>
+            <a href="#shoes" onclick="showSection('shoes')"><i class="fas fa-shoe-prints"></i>احذية</a>
+            <a href="#electronics" onclick="showSection('electronics')"><i class="fas fa-laptop"></i>الكترونيات</a>
+            <a href="#beauty" onclick="showSection('beauty')"><i class="fas fa-heart"></i>الجمال</a>
+            <a href="#furniture" onclick="showSection('furniture')"><i class="fas fa-couch"></i>اثاث</a>
+        </nav>
+    </header>
     <div class="container">
         <div id="home" class="section active">
-            <div class="banner">مرحبًا بكم في Temu Yemen</div>
+            <div class="banner">
+                <h2>أهلا بك في Temu Yemen</h2>
+                <p>أفضل المنتجات بأفضل الأسعار</p>
+            </div>
             <div class="slideshow">
-                <img src="images/slide1.jpg" class="active">
-                <img src="images/slide2.jpg">
-                <img src="images/slide3.jpg">
+                <img src="image1.jpg" class="active">
+                <img src="image2.jpg">
+                <img src="image3.jpg">
             </div>
-            <h2>المنتجات المميزة</h2>
             <div class="featured-products">
-                <div class="featured-product" onclick="showProductDetails('P001')">
-                    <img src="images/women2.jpeg">
-                    <p>فستان نسائي - 120 ريال</p>
+                <div class="featured-product" onclick="showProductDetails({image: 'product1.jpg', description: 'منتج 1'})">
+                    <img src="product1.jpg" alt="Product 1">
+                    <p>منتج 1</p>
                 </div>
-                <div class="featured-product" onclick="showProductDetails('P002')">
-                    <img src="images/men1.jpeg">
-                    <p>بدلة رجالية - 150 ريال</p>
-                </div>
-                <div class="featured-product" onclick="showProductDetails('P003')">
-                    <img src="images/women3.jpeg">
-                    <p>فستان سهرة - 180 ريال</p>
-                </div>
-                <div class="featured-product" onclick="showProductDetails('P004')">
-                    <img src="images/men2.jpeg">
-                    <p>تي شيرت رجالي - 80 ريال</p>
+                <div class="featured-product" onclick="showProductDetails({image: 'product2.jpg', description: 'منتج 2'})">
+                    <img src="product2.jpg" alt="Product 2">
+                    <p>منتج 2</p>
                 </div>
             </div>
         </div>
-
         <div id="men" class="section">
-            <h2>منتجات رجالية</h2>
+            <h2>ملابس رجالية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails('P002')">
-                    <img src="images/men1.jpeg">
-                    <p>بدلة رجالية - 150 ريال</p>
+                <div class="product" onclick="showProductDetails({image: 'men1.jpg', description: 'منتج رجالي 1'})">
+                    <img src="men1.jpg" alt="Men's Product 1">
+                    <p>منتج رجالي 1</p>
                 </div>
-                <div class="product" onclick="showProductDetails('P004')">
-                    <img src="images/men2.jpeg">
-                    <p>تي شيرت رجالي - 80 ريال</p>
+                <div class="product" onclick="showProductDetails({image: 'men2.jpg', description: 'منتج رجالي 2'})">
+                    <img src="men2.jpg" alt="Men's Product 2">
+                    <p>منتج رجالي 2</p>
                 </div>
             </div>
         </div>
-
         <div id="women" class="section">
-            <h2>منتجات نسائية</h2>
+            <h2>ملابس نسائية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails('P001')">
-                    <img src="images/women2.jpeg">
-                    <p>فستان نسائي - 120 ريال</p>
+                <div class="product" onclick="showProductDetails({image: 'women1.jpg', description: 'منتج نسائي 1'})">
+                    <img src="women1.jpg" alt="Women's Product 1">
+                    <p>منتج نسائي 1</p>
                 </div>
-                <div class="product" onclick="showProductDetails('P003')">
-                    <img src="images/women3.jpeg">
-                    <p>فستان سهرة - 180 ريال</p>
+                <div class="product" onclick="showProductDetails({image: 'women2.jpg', description: 'منتج نسائي 2'})">
+                    <img src="women2.jpg" alt="Women's Product 2">
+                    <p>منتج نسائي 2</p>
                 </div>
             </div>
         </div>
-
-        <!-- إضافة باقي الأقسام بنفس الطريقة -->
-
-        <div id="product-details" class="section">
-            <h2 id="product-name"></h2>
-            <img id="product-image" src="" alt="صورة المنتج">
-            <p id="product-description"></p>
-            <p id="product-price"></p>
-            <div class="size-options">
-                <button onclick="selectSize('S')">S</button>
-                <button onclick="selectSize('M')">M</button>
-                <button onclick="selectSize('L')">L</button>
-                <button onclick="selectSize('XL')">XL</button>
-            </div>
-            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
-        </div>
-
-        <div id="cart-details" class="section">
-            <h2>سلة التسوق</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <p>الإجمالي: <span id="cart-total">0 ريال</span></p>
-            </div>
-            <div class="cart-share">
-                <button class="btn" onclick="shareCart()">مشاركة السلة</button>
-                <button class="btn" onclick="emptyCart()">تفريغ السلة</button>
-            </div>
-        </div>
-
+        <!-- Add more sections for other categories... -->
         <div id="login" class="section">
-            <h2>تسجيل الدخول</h2>
+            <h2>تسجيل الدخول / إنشاء حساب</h2>
             <div>
-                <input type="email" id="email" placeholder="البريد الإلكتروني">
+                <input type="text" id="email" placeholder="البريد الإلكتروني">
                 <input type="password" id="password" placeholder="كلمة المرور">
-                <button class="btn" onclick="login()">تسجيل الدخول</button>
-                <button class="btn" onclick="register()">إنشاء حساب جديد</button>
-                <p id="auth-message"></p>
+                <button onclick="login()">تسجيل الدخول</button>
+                <button onclick="signup()">إنشاء حساب</button>
             </div>
         </div>
     </div>
-
+    <div id="product-details">
+        <h2>تفاصيل المنتج</h2>
+        <img id="product-image" src="" alt="Product Image">
+        <p id="product-description">وصف المنتج</p>
+        <div class="size-options">
+            <button onclick="selectSize(this, 'S')">S</button>
+            <button onclick="selectSize(this, 'M')">M</button>
+            <button onclick="selectSize(this, 'L')">L</button>
+            <button onclick="selectSize(this, 'XL')">XL</button>
+        </div>
+        <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
+    </div>
+    <div id="cart-details">
+        <h2>سلة المشتريات</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">المجموع: <span id="cart-total">0</span> ريال</div>
+        <div class="cart-share">
+            <a href="https://api.whatsapp.com/send?phone=+967700000000&text=Check out my cart: [insert cart details here]" target="_blank" class="btn">مشاركة عبر واتساب</a>
+        </div>
+    </div>
     <div class="bottom-nav">
         <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
         <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
         <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
-        <a href="#cart-details" onclick="showCart()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
-        <a href="#login" onclick="showSection('login')"><i class="fas fa-user"></i><span>حسابي</span></a>
+        <a href="#cart" onclick="showCart()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
     </div>
-
     <script>
-        // إعدادات Firebase
+        // Slideshow functionality
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.querySelectorAll('.slideshow img');
+            slides.forEach((slide, index) => {
+                slide.style.display = (index === slideIndex) ? 'block' : 'none';
+            });
+            slideIndex = (slideIndex + 1) % slides.length;
+        }
+        setInterval(showSlides, 3000); // Change slide every 3 seconds
+        showSlides(); // Initial call
+
+        function showSection(sectionId) {
+            let sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.toggle('active', section.id === sectionId);
+            });
+        }
+
+        function showCart() {
+            document.getElementById('product-details').style.display = 'none';
+            document.getElementById('cart-details').style.display = 'block';
+        }
+
+        let cart = [];
+        function addToCart() {
+            let product = {
+                image: document.getElementById('product-image').src,
+                description: document.getElementById('product-description').innerText,
+                size: selectedSize,
+                quantity: 1
+            };
+            cart.push(product);
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += 1; // Update with real price logic
+                let cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.description}">
+                    <div>
+                        <p>${item.description}</p>
+                        <p>الحجم: ${item.size}</p>
+                        <p>الكمية: ${item.quantity}</p>
+                    </div>
+                    <div>
+                        <button onclick="removeFromCart(${cart.indexOf(item)})">حذف</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            document.getElementById('cart-total').innerText = total;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        let selectedSize = '';
+        function selectSize(button, size) {
+            let buttons = document.querySelectorAll('.size-options button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            selectedSize = size;
+        }
+
+        function showProductDetails(product) {
+            document.getElementById('product-details').style.display = 'block';
+            document.getElementById('cart-details').style.display = 'none';
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-description').innerText = product.description;
+        }
+
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -385,174 +450,48 @@
             measurementId: "G-NLSSTZM62R"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const messaging = firebase.messaging();
 
-        let cart = [];
-        let selectedSize = '';
-        let currentUser = null;
-
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function showProductDetails(productId) {
-            const product = {
-                'P001': { name: 'فستان نسائي', price: '120 ريال', description: 'وصف المنتج', image: 'images/women2.jpeg' },
-                'P002': { name: 'بدلة رجالية', price: '150 ريال', description: 'وصف المنتج', image: 'images/men1.jpeg' },
-                'P003': { name: 'فستان سهرة', price: '180 ريال', description: 'وصف المنتج', image: 'images/women3.jpeg' },
-                'P004': { name: 'تي شيرت رجالي', price: '80 ريال', description: 'وصف المنتج', image: 'images/men2.jpeg' }
-            }[productId];
-            
-            document.getElementById('product-name').textContent = product.name;
-            document.getElementById('product-image').src = product.image;
-            document.getElementById('product-description').textContent = product.description;
-            document.getElementById('product-price').textContent = product.price;
-
-            showSection('product-details');
-        }
-
-        function selectSize(size) {
-            selectedSize = size;
-        }
-
-        function addToCart() {
-            if (!currentUser) {
-                alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة.');
-                return;
-            }
-
-            const name = document.getElementById('product-name').textContent;
-            const price = document.getElementById('product-price').textContent;
-            if (!selectedSize) {
-                alert('يرجى اختيار حجم المنتج قبل الإضافة إلى السلة.');
-                return;
-            }
-
-            const item = { name, price, size: selectedSize };
-            cart.push(item);
-            saveCart();
-            alert('تمت إضافة المنتج إلى السلة.');
-        }
-
-        function showCart() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            cart.forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'cart-item';
-                itemElement.innerHTML = `
-                    <p>${item.name} - ${item.price} - الحجم: 
-                        <select onchange="updateCartItemSize(${index}, this.value)">
-                            <option value="S" ${item.size === 'S' ? 'selected' : ''}>S</option>
-                            <option value="M" ${item.size === 'M' ? 'selected' : ''}>M</option>
-                            <option value="L" ${item.size === 'L' ? 'selected' : ''}>L</option>
-                            <option value="XL" ${item.size === 'XL' ? 'selected' : ''}>XL</option>
-                        </select>
-                    </p>
-                `;
-                cartItems.appendChild(itemElement);
-            });
-
-            const cartTotal = cart.reduce((total, item) => total + parseInt(item.price.replace('ريال', '')), 0);
-            document.getElementById('cart-total').textContent = `${cartTotal} ريال`;
-
-            showSection('cart-details');
-        }
-
-        function updateCartItemSize(index, size) {
-            cart[index].size = size;
-            saveCart();
-        }
-
-        function saveCart() {
-            if (!currentUser) return;
-
-            db.collection('carts').doc(currentUser.uid).set({ items: cart });
-        }
-
-        function loadCart() {
-            if (!currentUser) return;
-
-            db.collection('carts').doc(currentUser.uid).get().then(doc => {
-                if (doc.exists) {
-                    cart = doc.data().items;
-                }
-            });
-        }
-
-        function emptyCart() {
-            cart = [];
-            saveCart();
-            showCart();
-        }
-
-        function shareCart() {
-            const shareData = {
-                title: 'Temu Yemen',
-                text: 'انظر إلى هذه المنتجات في سلة تسوقي!',
-                url: 'https://temu-yemen.firebaseapp.com'
-            };
-
-            try {
-                navigator.share(shareData);
-            } catch (err) {
-                alert('تعذر مشاركة السلة.');
-            }
-        }
-
+        // Login function
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             auth.signInWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                    currentUser = userCredential.user;
-                    document.getElementById('auth-message').textContent = 'تم تسجيل الدخول بنجاح.';
-                    loadCart();
+                    alert('تم تسجيل الدخول بنجاح');
                 })
                 .catch(error => {
-                    document.getElementById('auth-message').textContent = `خطأ: ${error.message}`;
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
                 });
         }
 
-        function register() {
+        // Signup function
+        function signup() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             auth.createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                    currentUser = userCredential.user;
-                    document.getElementById('auth-message').textContent = 'تم إنشاء الحساب وتسجيل الدخول بنجاح.';
+                    alert('تم إنشاء الحساب بنجاح');
                 })
                 .catch(error => {
-                    document.getElementById('auth-message').textContent = `خطأ: ${error.message}`;
+                    alert('خطأ في إنشاء الحساب: ' + error.message);
                 });
         }
 
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                currentUser = user;
-                loadCart();
-            } else {
-                currentUser = null;
-                cart = [];
-            }
-        });
+        // Request permission for notifications
+        messaging.requestPermission()
+            .then(() => messaging.getToken())
+            .then(token => {
+                console.log('Notification token:', token);
+            })
+            .catch(error => {
+                console.error('Error getting notification token:', error);
+            });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            showSection('home');
-            setInterval(() => {
-                const activeSlide = document.querySelector('.slideshow img.active');
-                const nextSlide = activeSlide.nextElementSibling || document.querySelector('.slideshow img:first-child');
-                activeSlide.classList.remove('active');
-                nextSlide.classList.add('active');
-            }, 5000);
-        });
     </script>
 </body>
 </html>
