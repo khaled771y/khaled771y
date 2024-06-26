@@ -8,7 +8,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -328,6 +327,12 @@
                 <input type="text" id="email" placeholder="البريد الإلكتروني">
                 <input type="password" id="password" placeholder="كلمة المرور">
                 <button onclick="login()">تسجيل الدخول</button>
+                <button onclick="showSignupForm()">إنشاء حساب</button>
+            </div>
+            <div id="signup-form" style="display: none;">
+                <h3>إنشاء حساب جديد</h3>
+                <input type="text" id="signup-email" placeholder="البريد الإلكتروني">
+                <input type="password" id="signup-password" placeholder="كلمة المرور">
                 <button onclick="signup()">إنشاء حساب</button>
             </div>
         </div>
@@ -348,7 +353,8 @@
         <h2>سلة المشتريات</h2>
         <div id="cart-items"></div>
         <div class="cart-total">المجموع: <span id="cart-total">0</span> ريال</div>
-        <div class="cart-share">
+        <div class="cart-actions">
+            <button class="btn" onclick="confirmCart()">تأكيد السلة</button>
             <a href="https://api.whatsapp.com/send?phone=+967700000000&text=Check out my cart: [insert cart details here]" target="_blank" class="btn">مشاركة عبر واتساب</a>
         </div>
     </div>
@@ -396,50 +402,60 @@
         }
 
         function updateCart() {
-            let cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
+            let cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
             let total = 0;
-            cart.forEach(item => {
-                total += 1; // Update with real price logic
+            cart.forEach((item, index) => {
                 let cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.description}">
-                    <div>
-                        <p>${item.description}</p>
-                        <p>الحجم: ${item.size}</p>
-                        <p>الكمية: ${item.quantity}</p>
-                    </div>
-                    <div>
-                        <button onclick="removeFromCart(${cart.indexOf(item)})">حذف</button>
-                    </div>
+                    <img src="${item.image}" alt="Product Image">
+                    <p>${item.description}</p>
+                    <p>Size: ${item.size}</p>
+                    <p>Quantity: ${item.quantity}</p>
                 `;
-                cartItems.appendChild(cartItem);
+                cartItemsContainer.appendChild(cartItem);
+                total += item.quantity * 100; // Assuming each item costs 100 units
             });
             document.getElementById('cart-total').innerText = total;
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
+        function confirmCart() {
+            // Save cart to Firebase
+            if (auth.currentUser) {
+                let userId = auth.currentUser.uid;
+                db.collection('carts').doc(userId).set({ items: cart })
+                    .then(() => {
+                        alert('تم تأكيد السلة وحفظها بنجاح');
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حفظ السلة: ' + error.message);
+                    });
+            } else {
+                alert('يرجى تسجيل الدخول لتأكيد السلة');
+            }
+        }
+
+        function showProductDetails(product) {
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-description').innerText = product.description;
+            document.getElementById('product-details').style.display = 'block';
+            document.getElementById('cart-details').style.display = 'none';
         }
 
         let selectedSize = '';
         function selectSize(button, size) {
-            let buttons = document.querySelectorAll('.size-options button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
             selectedSize = size;
+            let buttons = document.querySelectorAll('.size-options button');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
         }
 
-        function showProductDetails(product) {
-            document.getElementById('product-details').style.display = 'block';
-            document.getElementById('cart-details').style.display = 'none';
-            document.getElementById('product-image').src = product.image;
-            document.getElementById('product-description').innerText = product.description;
+        function showSignupForm() {
+            document.getElementById('signup-form').style.display = 'block';
         }
 
-        // Firebase Configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -449,14 +465,11 @@
             appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
             measurementId: "G-NLSSTZM62R"
         };
-
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         const messaging = firebase.messaging();
 
-        // Login function
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -469,10 +482,9 @@
                 });
         }
 
-        // Signup function
         function signup() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
             auth.createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
                     alert('تم إنشاء الحساب بنجاح');
