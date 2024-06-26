@@ -8,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -332,7 +333,9 @@
             <div id="signup-form" style="display: none;">
                 <h3>إنشاء حساب جديد</h3>
                 <input type="text" id="signup-email" placeholder="البريد الإلكتروني">
+                <input type="text" id="signup-fullname" placeholder="الاسم الثلاثي">
                 <input type="password" id="signup-password" placeholder="كلمة المرور">
+                <input type="password" id="signup-password-confirm" placeholder="تأكيد كلمة المرور">
                 <button onclick="signup()">إنشاء حساب</button>
             </div>
         </div>
@@ -484,10 +487,25 @@
 
         function signup() {
             const email = document.getElementById('signup-email').value;
+            const fullname = document.getElementById('signup-fullname').value;
             const password = document.getElementById('signup-password').value;
+            const passwordConfirm = document.getElementById('signup-password-confirm').value;
+
+            if (password !== passwordConfirm) {
+                alert('كلمتا المرور غير متطابقتين');
+                return;
+            }
+
             auth.createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                    alert('تم إنشاء الحساب بنجاح');
+                    let userId = userCredential.user.uid;
+                    db.collection('users').doc(userId).set({ fullname: fullname })
+                        .then(() => {
+                            alert('تم إنشاء الحساب بنجاح');
+                        })
+                        .catch(error => {
+                            alert('خطأ في حفظ بيانات المستخدم: ' + error.message);
+                        });
                 })
                 .catch(error => {
                     alert('خطأ في إنشاء الحساب: ' + error.message);
