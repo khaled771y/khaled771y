@@ -8,7 +8,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -171,7 +170,7 @@
                 transform: translateX(-100%);
             }
         }
-        #product-details, #cart-details {
+        #product-details, #cart-details, #account-details, #login-form, #signup-form, #user-profile {
             display: none;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -248,202 +247,392 @@
 <body>
     <header>
         <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-store"></i>
-            <span>Temu Yemen</span>
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>Temu Yemen</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن المنتجات...">
+            </div>
+            <div class="icons">
+                <div><i class="fas fa-user" onclick="toggleLoginForm()"></i></div>
+                <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
+            </div>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="ابحث عن المنتجات...">
-        </div>
-        <div class="icons">
-            <div><i class="fas fa-user" onclick="showSection('login')"></i></div>
-            <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
-        </div>
-    </div>
-    <nav>
-        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
-        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
-        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
-        <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
-        <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
-        <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i>تخفيضات</a>
-    </nav>
+        <nav>
+            <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
+            <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
+            <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
+            <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
+            <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
+            <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i>تخفيضات</a>
+        </nav>
     </header>
-    <main class="container">
+    <div class="container">
         <div id="home" class="section active">
-            <div class="banner">أفضل العروض والتخفيضات على جميع المنتجات!</div>
+            <div class="banner">
+                <h2>مرحبًا بكم في Temu Yemen - وجهتكم للتسوق المتميز!</h2>
+            </div>
             <div class="slideshow">
-                <img src="https://via.placeholder.com/800x400?text=Slide+1" class="active" alt="Slide 1">
-                <img src="https://via.placeholder.com/800x400?text=Slide+2" alt="Slide 2">
-                <img src="https://via.placeholder.com/800x400?text=Slide+3" alt="Slide 3">
+                <img src="ad1.jpg" alt="Advertisement 1" class="active">
+                <img src="ad2.jpg" alt="Advertisement 2">
+                <img src="ad3.jpg" alt="Advertisement 3">
             </div>
-            <h2>منتجات مميزة</h2>
-            <div class="carousel">
-                <img src="https://via.placeholder.com/80?text=Item+1" alt="Item 1">
-                <img src="https://via.placeholder.com/80?text=Item+2" alt="Item 2">
-                <img src="https://via.placeholder.com/80?text=Item+3" alt="Item 3">
-                <img src="https://via.placeholder.com/80?text=Item+4" alt="Item 4">
-                <img src="https://via.placeholder.com/80?text=Item+5" alt="Item 5">
-                <img src="https://via.placeholder.com/80?text=Item+6" alt="Item 6">
-            </div>
-            <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+1" alt="Product 1">
-                    <h3>منتج 1</h3>
-                    <p>وصف المنتج 1</p>
-                    <p>السعر: $20</p>
+            <div class="featured-products">
+                <h3>منتجات مميزة</h3>
+                <div class="featured-product">
+                    <img src="product1.jpg" alt="Product 1">
+                    <p>منتج مميز 1</p>
                 </div>
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+2" alt="Product 2">
-                    <h3>منتج 2</h3>
-                    <p>وصف المنتج 2</p>
-                    <p>السعر: $30</p>
+                <div class="featured-product">
+                    <img src="product2.jpg" alt="Product 2">
+                    <p>منتج مميز 2</p>
+                </div>
+                <div class="featured-product">
+                    <img src="product3.jpg" alt="Product 3">
+                    <p>منتج مميز 3</p>
                 </div>
             </div>
         </div>
         <div id="men" class="section">
-            <h2>الملابس الرجالية</h2>
+            <h2>منتجات رجالية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+3" alt="Product 3">
-                    <h3>منتج 3</h3>
-                    <p>وصف المنتج 3</p>
-                    <p>السعر: $40</p>
+                <div class="product">
+                    <img src="men_product1.jpg" alt="Men Product 1">
+                    <p>منتج رجالي 1</p>
+                </div>
+                <div class="product">
+                    <img src="men_product2.jpg" alt="Men Product 2">
+                    <p>منتج رجالي 2</p>
+                </div>
+                <div class="product">
+                    <img src="men_product3.jpg" alt="Men Product 3">
+                    <p>منتج رجالي 3</p>
                 </div>
             </div>
         </div>
         <div id="women" class="section">
-            <h2>الملابس النسائية</h2>
+            <h2>منتجات نسائية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+4" alt="Product 4">
-                    <h3>منتج 4</h3>
-                    <p>وصف المنتج 4</p>
-                    <p>السعر: $50</p>
+                <div class="product">
+                    <img src="women_product1.jpg" alt="Women Product 1">
+                    <p>منتج نسائي 1</p>
+                </div>
+                <div class="product">
+                    <img src="women_product2.jpg" alt="Women Product 2">
+                    <p>منتج نسائي 2</p>
+                </div>
+                <div class="product">
+                    <img src="women_product3.jpg" alt="Women Product 3">
+                    <p>منتج نسائي 3</p>
                 </div>
             </div>
         </div>
         <div id="boys" class="section">
-            <h2>ملابس الأولاد</h2>
+            <h2>منتجات ولادية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+5" alt="Product 5">
-                    <h3>منتج 5</h3>
-                    <p>وصف المنتج 5</p>
-                    <p>السعر: $15</p>
+                <div class="product">
+                    <img src="boys_product1.jpg" alt="Boys Product 1">
+                    <p>منتج ولادي 1</p>
+                </div>
+                <div class="product">
+                    <img src="boys_product2.jpg" alt="Boys Product 2">
+                    <p>منتج ولادي 2</p>
+                </div>
+                <div class="product">
+                    <img src="boys_product3.jpg" alt="Boys Product 3">
+                    <p>منتج ولادي 3</p>
                 </div>
             </div>
         </div>
         <div id="girls" class="section">
-            <h2>ملابس البنات</h2>
+            <h2>منتجات بناتية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+6" alt="Product 6">
-                    <h3>منتج 6</h3>
-                    <p>وصف المنتج 6</p>
-                    <p>السعر: $25</p>
+                <div class="product">
+                    <img src="girls_product1.jpg" alt="Girls Product 1">
+                    <p>منتج بناتي 1</p>
+                </div>
+                <div class="product">
+                    <img src="girls_product2.jpg" alt="Girls Product 2">
+                    <p>منتج بناتي 2</p>
+                </div>
+                <div class="product">
+                    <img src="girls_product3.jpg" alt="Girls Product 3">
+                    <p>منتج بناتي 3</p>
                 </div>
             </div>
         </div>
         <div id="discounts" class="section">
-            <h2>تخفيضات خاصة</h2>
+            <h2>تخفيضات</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails()">
-                    <img src="https://via.placeholder.com/200x200?text=Product+7" alt="Product 7">
-                    <h3>منتج 7</h3>
-                    <p>وصف المنتج 7</p>
-                    <p>السعر: $10</p>
+                <div class="product">
+                    <img src="discount_product1.jpg" alt="Discount Product 1">
+                    <p>منتج مخفض 1</p>
+                </div>
+                <div class="product">
+                    <img src="discount_product2.jpg" alt="Discount Product 2">
+                    <p>منتج مخفض 2</p>
+                </div>
+                <div class="product">
+                    <img src="discount_product3.jpg" alt="Discount Product 3">
+                    <p>منتج مخفض 3</p>
                 </div>
             </div>
         </div>
-        <div id="product-details">
-            <h2>تفاصيل المنتج</h2>
-            <div class="size-options">
-                <button onclick="selectSize(this)">S</button>
-                <button onclick="selectSize(this)">M</button>
-                <button onclick="selectSize(this)">L</button>
-            </div>
-            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
-        </div>
+        <div id="product-details"></div>
         <div id="cart-details">
             <h2>سلة التسوق</h2>
-            <div class="cart-item">
-                <img src="https://via.placeholder.com/50?text=Item+1" alt="Item 1">
-                <div>منتج 1</div>
-                <div>$20</div>
-            </div>
+            <div id="cart-items"></div>
             <div class="cart-total">
-                <h3>المجموع: $20</h3>
-                <button class="btn">إتمام الشراء</button>
-            </div>
-            <div class="cart-share">
-                <a href="#" class="btn">مشاركة السلة</a>
+                <p>المجموع: <span id="cart-total-amount">0</span> ريال</p>
+                <button id="checkout-btn" onclick="checkoutCart()">تأكيد السلة</button>
             </div>
         </div>
-    </main>
-    <footer class="bottom-nav">
+        <div id="account-details">
+            <h2>بيانات الحساب</h2>
+            <div id="account-info"></div>
+        </div>
+        <div id="login-form">
+            <h2>تسجيل الدخول</h2>
+            <form id="loginForm" onsubmit="login(event)">
+                <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="login-password" placeholder="كلمة المرور" required>
+                <button type="submit">تسجيل الدخول</button>
+            </form>
+            <p>هل تريد إنشاء حساب؟ <a href="#" onclick="showSignupForm()">إنشاء حساب</a></p>
+        </div>
+        <div id="signup-form">
+            <h2>إنشاء حساب</h2>
+            <form id="signupForm" onsubmit="signup(event)">
+                <input type="text" id="signup-name" placeholder="الاسم الكامل" required>
+                <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="signup-password" placeholder="كلمة المرور" required>
+                <button type="submit">إنشاء حساب</button>
+            </form>
+            <p>لديك حساب بالفعل؟ <a href="#" onclick="showLoginForm()">تسجيل الدخول</a></p>
+        </div>
+        <div id="user-profile">
+            <h2>الملف الشخصي</h2>
+            <div id="profile-info"></div>
+            <button onclick="logout()">تسجيل الخروج</button>
+        </div>
+    </div>
+    <div class="bottom-nav">
         <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
         <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
         <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
         <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i><span>ولادي</span></a>
         <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i><span>بناتي</span></a>
-    </footer>
+        <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i><span>تخفيضات</span></a>
+    </div>
     <script>
-        // Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
 
-        // Navigation and UI functions
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        let userCart = [];
+
         function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
             document.getElementById(sectionId).classList.add('active');
+            document.getElementById('product-details').style.display = 'none';
+            document.getElementById('cart-details').style.display = 'none';
+            document.getElementById('account-details').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('user-profile').style.display = 'none';
         }
 
-        function showProductDetails() {
-            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-            document.getElementById('product-details').style.display = 'block';
+        function toggleLoginForm() {
+            const loginForm = document.getElementById('login-form');
+            if (loginForm.style.display === 'none' || loginForm.style.display === '') {
+                loginForm.style.display = 'block';
+            } else {
+                loginForm.style.display = 'none';
+            }
+        }
+
+        function showSignupForm() {
+            document.getElementById('signup-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+        }
+
+        function showLoginForm() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('signup-form').style.display = 'none';
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    return db.collection('users').doc(user.uid).set({
+                        name,
+                        email,
+                        cart: []
+                    });
+                })
+                .then(() => {
+                    alert('تم إنشاء الحساب بنجاح');
+                    showLoginForm();
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء إنشاء الحساب: ' + error.message);
+                });
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    alert('تم تسجيل الدخول بنجاح');
+                    document.getElementById('login-form').style.display = 'none';
+                    showUserProfile();
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء تسجيل الدخول: ' + error.message);
+                });
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                alert('تم تسجيل الخروج');
+                document.getElementById('user-profile').style.display = 'none';
+            });
+        }
+
+        function showUserProfile() {
+            const user = auth.currentUser;
+            if (user) {
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById('profile-info').innerHTML = `
+                            <p>الاسم: ${data.name}</p>
+                            <p>البريد الإلكتروني: ${data.email}</p>
+                            <h3>منتجات السلة:</h3>
+                            <div id="cart-items"></div>
+                        `;
+                        loadUserCart();
+                        document.getElementById('user-profile').style.display = 'block';
+                    }
+                });
+            }
+        }
+
+        function loadUserCart() {
+            const user = auth.currentUser;
+            if (user) {
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        userCart = doc.data().cart || [];
+                        displayCartItems();
+                    }
+                });
+            }
+        }
+
+        function displayCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            userCart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <p>${item.name}</p>
+                    <p>${item.price} ريال</p>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            const total = userCart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total-amount').innerText = total;
         }
 
         function showCart() {
-            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
             document.getElementById('cart-details').style.display = 'block';
+            loadUserCart();
         }
 
-        function addToCart() {
-            // Logic to add the product to the cart
-            alert('Product added to cart!');
+        function addToCart(product) {
+            const user = auth.currentUser;
+            if (user) {
+                userCart.push(product);
+                db.collection('users').doc(user.uid).update({
+                    cart: userCart
+                }).then(() => {
+                    alert('تم إضافة المنتج إلى السلة');
+                    updateCartTotal();
+                });
+            } else {
+                alert('يرجى تسجيل الدخول لإضافة المنتجات إلى السلة');
+            }
         }
 
-        function selectSize(button) {
-            document.querySelectorAll('.size-options button').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+        function checkoutCart() {
+            const user = auth.currentUser;
+            if (user) {
+                if (userCart.length > 0) {
+                    alert('تم تأكيد السلة بنجاح');
+                    userCart = [];
+                    db.collection('users').doc(user.uid).update({
+                        cart: []
+                    });
+                    displayCartItems();
+                } else {
+                    alert('سلة التسوق فارغة');
+                }
+            } else {
+                alert('يرجى تسجيل الدخول لتأكيد السلة');
+            }
         }
 
-        // Slideshow logic
+        // Slideshow functionality
         let slideIndex = 0;
         function showSlides() {
-            let slides = document.querySelectorAll('.slideshow img');
-            slides.forEach((slide, index) => {
-                slide.style.display = 'none';
-                slide.classList.remove('active');
-                if (index === slideIndex) {
-                    slide.style.display = 'block';
-                    slide.classList.add('active');
-                }
-            });
-            slideIndex = (slideIndex + 1) % slides.length;
-            setTimeout(showSlides, 3000); // Change image every 3 seconds
+            const slides = document.querySelectorAll('.slideshow img');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 5000); // Change image every 5 seconds
         }
         showSlides();
+
+        // Event listeners for adding products to cart (example usage)
+        document.querySelectorAll('.product').forEach(productElement => {
+            productElement.addEventListener('click', () => {
+                const product = {
+                    image: productElement.querySelector('img').src,
+                    name: productElement.querySelector('p').innerText,
+                    price: Math.floor(Math.random() * 100) + 20 // Example price
+                };
+                addToCart(product);
+            });
+        });
     </script>
 </body>
 </html>
