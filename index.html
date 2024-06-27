@@ -531,105 +531,34 @@
             </div>
         </div>
     </div>
-    <div id="product-details">
-        <h2>تفاصيل المنتج</h2>
-        <img id="product-image" src="" alt="Product Image">
-        <p id="product-description">وصف المنتج</p>
-        <div class="size-options">
-            <button onclick="selectSize(this, 'S')">S</button>
-            <button onclick="selectSize(this, 'M')">M</button>
-            <button onclick="selectSize(this, 'L')">L</button>
-            <button onclick="selectSize(this, 'XL')">XL</button>
-        </div>
-        <button class="btn primary" onclick="addToCart()">أضف إلى السلة</button>
+    <section id="cart" class="section">
+            <h2>السلة</h2>
+            <div id="cart-details">
+                <div id="cart-items"></div>
+                <div class="cart-total">المجموع: <span id="cart-total">0</span> ريال</div>
+                <div class="cart-actions">
+                    <button class="btn primary" onclick="confirmCart()">تأكيد السلة</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="account" class="section">
+            <h2>حسابي</h2>
+            <div id="account-details"></div>
+        </section>
+
+        <section id="signup-form" class="section">
+            <h2>إنشاء حساب</h2>
+            <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required>
+            <input type="text" id="signup-fullname" placeholder="الاسم الثلاثي" required>
+            <input type="password" id="signup-password" placeholder="كلمة المرور" required>
+            <input type="password" id="signup-password-confirm" placeholder="تأكيد كلمة المرور" required>
+            <button class="btn primary" onclick="signup()">إنشاء حساب</button>
+            <button class="btn google" onclick="loginWithGoogle()">التسجيل باستخدام جوجل</button>
+        </section>
     </div>
-    <div id="cart-details">
-        <h2>سلة المشتريات</h2>
-        <div id="cart-items"></div>
-        <div class="cart-total">المجموع: <span id="cart-total">0</span> ريال</div>
-        <div class="cart-actions">
-            <button class="btn primary" onclick="confirmCart()">تأكيد السلة</button>
-            <a href="https://api.whatsapp.com/send?phone=+967700000000&text=Check out my cart: [insert cart details here]" target="_blank" class="btn secondary">مشاركة عبر واتساب</a>
-        </div>
-    </div>
-    <div class="bottom-nav">
-        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
-        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
-        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
-        <a href="#cart" onclick="showCart()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
-    </div>
+
     <script>
-        // Slideshow functionality
-        let slideIndex = 0;
-        function showSlides() {
-            let slides = document.querySelectorAll('.slideshow img');
-            slides.forEach((slide, index) => {
-                slide.style.display = (index === slideIndex) ? 'block' : 'none';
-            });
-            slideIndex = (slideIndex + 1) % slides.length;
-        }
-        setInterval(showSlides, 3000); // Change slide every 3 seconds
-        showSlides(); // Initial call
-
-        function showSection(sectionId) {
-            let sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.toggle('active', section.id === sectionId);
-            });
-        }
-
-        function showCart() {
-            document.getElementById('product-details').style.display = 'none';
-            document.getElementById('cart-details').style.display = 'block';
-        }
-
-        let cart = [];
-        function addToCart() {
-            let product = {
-                image: document.getElementById('product-image').src,
-                description: document.getElementById('product-description').innerText,
-                size: selectedSize,
-                quantity: 1 // Default quantity
-            };
-            cart.push(product);
-            alert('تمت إضافة المنتج إلى السلة');
-        }
-
-        function confirmCart() {
-            // Save cart to Firebase
-            if (auth.currentUser) {
-                let userId = auth.currentUser.uid;
-                db.collection('carts').doc(userId).set({ items: cart })
-                    .then(() => {
-                        alert('تم تأكيد السلة وحفظها بنجاح');
-                    })
-                    .catch(error => {
-                        alert('حدث خطأ أثناء حفظ السلة: ' + error.message);
-                    });
-            } else {
-                alert('يرجى تسجيل الدخول لتأكيد السلة');
-            }
-        }
-
-        function showProductDetails(product) {
-            document.getElementById('product-image').src = product.image;
-            document.getElementById('product-description').innerText = product.description;
-            document.getElementById('product-details').style.display = 'block';
-            document.getElementById('cart-details').style.display = 'none';
-        }
-
-        let selectedSize = '';
-        function selectSize(button, size) {
-            selectedSize = size;
-            let buttons = document.querySelectorAll('.size-options button');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        }
-
-        function showSignupForm() {
-            document.getElementById('signup-form').style.display = 'block';
-        }
-
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
@@ -645,16 +574,13 @@
         const db = firebase.firestore();
         const messaging = firebase.messaging();
 
-        function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    alert('تم تسجيل الدخول بنجاح');
-                })
-                .catch(error => {
-                    alert('خطأ في تسجيل الدخول: ' + error.message);
-                });
+        let cart = [];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
         }
 
         function signup() {
@@ -674,6 +600,8 @@
                     db.collection('users').doc(userId).set({ fullname: fullname })
                         .then(() => {
                             alert('تم إنشاء الحساب بنجاح');
+                            showSection('account');
+                            displayAccountDetails(userId);
                         })
                         .catch(error => {
                             alert('خطأ في حفظ بيانات المستخدم: ' + error.message);
@@ -684,14 +612,102 @@
                 });
         }
 
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    alert('تم تسجيل الدخول بنجاح');
+                    showSection('account');
+                    displayAccountDetails(userCredential.user.uid);
+                })
+                .catch(error => {
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
+                });
+        }
+
         function loginWithGoogle() {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then(userCredential => {
                     alert('تم تسجيل الدخول بنجاح باستخدام جوجل');
+                    showSection('account');
+                    displayAccountDetails(userCredential.user.uid);
                 })
                 .catch(error => {
                     alert('خطأ في تسجيل الدخول باستخدام جوجل: ' + error.message);
+                });
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                alert('تم تسجيل الخروج بنجاح');
+                showSection('home');
+            }).catch(error => {
+                alert('خطأ في تسجيل الخروج: ' + error.message);
+            });
+        }
+
+        function confirmCart() {
+            if (auth.currentUser) {
+                let userId = auth.currentUser.uid;
+                db.collection('carts').doc(userId).set({ items: cart })
+                    .then(() => {
+                        alert('تم تأكيد السلة وحفظها بنجاح');
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حفظ السلة: ' + error.message);
+                    });
+            } else {
+                alert('يرجى تسجيل الدخول لتأكيد السلة');
+            }
+        }
+
+        function displayAccountDetails(userId) {
+            db.collection('users').doc(userId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        document.getElementById('account-details').innerHTML = `
+                            <p>البريد الإلكتروني: ${auth.currentUser.email}</p>
+                            <p>الاسم الثلاثي: ${userData.fullname}</p>
+                        `;
+                        displayCart(userId);
+                    } else {
+                        alert('لا يوجد بيانات للمستخدم');
+                    }
+                })
+                .catch(error => {
+                    alert('حدث خطأ في جلب بيانات المستخدم: ' + error.message);
+                });
+        }
+
+        function displayCart(userId) {
+            db.collection('carts').doc(userId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const cartData = doc.data();
+                        cart = cartData.items;
+                        let cartItemsHtml = '';
+                        let total = 0;
+                        cart.forEach(item => {
+                            cartItemsHtml += `
+                                <div class="cart-item">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <p>${item.name}</p>
+                                    <p>الكمية: ${item.quantity}</p>
+                                </div>
+                            `;
+                            total += item.price * item.quantity;
+                        });
+                        document.getElementById('cart-items').innerHTML = cartItemsHtml;
+                        document.getElementById('cart-total').innerText = total;
+                    } else {
+                        document.getElementById('cart-items').innerHTML = '<p>السلة فارغة</p>';
+                    }
+                })
+                .catch(error => {
+                    alert('حدث خطأ في جلب بيانات السلة: ' + error.message);
                 });
         }
 
