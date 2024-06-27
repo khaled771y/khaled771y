@@ -14,30 +14,35 @@
             direction: rtl;
             text-align: right;
             margin: 0;
-            padding-bottom: 60px;
+            padding-bottom: 60px; /* For bottom navigation bar */
         }
+
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #FF5733;
+            background-color: #FF5733; /* Orange background color */
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .top-bar .logo {
             display: flex;
             align-items: center;
         }
+
         .top-bar .logo i {
             font-size: 28px;
-            color: #fff;
+            color: #fff; /* White icon color */
         }
+
         .top-bar .logo span {
             margin-left: 10px;
             font-size: 24px;
             font-weight: bold;
-            color: #fff;
+            color: #fff; /* White text color */
         }
+
         .top-bar .search-bar {
             flex: 1;
             display: flex;
@@ -45,35 +50,42 @@
             align-items: center;
             margin: 0 20px;
         }
+
         .top-bar .search-bar input[type="text"] {
             width: 100%;
-            max-width: 800px;
-            padding: 7px 20px;
+            max-width: 800px; /* Adjusted size for 4K screens */
+            padding: 7px 20px; /* Larger size */
             border: none;
-            border-radius: 11px;
-            font-size: 20px;
-            background-color: #fff;
-            color: #FF5733;
+            border-radius: 11px; /* Rounded corners */
+            font-size: 20px; /* Larger font */
+            background-color: #fff; /* White background */
+            color: #FF5733; /* Orange text color */
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .top-bar .search-bar input[type="text"]::placeholder {
-            color: #FF5733;
+            color: #FF5733; /* Orange placeholder text color */
         }
+
         .top-bar .search-bar input[type="text"]:focus {
             outline: none;
         }
+
         .top-bar .icons {
             display: flex;
             align-items: center;
         }
+
         .top-bar .icons div {
             margin-left: 20px;
         }
+
         .top-bar .icons i {
             font-size: 24px;
             color: #fff;
             cursor: pointer;
         }
+
         .top-bar .cart-count {
             position: relative;
             top: -10px;
@@ -84,12 +96,14 @@
             padding: 5px 8px;
             border-radius: 50%;
         }
+
         nav {
             background-color: #FF7043;
             padding: 10px;
             display: flex;
             overflow-x: auto;
         }
+
         nav a {
             color: #fff;
             text-decoration: none;
@@ -97,18 +111,22 @@
             align-items: center;
             padding: 0 10px;
         }
+
         nav a i {
             margin-left: 5px;
         }
+
         .container {
             padding: 20px;
         }
+
         .banner {
             background-color: #FFC300;
             padding: 10px;
             text-align: center;
             margin-bottom: 20px;
         }
+
         .slideshow {
             position: relative;
             width: 100%;
@@ -116,23 +134,29 @@
             margin: 0 auto;
             overflow: hidden;
         }
+
         .slideshow img {
             width: 100%;
             display: none;
         }
+
         .slideshow img.active {
             display: block;
         }
+
         .section {
             display: none;
         }
+
         .section.active {
             display: block;
         }
+
         .products, .featured-products {
             display: flex;
             flex-wrap: wrap;
         }
+
         .product, .featured-product {
             border: 1px solid #ddd;
             border-radius: 20px;
@@ -142,10 +166,12 @@
             box-sizing: border-box;
             cursor: pointer;
         }
+
         .product img, .featured-product img {
             width: 100%;
             height: auto;
         }
+
         .carousel {
             display: flex;
             overflow-x: auto;
@@ -154,6 +180,7 @@
             gap: 10px;
             scroll-behavior: smooth;
         }
+
         .carousel img {
             flex: 0 0 auto;
             width: 80px;
@@ -162,6 +189,7 @@
             border-radius: 50%;
             animation: slide 30s linear infinite;
         }
+
         @keyframes slide {
             0% {
                 transform: translateX(100%);
@@ -170,6 +198,7 @@
                 transform: translateX(-100%);
             }
         }
+
         #product-details, #cart-details {
             display: none;
             border: 1px solid #ddd;
@@ -177,6 +206,7 @@
             padding: 20px;
             margin-top: 20px;
         }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -184,14 +214,17 @@
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
+
         .cart-item img {
             width: 50px;
             height: auto;
         }
+
         .cart-total, .cart-share {
             text-align: center;
             margin-top: 20px;
         }
+
         .btn {
             padding: 10px 20px;
             color: #fff;
@@ -201,9 +234,11 @@
             cursor: pointer;
             text-decoration: none;
         }
+
         .cart-share a:hover {
             background-color: #FF7043;
         }
+
         .size-options button {
             margin: 5px;
             padding: 5px 10px;
@@ -212,10 +247,12 @@
             background-color: #fff;
             cursor: pointer;
         }
+
         .size-options button.active {
             background-color: #FF5733;
             color: #fff;
         }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -228,336 +265,285 @@
             height: 60px;
             box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
         }
+
         .bottom-nav a {
             color: #fff;
             text-decoration: none;
             text-align: center;
             flex: 1;
         }
+
         .bottom-nav a i {
             display: block;
             font-size: 24px;
         }
+
         .bottom-nav a span {
             display: block;
             font-size: 12px;
         }
-        /* Sign Up / Sign In Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-        .modal-content input[type="text"], .modal-content input[type="password"], .modal-content input[type="email"] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .modal-content button {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .modal-content button:hover {
-            background-color: #45a049;
-        }
-        .modal-content .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .modal-content .close:hover,
-        .modal-content .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal-content .toggle-link {
-            color: #FF5733;
-            cursor: pointer;
-        }
-        .modal-content .toggle-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-store"></i>
-            <span>Temu Yemen</span>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="ابحث عن منتج">
-        </div>
-        <div class="icons">
-            <div id="account-icon" onclick="openModal('login-modal')">
-                <i class="fas fa-user"></i>
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>Temu Yemen</span>
             </div>
-            <div id="cart-icon" onclick="showSection('cart-details')">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cart-count">0</span>
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن المنتجات...">
+            </div>
+            <div class="icons">
+                <div><i class="fas fa-user" onclick="showSection('account')"></i></div>
+                <div><i class="fas fa-shopping-cart" onclick="showCart()"></i></div>
             </div>
         </div>
-    </div>
-    <nav>
-        <a href="#category1" onclick="showSection('category1')"><i class="fas fa-mobile-alt"></i> الكترونيات</a>
-        <a href="#category2" onclick="showSection('category2')"><i class="fas fa-tshirt"></i> أزياء</a>
-        <a href="#category3" onclick="showSection('category3')"><i class="fas fa-utensils"></i> أدوات منزلية</a>
-        <a href="#category4" onclick="showSection('category4')"><i class="fas fa-football-ball"></i> رياضة</a>
-        <a href="#category5" onclick="showSection('category5')"><i class="fas fa-book"></i> كتب</a>
-    </nav>
+        <nav>
+            <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
+            <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
+            <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
+            <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
+            <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
+            <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i>تخفيضات</a>
+        </nav>
+    </header>
     <div class="container">
-        <div class="banner">
-            <p>مرحباً بكم في Temu Yemen - أفضل المنتجات بأفضل الأسعار</p>
-        </div>
-        <div class="slideshow">
-            <img src="slide1.jpg" class="active" alt="Slide 1">
-            <img src="slide2.jpg" alt="Slide 2">
-            <img src="slide3.jpg" alt="Slide 3">
-        </div>
-        <div id="products" class="section active">
-            <h2>المنتجات</h2>
-            <div class="products">
-                <div class="product" onclick="showProductDetails('product1')">
-                    <img src="product1.jpg" alt="Product 1">
-                    <h3>منتج 1</h3>
-                    <p>الوصف والسعر</p>
-                </div>
-                <div class="product" onclick="showProductDetails('product2')">
-                    <img src="product2.jpg" alt="Product 2">
-                    <h3>منتج 2</h3>
-                    <p>الوصف والسعر</p>
-                </div>
-                <!-- Add more products as needed -->
+        <div id="home" class="section active">
+            <div class="banner">
+                مرحباً بكم في تمو يمن! استمتعوا بأفضل العروض والمنتجات.
             </div>
-        </div>
-        <div id="featured-products" class="section">
-            <h2>المنتجات المميزة</h2>
+            <div class="slideshow">
+                <img src="https://via.placeholder.com/600x400" class="active">
+                <img src="https://via.placeholder.com/600x400">
+                <img src="https://via.placeholder.com/600x400">
+            </div>
+            <h2>منتجات مميزة</h2>
             <div class="featured-products">
-                <div class="featured-product" onclick="showProductDetails('featured1')">
-                    <img src="featured1.jpg" alt="Featured Product 1">
-                    <h3>منتج مميز 1</h3>
-                    <p>الوصف والسعر</p>
+                <div class="featured-product" onclick="showProductDetails('منتج 1', 'وصف المنتج 1', 'https://via.placeholder.com/600x400')">
+                    <img src="https://via.placeholder.com/600x400" alt="منتج 1">
+                    <h3>منتج 1</h3>
+                    <p>$10.00</p>
                 </div>
-                <div class="featured-product" onclick="showProductDetails('featured2')">
-                    <img src="featured2.jpg" alt="Featured Product 2">
-                    <h3>منتج مميز 2</h3>
-                    <p>الوصف والسعر</p>
+                <div class="featured-product" onclick="showProductDetails('منتج 2', 'وصف المنتج 2', 'https://via.placeholder.com/600x400')">
+                    <img src="https://via.placeholder.com/600x400" alt="منتج 2">
+                    <h3>منتج 2</h3>
+                    <p>$20.00</p>
                 </div>
-                <!-- Add more featured products as needed -->
+            </div>
+            <h2>المنتجات الجديدة</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('منتج 3', 'وصف المنتج 3', 'https://via.placeholder.com/600x400')">
+                    <img src="https://via.placeholder.com/600x400" alt="منتج 3">
+                    <h3>منتج 3</h3>
+                    <p>$15.00</p>
+                </div>
+                <div class="product" onclick="showProductDetails('منتج 4', 'وصف المنتج 4', 'https://via.placeholder.com/600x400')">
+                    <img src="https://via.placeholder.com/600x400" alt="منتج 4">
+                    <h3>منتج 4</h3>
+                    <p>$25.00</p>
+                </div>
             </div>
         </div>
-        <div id="product-details" class="section">
-            <h2>تفاصيل المنتج</h2>
-            <img src="product.jpg" alt="Product Image">
-            <p>الوصف الكامل للمنتج</p>
+        <div id="men" class="section">
+            <h2>رجالي</h2>
+            <!-- محتوى القسم الرجالي -->
+        </div>
+        <div id="women" class="section">
+            <h2>نسائي</h2>
+            <!-- محتوى القسم النسائي -->
+        </div>
+        <div id="boys" class="section">
+            <h2>ولادي</h2>
+            <!-- محتوى القسم الولادي -->
+        </div>
+        <div id="girls" class="section">
+            <h2>بناتي</h2>
+            <!-- محتوى القسم البناتي -->
+        </div>
+        <div id="discounts" class="section">
+            <h2>تخفيضات</h2>
+            <!-- محتوى قسم التخفيضات -->
+        </div>
+        <div id="product-details">
+            <h2 id="product-title">عنوان المنتج</h2>
+            <img id="product-image" src="https://via.placeholder.com/600x400" alt="Product Image">
+            <p id="product-description">وصف المنتج</p>
             <div class="size-options">
-                <button>حجم 1</button>
-                <button>حجم 2</button>
-                <button>حجم 3</button>
+                <button>XS</button>
+                <button>S</button>
+                <button>M</button>
+                <button>L</button>
+                <button>XL</button>
             </div>
-            <button onclick="addToCart('productID')">أضف إلى السلة</button>
+            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
         </div>
-        <div id="cart-details" class="section">
+        <div id="cart-details">
             <h2>سلة التسوق</h2>
             <div id="cart-items">
-                <!-- Items will be dynamically added here -->
+                <!-- عناصر السلة ستُضاف هنا -->
             </div>
             <div class="cart-total">
-                <p>إجمالي: <span id="cart-total">0</span> ريال</p>
+                <h3>المجموع الكلي: <span id="cart-total-amount">$0.00</span></h3>
             </div>
             <div class="cart-share">
-                <a href="#" class="btn" onclick="checkout()">إتمام الشراء</a>
+                <a href="#" class="btn">المتابعة إلى الدفع</a>
+                <a href="#" class="btn" id="share-cart-btn">مشاركة السلة</a>
+            </div>
+        </div>
+        <div id="account" class="section">
+            <h2>الحساب</h2>
+            <button onclick="showLogin()">تسجيل الدخول</button>
+            <button onclick="showSignUp()">إنشاء حساب جديد</button>
+            <div id="login-form" style="display:none;">
+                <h3>تسجيل الدخول</h3>
+                <input type="email" id="login-email" placeholder="البريد الإلكتروني">
+                <input type="password" id="login-password" placeholder="كلمة المرور">
+                <button onclick="login()">تسجيل الدخول</button>
+                <button onclick="googleLogin()">تسجيل الدخول عبر جوجل</button>
+                <button onclick="facebookLogin()">تسجيل الدخول عبر فيسبوك</button>
+            </div>
+            <div id="signup-form" style="display:none;">
+                <h3>إنشاء حساب جديد</h3>
+                <input type="text" id="signup-name" placeholder="الاسم الكامل">
+                <input type="email" id="signup-email" placeholder="البريد الإلكتروني">
+                <input type="password" id="signup-password" placeholder="كلمة المرور">
+                <button onclick="signUp()">إنشاء حساب</button>
             </div>
         </div>
     </div>
     <div class="bottom-nav">
-        <a href="#home" onclick="showSection('products')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
-        <a href="#featured" onclick="showSection('featured-products')"><i class="fas fa-star"></i><span>مميز</span></a>
-        <a href="#cart" onclick="showSection('cart-details')"><i class="fas fa-shopping-cart"></i><span>سلة التسوق</span></a>
-        <a href="#account" onclick="openModal('login-modal')"><i class="fas fa-user"></i><span>الحساب</span></a>
-    </div>
-
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('login-modal')">&times;</span>
-            <h2>تسجيل الدخول</h2>
-            <input type="email" id="login-email" placeholder="البريد الإلكتروني">
-            <input type="password" id="login-password" placeholder="كلمة المرور">
-            <button onclick="login()">تسجيل الدخول</button>
-            <p>ليس لديك حساب؟ <span class="toggle-link" onclick="toggleModal('login-modal', 'signup-modal')">إنشاء حساب</span></p>
-        </div>
-    </div>
-
-    <!-- Sign Up Modal -->
-    <div id="signup-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('signup-modal')">&times;</span>
-            <h2>إنشاء حساب</h2>
-            <input type="text" id="signup-name" placeholder="الاسم الكامل">
-            <input type="email" id="signup-email" placeholder="البريد الإلكتروني">
-            <input type="password" id="signup-password" placeholder="كلمة المرور">
-            <button onclick="signup()">إنشاء حساب</button>
-            <p>لديك حساب بالفعل؟ <span class="toggle-link" onclick="toggleModal('signup-modal', 'login-modal')">تسجيل الدخول</span></p>
-        </div>
+        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
+        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
+        <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i><span>ولادي</span></a>
+        <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i><span>بناتي</span></a>
+        <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i><span>تخفيضات</span></a>
     </div>
 
     <script>
         // Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // User authentication state observer
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                // User is signed in.
-                document.getElementById('account-icon').innerHTML = '<i class="fas fa-user"></i> مرحباً، ' + user.displayName;
-            } else {
-                // No user is signed in.
-                document.getElementById('account-icon').innerHTML = '<i class="fas fa-user"></i>';
-            }
-        });
-
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = "block";
+        function showSection(sectionId) {
+            var sections = document.querySelectorAll('.section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
+        function showProductDetails(title, description, imageUrl) {
+            document.getElementById('product-title').textContent = title;
+            document.getElementById('product-description').textContent = description;
+            document.getElementById('product-image').src = imageUrl;
+            showSection('product-details');
         }
 
-        function toggleModal(hideModalId, showModalId) {
-            closeModal(hideModalId);
-            openModal(showModalId);
+        function showCart() {
+            showSection('cart-details');
+        }
+
+        function addToCart() {
+            var cartItems = document.getElementById('cart-items');
+            var productTitle = document.getElementById('product-title').textContent;
+            var cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <img src="${document.getElementById('product-image').src}" alt="${productTitle}">
+                <span>${productTitle}</span>
+                <span>$10.00</span>
+                <button onclick="removeFromCart(this)">إزالة</button>
+            `;
+            cartItems.appendChild(cartItem);
+            updateCartTotal();
+        }
+
+        function removeFromCart(button) {
+            var cartItem = button.parentElement;
+            cartItem.remove();
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            var cartItems = document.querySelectorAll('.cart-item');
+            var total = 0;
+            cartItems.forEach(function(item) {
+                var price = parseFloat(item.children[2].textContent.replace('$', ''));
+                total += price;
+            });
+            document.getElementById('cart-total-amount').textContent = '$' + total.toFixed(2);
+        }
+
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('signup-form').style.display = 'none';
+        }
+
+        function showSignUp() {
+            document.getElementById('signup-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
         }
 
         function login() {
             var email = document.getElementById('login-email').value;
             var password = document.getElementById('login-password').value;
-
             firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in 
-                    var user = userCredential.user;
-                    closeModal('login-modal');
+                .then(function(userCredential) {
+                    alert('تم تسجيل الدخول بنجاح');
+                    showSection('home');
                 })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert(errorMessage);
+                .catch(function(error) {
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
                 });
         }
 
-        function signup() {
+        function googleLogin() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(function(result) {
+                    alert('تم تسجيل الدخول بنجاح');
+                    showSection('home');
+                })
+                .catch(function(error) {
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
+                });
+        }
+
+        function facebookLogin() {
+            var provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(function(result) {
+                    alert('تم تسجيل الدخول بنجاح');
+                    showSection('home');
+                })
+                .catch(function(error) {
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
+                });
+        }
+
+        function signUp() {
             var name = document.getElementById('signup-name').value;
             var email = document.getElementById('signup-email').value;
             var password = document.getElementById('signup-password').value;
-
             firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed up 
+                .then(function(userCredential) {
                     var user = userCredential.user;
-                    user.updateProfile({
-                        displayName: name
-                    }).then(() => {
-                        // Profile updated
-                        closeModal('signup-modal');
-                    }).catch((error) => {
-                        // An error occurred
-                        alert(error.message);
-                    });
+                    user.updateProfile({ displayName: name });
+                    alert('تم إنشاء الحساب بنجاح');
+                    showSection('home');
                 })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert(errorMessage);
+                .catch(function(error) {
+                    alert('خطأ في إنشاء الحساب: ' + error.message);
                 });
-        }
-
-        function showSection(sectionId) {
-            var sections = document.getElementsByClassName('section');
-            for (var i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function addToCart(productId) {
-            // Get the cart count element
-            var cartCountElement = document.getElementById('cart-count');
-            var cartCount = parseInt(cartCountElement.textContent);
-            cartCount++;
-            cartCountElement.textContent = cartCount;
-
-            // Add the product to the cart
-            var cartItems = document.getElementById('cart-items');
-            var cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.textContent = 'Product ' + productId;
-            cartItems.appendChild(cartItem);
-
-            // Update the cart total
-            var cartTotalElement = document.getElementById('cart-total');
-            var cartTotal = parseFloat(cartTotalElement.textContent);
-            cartTotal += 100; // Example price
-            cartTotalElement.textContent = cartTotal.toFixed(2);
-        }
-
-        function checkout() {
-            alert('Checkout functionality not implemented.');
-        }
-
-        // Slideshow functionality
-        var slideIndex = 0;
-        showSlides();
-
-        function showSlides() {
-            var slides = document.getElementsByClassName("slideshow")[0].getElementsByTagName("img");
-            for (var i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) {slideIndex = 1}
-            slides[slideIndex-1].style.display = "block";
-            setTimeout(showSlides, 2000); // Change image every 2 seconds
         }
     </script>
 </body>
