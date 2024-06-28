@@ -300,123 +300,97 @@
             <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i>تخفيضات</a>
         </nav>
     </header>
-    <main class="container">
+    <div class="container">
         <div id="home" class="section active">
-            <div class="banner">إعلان مميز</div>
+            <div class="banner">
+                <h1>مرحبًا بكم في Temu Yemen</h1>
+                <p>أفضل العروض والمنتجات في اليمن</p>
+            </div>
             <div class="slideshow">
-                <img src="https://via.placeholder.com/600x300" class="active">
-                <img src="https://via.placeholder.com/600x300">
-                <img src="https://via.placeholder.com/600x300">
+                <img src="slide1.jpg" alt="Slide 1" class="active">
+                <img src="slide2.jpg" alt="Slide 2">
+                <img src="slide3.jpg" alt="Slide 3">
             </div>
-            <h2>المنتجات المميزة</h2>
+            <h2>منتجات مميزة</h2>
             <div class="featured-products">
-                <div class="featured-product" onclick="showProductDetails('Product 1')">
-                    <img src="https://via.placeholder.com/150">
-                    <h3>Product 1</h3>
-                    <p>Price: $100</p>
+                <div class="featured-product">
+                    <img src="product1.jpg" alt="Product 1">
+                    <h3>منتج 1</h3>
+                    <p>وصف المنتج 1</p>
                 </div>
-                <div class="featured-product" onclick="showProductDetails('Product 2')">
-                    <img src="https://via.placeholder.com/150">
-                    <h3>Product 2</h3>
-                    <p>Price: $80</p>
+                <div class="featured-product">
+                    <img src="product2.jpg" alt="Product 2">
+                    <h3>منتج 2</h3>
+                    <p>وصف المنتج 2</p>
                 </div>
+                <!-- إضافة المزيد من المنتجات حسب الحاجة -->
             </div>
-            <div class="carousel">
-                <img src="https://via.placeholder.com/80" alt="item">
-                <img src="https://via.placeholder.com/80" alt="item">
-                <img src="https://via.placeholder.com/80" alt="item">
-                <img src="https://via.placeholder.com/80" alt="item">
-            </div>
-            <h2>كل المنتجات</h2>
+        </div>
+        <div id="men" class="section">
+            <h2>ملابس رجالية</h2>
             <div class="products">
-                <div class="product" onclick="showProductDetails('Product A')">
-                    <img src="https://via.placeholder.com/150">
-                    <h3>Product A</h3>
-                    <p>Price: $50</p>
-                </div>
-                <div class="product" onclick="showProductDetails('Product B')">
-                    <img src="https://via.placeholder.com/150">
-                    <h3>Product B</h3>
-                    <p>Price: $60</p>
-                </div>
+                <!-- منتجات رجالية -->
+            </div>
+        </div>
+        <div id="women" class="section">
+            <h2>ملابس نسائية</h2>
+            <div class="products">
+                <!-- منتجات نسائية -->
             </div>
         </div>
         <div id="boys" class="section">
-            <h2>ولادي</h2>
+            <h2>ملابس ولادي</h2>
             <div class="products">
-                <div id="boys1" class="product" onclick="showProductDetails('boys1')">
-                    <img src="boys1.jpg" alt="Boys Product 1">
-                    <h3>منتج ولادي 1</h3>
-                </div>
-                <div id="boys2" class="product" onclick="showProductDetails('boys2')">
-                    <img src="boys2.jpg" alt="Boys Product 2">
-                    <h3>منتج ولادي 2</h3>
-                </div>
+                <!-- منتجات ولادي -->
             </div>
         </div>
         <div id="girls" class="section">
-            <h2>بناتي</h2>
+            <h2>ملابس بناتي</h2>
             <div class="products">
-                <div id="girls1" class="product" onclick="showProductDetails('girls1')">
-                    <img src="girls1.jpg" alt="Girls Product 1">
-                    <h3>منتج بناتي 1</h3>
-                </div>
-                <div id="girls2" class="product" onclick="showProductDetails('girls2')">
-                    <img src="girls2.jpg" alt="Girls Product 2">
-                    <h3>منتج بناتي 2</h3>
-                </div>
+                <!-- منتجات بناتي -->
             </div>
         </div>
         <div id="discounts" class="section">
             <h2>تخفيضات</h2>
             <div class="products">
-                <div id="discount1" class="product" onclick="showProductDetails('discount1')">
-                    <img src="discount1.jpg" alt="Discount Product 1">
-                    <h3>منتج تخفيضات 1</h3>
-                </div>
-                <div id="discount2" class="product" onclick="showProductDetails('discount2')">
-                    <img src="discount2.jpg" alt="Discount Product 2">
-                    <h3>منتج تخفيضات 2</h3>
-                </div>
-            </div>
-        </div>
-        <div id="product-details"></div>
-        <div id="cart-details">
-            <h2>سلة المشتريات</h2>
-            <div class="cart-items">
-                <!-- سيتم عرض عناصر السلة هنا -->
-            </div>
-            <div class="cart-total">
-                <h3>المجموع: <span id="total-price">0</span> ريال</h3>
-            </div>
-            <div class="cart-actions">
-                <button class="btn" onclick="checkout()">تأكيد السلة</button>
+                <!-- منتجات التخفيضات -->
             </div>
         </div>
         <div id="account" class="section">
             <div class="auth-container">
+                <h2>حسابي</h2>
                 <div id="login-form">
-                    <h2>تسجيل الدخول</h2>
-                    <input type="email" id="login-email" class="auth-input" placeholder="البريد الإلكتروني">
+                    <h3>تسجيل الدخول</h3>
+                    <input type="text" id="login-identifier" class="auth-input" placeholder="البريد الإلكتروني أو رقم الهاتف">
                     <input type="password" id="login-password" class="auth-input" placeholder="كلمة المرور">
                     <button class="btn" onclick="login()">تسجيل الدخول</button>
-                    <p>هل تريد إنشاء حساب؟ <a href="#" onclick="showSignup()">أنشئ حساباً</a></p>
-                    <button class="btn-google" onclick="loginWithGoogle()">
-                        <i class="fab fa-google"></i> التسجيل عبر جوجل
-                    </button>
+                    <button class="btn-google" onclick="loginWithGoogle()"><i class="fab fa-google"></i>تسجيل الدخول باستخدام Google</button>
+                    <p>ليس لديك حساب؟ <a href="#" onclick="showSignup()">إنشاء حساب</a></p>
                 </div>
                 <div id="signup-form" style="display: none;">
-                    <h2>إنشاء حساب</h2>
-                    <input type="email" id="signup-email" class="auth-input" placeholder="البريد الإلكتروني">
-                    <input type="password" id="signup-password" class="auth-input" placeholder="كلمة المرور">
+                    <h3>إنشاء حساب</h3>
                     <input type="text" id="signup-name" class="auth-input" placeholder="الاسم الكامل">
+                    <input type="email" id="signup-email" class="auth-input" placeholder="البريد الإلكتروني">
+                    <input type="text" id="signup-phone" class="auth-input" placeholder="رقم الهاتف">
+                    <input type="password" id="signup-password" class="auth-input" placeholder="كلمة المرور">
                     <button class="btn" onclick="signup()">إنشاء حساب</button>
-                    <p>لديك حساب بالفعل؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a></p>
+                    <button class="btn-google" onclick="loginWithGoogle()"><i class="fab fa-google"></i>إنشاء حساب باستخدام Google</button>
+                    <p>لديك حساب؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a></p>
                 </div>
                 <div id="account-info" style="display: none;"></div>
             </div>
         </div>
-    </main>
+        <div id="cart-details" class="section">
+            <h2>عربة التسوق</h2>
+            <div class="cart-items">
+                <!-- عناصر العربة -->
+            </div>
+            <div class="cart-total">
+                <h3>الإجمالي: <span id="cart-total">0</span> ريال</h3>
+                <button class="btn">إتمام الشراء</button>
+            </div>
+        </div>
+    </div>
     <footer class="bottom-nav">
         <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
         <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
@@ -426,170 +400,123 @@
         <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i><span>تخفيضات</span></a>
     </footer>
     <script>
-        const firebaseConfig = {
-    apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
+        // تكوين Firebase
+        var firebaseConfig = {
+            apiKey: "API_KEY",
+            authDomain: "PROJECT_ID.firebaseapp.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID",
+            measurementId: "G-MEASUREMENT_ID"
         };
-firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
 
-function showSection(sectionId) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => section.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-}
+        function login() {
+            var identifier = document.getElementById('login-identifier').value;
+            var password = document.getElementById('login-password').value;
 
-function showSignup() {
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'block';
-}
+            if (identifier.includes('@')) {
+                firebase.auth().signInWithEmailAndPassword(identifier, password)
+                .then(userCredential => {
+                    var user = userCredential.user;
+                    showAccountInfo(user);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error.message);
+                });
+            } else {
+                var phoneNumber = '+2' + identifier; // رمز الدولة
+                var appVerifier = new firebase.auth.RecaptchaVerifier('login-form');
+                firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then(confirmationResult => {
+                    var code = prompt('أدخل الرمز المرسل إلى هاتفك');
+                    return confirmationResult.confirm(code);
+                })
+                .then(userCredential => {
+                    var user = userCredential.user;
+                    showAccountInfo(user);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert(error.message);
+                });
+            }
+        }
 
-function showLogin() {
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('login-form').style.display = 'block';
-}
+        function signup() {
+            var email = document.getElementById('signup-email').value;
+            var phone = document.getElementById('signup-phone').value;
+            var password = document.getElementById('signup-password').value;
+            var name = document.getElementById('signup-name').value;
 
-function login() {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed in
-            var user = userCredential.user;
-            console.log(user);
-            showAccountInfo(user);
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error(errorMessage);
-            alert(errorMessage);
-        });
-}
-
-function signup() {
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    const name = document.getElementById('signup-name').value;
-
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed up
-            var user = userCredential.user;
-            console.log(user);
-            user.updateProfile({
-                displayName: name
-            }).then(() => {
-                showAccountInfo(user);
-            }).catch((error) => {
-                console.error(error.message);
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                var user = userCredential.user;
+                return user.updateProfile({ displayName: name });
+            })
+            .then(() => {
+                var user = firebase.auth().currentUser;
+                return user.sendEmailVerification();
+            })
+            .then(() => {
+                alert('يرجى التحقق من بريدك الإلكتروني');
+                showLogin();
+            })
+            .catch(error => {
+                console.error(error);
                 alert(error.message);
             });
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error(errorMessage);
-            alert(errorMessage);
-        });
-}
 
-function loginWithGoogle() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            // Signed in with Google
-            var user = result.user;
-            console.log(user);
-            showAccountInfo(user);
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error(errorMessage);
-            alert(errorMessage);
-        });
-}
+            var phoneNumber = '+2' + phone; // رمز الدولة
+            var appVerifier = new firebase.auth.RecaptchaVerifier('signup-form');
+            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then(confirmationResult => {
+                var code = prompt('أدخل الرمز المرسل إلى هاتفك');
+                return confirmationResult.confirm(code);
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error.message);
+            });
+        }
 
-function showAccountInfo(user) {
-    const accountInfo = document.getElementById('account-info');
-    accountInfo.innerHTML = `
-        <h2>مرحباً ${user.displayName || 'بك'}</h2>
-        <p>تم تسجيل الدخول بنجاح!</p>
-        <p>البريد الإلكتروني: ${user.email}</p>
-        <button class="btn" onclick="logout()">تسجيل الخروج</button>
-    `;
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'none';
-    accountInfo.style.display = 'block';
-}
+        function showSignup() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'block';
+        }
 
-function logout() {
-    firebase.auth().signOut().then(() => {
-        // Signed out
-        document.getElementById('account-info').style.display = 'none';
-        document.getElementById('login-form').style.display = 'block';
-        document.getElementById('signup-form').style.display = 'none';
-        alert('تم تسجيل الخروج بنجاح!');
-    }).catch((error) => {
-        console.error(error.message);
-        alert(error.message);
-    });
-}
+        function showLogin() {
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
 
-function showProductDetails(productId) {
-    const productDetails = document.getElementById('product-details');
-    productDetails.innerHTML = `
-        <h2>تفاصيل المنتج</h2>
-        <img src="${productId}.jpg" alt="Product Image">
-        <p>اسم المنتج ${productId}</p>
-        <button class="btn" onclick="addToCart('${productId}', 100)">أضف إلى السلة</button>
-    `;
-    productDetails.style.display = 'block';
-    window.scrollTo(0, productDetails.offsetTop);
-}
+        function showAccountInfo(user) {
+            var accountInfo = document.getElementById('account-info');
+            accountInfo.style.display = 'block';
+            accountInfo.innerHTML = '<h3>معلومات الحساب</h3><p>اسم المستخدم: ' + user.displayName + '</p><p>البريد الإلكتروني: ' + user.email + '</p><p>رقم الهاتف: ' + user.phoneNumber + '</p>';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'none';
+        }
 
-function addToCart(productId, price) {
-    const cartItems = document.querySelector('.cart-items');
-    const item = document.createElement('div');
-    item.classList.add('cart-item');
-    item.innerHTML = `
-        <img src="${productId}.jpg" alt="Product Image">
-        <div>
-            <h4>منتج ${productId}</h4>
-            <p>السعر: ${price} ريال</p>
-        </div>
-        <button class="btn" onclick="removeFromCart(this)">حذف</button>
-    `;
-    cartItems.appendChild(item);
+        function showSection(sectionId) {
+            var sections = document.getElementsByClassName('section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
+        }
 
-    // Update total price
-    const totalPrice = document.getElementById('total-price');
-    const currentTotal = parseInt(totalPrice.textContent);
-    totalPrice.textContent = currentTotal + price;
-}
-
-function removeFromCart(button) {
-    const item = button.parentElement;
-    const price = parseInt(item.querySelector('p').textContent.split(' ')[1]);
-    const totalPrice = document.getElementById('total-price');
-    const currentTotal = parseInt(totalPrice.textContent);
-    totalPrice.textContent = currentTotal - price;
-    item.remove();
-}
-
-function checkout() {
-    alert('تم تأكيد السلة بنجاح!');
-    document.querySelector('.cart-items').innerHTML = '';
-    document.getElementById('total-price').textContent = '0';
-}
-
-// Initial setup
-showSection('home');
-</script>
+        // عرض الصور بالتناوب في السلايدر
+        var slideIndex = 0;
+        var slides = document.querySelectorAll('.slideshow img');
+        function showNextSlide() {
+            slides[slideIndex].classList.remove('active');
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add('active');
+        }
+        setInterval(showNextSlide, 3000);
+    </script>
 </body>
 </html>
