@@ -302,59 +302,42 @@
     </header>
     <main class="container">
         <div id="home" class="section active">
-            <div class="banner">
-                <h2>مرحباً بكم في متجر Temu Yemen</h2>
-                <p>اكتشفوا أحدث المنتجات وأفضل العروض</p>
-            </div>
+            <div class="banner">إعلان مميز</div>
             <div class="slideshow">
-                <img src="banner1.jpg" class="active" alt="Banner 1">
-                <img src="banner2.jpg" alt="Banner 2">
-                <img src="banner3.jpg" alt="Banner 3">
+                <img src="https://via.placeholder.com/600x300" class="active">
+                <img src="https://via.placeholder.com/600x300">
+                <img src="https://via.placeholder.com/600x300">
             </div>
-            <h3>منتجات مميزة</h3>
+            <h2>المنتجات المميزة</h2>
             <div class="featured-products">
-                <div class="featured-product">
-                    <img src="product1.jpg" alt="Product 1">
-                    <h4>منتج مميز 1</h4>
+                <div class="featured-product" onclick="showProductDetails('Product 1')">
+                    <img src="https://via.placeholder.com/150">
+                    <h3>Product 1</h3>
+                    <p>Price: $100</p>
                 </div>
-                <div class="featured-product">
-                    <img src="product2.jpg" alt="Product 2">
-                    <h4>منتج مميز 2</h4>
+                <div class="featured-product" onclick="showProductDetails('Product 2')">
+                    <img src="https://via.placeholder.com/150">
+                    <h3>Product 2</h3>
+                    <p>Price: $80</p>
                 </div>
             </div>
             <div class="carousel">
-                <img src="product1.jpg" alt="Product 1">
-                <img src="product2.jpg" alt="Product 2">
-                <img src="product3.jpg" alt="Product 3">
-                <img src="product4.jpg" alt="Product 4">
-                <img src="product5.jpg" alt="Product 5">
-                <img src="product6.jpg" alt="Product 6">
-                <img src="product7.jpg" alt="Product 7">
+                <img src="https://via.placeholder.com/80" alt="item">
+                <img src="https://via.placeholder.com/80" alt="item">
+                <img src="https://via.placeholder.com/80" alt="item">
+                <img src="https://via.placeholder.com/80" alt="item">
             </div>
-        </div>
-        <div id="men" class="section">
-            <h2>رجالي</h2>
+            <h2>كل المنتجات</h2>
             <div class="products">
-                <div id="men1" class="product" onclick="showProductDetails('men1')">
-                    <img src="men1.jpg" alt="Men Product 1">
-                    <h3>منتج رجالي 1</h3>
+                <div class="product" onclick="showProductDetails('Product A')">
+                    <img src="https://via.placeholder.com/150">
+                    <h3>Product A</h3>
+                    <p>Price: $50</p>
                 </div>
-                <div id="men2" class="product" onclick="showProductDetails('men2')">
-                    <img src="men2.jpg" alt="Men Product 2">
-                    <h3>منتج رجالي 2</h3>
-                </div>
-            </div>
-        </div>
-        <div id="women" class="section">
-            <h2>نسائي</h2>
-            <div class="products">
-                <div id="women1" class="product" onclick="showProductDetails('women1')">
-                    <img src="women1.jpg" alt="Women Product 1">
-                    <h3>منتج نسائي 1</h3>
-                </div>
-                <div id="women2" class="product" onclick="showProductDetails('women2')">
-                    <img src="women2.jpg" alt="Women Product 2">
-                    <h3>منتج نسائي 2</h3>
+                <div class="product" onclick="showProductDetails('Product B')">
+                    <img src="https://via.placeholder.com/150">
+                    <h3>Product B</h3>
+                    <p>Price: $60</p>
                 </div>
             </div>
         </div>
@@ -452,7 +435,6 @@
             appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
             measurementId: "G-NLSSTZM62R"
         };
-
 firebase.initializeApp(firebaseConfig);
 
 function showSection(sectionId) {
