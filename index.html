@@ -269,6 +269,10 @@
             max-width: 300px;
             box-sizing: border-box;
         }
+        .user-info {
+            text-align: center;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -288,213 +292,129 @@
         </div>
         <nav>
             <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
-            <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
-            <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
-            <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>أولاد</a>
-            <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بنات</a>
-            <a href="#accessories" onclick="showSection('accessories')"><i class="fas fa-glasses"></i>اكسسوارات</a>
-            <a href="#sale" onclick="showSection('sale')"><i class="fas fa-tags"></i>تخفيضات</a>
+            <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>ملابس رجالية</a>
+            <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>ملابس نسائية</a>
+            <a href="#kids" onclick="showSection('kids')"><i class="fas fa-child"></i>ملابس أطفال</a>
+            <a href="#beauty" onclick="showSection('beauty')"><i class="fas fa-heart"></i>مستحضرات تجميل</a>
+            <a href="#electronics" onclick="showSection('electronics')"><i class="fas fa-plug"></i>إلكترونيات</a>
         </nav>
     </header>
     <main class="container">
-        <div class="section banner">
-            <h1>مرحبا بكم في تيمو اليمن!</h1>
-        </div>
-        <div class="slideshow">
-            <img src="slide1.jpg" class="active">
-            <img src="slide2.jpg">
-            <img src="slide3.jpg">
-        </div>
         <div id="home" class="section active">
-            <h2>منتجات مميزة</h2>
-            <div class="featured-products">
-                <div class="featured-product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
+            <div class="banner">مرحبا بكم في Temu Yemen! تسوقوا أحدث المنتجات بأفضل الأسعار!</div>
+            <div class="slideshow">
+                <img src="https://via.placeholder.com/600x300?text=Sale+1" class="active">
+                <img src="https://via.placeholder.com/600x300?text=Sale+2">
+                <img src="https://via.placeholder.com/600x300?text=Sale+3">
+            </div>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('product1')">
+                    <img src="https://via.placeholder.com/150?text=Product+1" alt="Product 1">
+                    <h3>المنتج 1</h3>
+                    <p>وصف قصير للمنتج 1</p>
                 </div>
-                <div class="featured-product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
+                <div class="product" onclick="showProductDetails('product2')">
+                    <img src="https://via.placeholder.com/150?text=Product+2" alt="Product 2">
+                    <h3>المنتج 2</h3>
+                    <p>وصف قصير للمنتج 2</p>
                 </div>
-                <div class="featured-product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Add more products as needed -->
             </div>
         </div>
         <div id="men" class="section">
-            <h2>الملابس الرجالية</h2>
+            <h2>ملابس رجالية</h2>
             <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Men's products -->
             </div>
         </div>
         <div id="women" class="section">
-            <h2>الملابس النسائية</h2>
+            <h2>ملابس نسائية</h2>
             <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Women's products -->
             </div>
         </div>
-        <div id="boys" class="section">
-            <h2>ملابس الأولاد</h2>
+        <div id="kids" class="section">
+            <h2>ملابس أطفال</h2>
             <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Kids' products -->
             </div>
         </div>
-        <div id="girls" class="section">
-            <h2>ملابس البنات</h2>
+        <div id="beauty" class="section">
+            <h2>مستحضرات تجميل</h2>
             <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Beauty products -->
             </div>
         </div>
-        <div id="accessories" class="section">
-            <h2>الاكسسوارات</h2>
+        <div id="electronics" class="section">
+            <h2>إلكترونيات</h2>
             <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
-                </div>
+                <!-- Electronics products -->
             </div>
         </div>
-        <div id="sale" class="section">
-            <h2>التخفيضات</h2>
-            <div class="products">
-                <div class="product">
-                    <img src="product1.jpg">
-                    <h3>منتج 1</h3>
-                    <p>سعر: $10.00</p>
+        <div id="account" class="section">
+            <div class="auth-container">
+                <div id="login-form">
+                    <h2>تسجيل الدخول</h2>
+                    <input type="email" id="login-email" class="auth-input" placeholder="البريد الإلكتروني">
+                    <input type="password" id="login-password" class="auth-input" placeholder="كلمة المرور">
+                    <button class="btn" onclick="login()">تسجيل الدخول</button>
+                    <p>هل تريد إنشاء حساب؟ <a href="#" onclick="showSignup()">أنشئ حساباً</a></p>
+                    <button class="btn-google" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i> التسجيل عبر جوجل
+                    </button>
+                    <button class="btn-facebook" onclick="signInWithFacebook()">
+                        <i class="fab fa-facebook-f"></i> تسجيل الدخول باستخدام فيسبوك
+                    </button>
+                    <p class="error" id="login-error"></p>
                 </div>
-                <div class="product">
-                    <img src="product2.jpg">
-                    <h3>منتج 2</h3>
-                    <p>سعر: $15.00</p>
+                <div id="signup-form" class="hidden">
+                    <h2>إنشاء حساب</h2>
+                    <input type="email" id="signup-email" class="auth-input" placeholder="البريد الإلكتروني">
+                    <input type="password" id="signup-password" class="auth-input" placeholder="كلمة المرور">
+                    <input type="text" id="signup-name" class="auth-input" placeholder="الاسم الكامل">
+                    <button class="btn" onclick="signup()">إنشاء حساب</button>
+                    <p>لديك حساب بالفعل؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a></p>
+                    <p class="error" id="signup-error"></p>
                 </div>
-                <div class="product">
-                    <img src="product3.jpg">
-                    <h3>منتج 3</h3>
-                    <p>سعر: $20.00</p>
+                <div class="user-info hidden" id="user-info">
+                    <h3>مرحبا، <span id="user-name"></span>!</h3>
+                    <button class="btn" onclick="signOut()">تسجيل الخروج</button>
                 </div>
             </div>
         </div>
         <div id="product-details">
             <h2>تفاصيل المنتج</h2>
-            <img src="product-detail.jpg">
-            <h3>اسم المنتج</h3>
-            <p>سعر: $20.00</p>
             <div class="size-options">
-                <button>صغير</button>
-                <button>متوسط</button>
-                <button>كبير</button>
+                <button onclick="selectSize(this)">S</button>
+                <button onclick="selectSize(this)">M</button>
+                <button onclick="selectSize(this)">L</button>
             </div>
-            <button class="btn" onclick="addToCart()">أضف إلى السلة</button>
+            <button class="btn" onclick="addToCart()">إضافة إلى السلة</button>
         </div>
         <div id="cart-details">
-            <h2>سلة المشتريات</h2>
-            <div class="cart-items">
-                <!-- Cart items will be dynamically added here -->
+            <h2>سلة التسوق</h2>
+            <div id="cart-items">
+                <!-- Cart items will be added here -->
             </div>
             <div class="cart-total">
-                <h3>المجموع: $0.00</h3>
+                المجموع: $<span id="cart-total">0.00</span>
             </div>
             <div class="cart-share">
-                <button class="btn">إتمام الشراء</button>
-            </div>
-        </div>
-        <div id="account" class="section">
-            <div class="auth-container">
-                <h2>تسجيل الدخول</h2>
-                <input type="email" id="login-email" class="auth-input" placeholder="البريد الإلكتروني">
-                <input type="password" id="login-password" class="auth-input" placeholder="كلمة المرور">
-                <button class="btn" onclick="login()">تسجيل الدخول</button>
-                <p>هل تريد إنشاء حساب؟</p>
-                <button class="btn-google" onclick="loginWithGoogle()">
-                    <i class="fab fa-google"></i> تسجيل الدخول بواسطة جوجل
-                </button>
-                <button class="btn-facebook" onclick="loginWithFacebook()">
-                    <i class="fab fa-facebook-f"></i> تسجيل الدخول بواسطة فيسبوك
-                </button>
+                <a href="#" class="btn">مشاركة السلة</a>
             </div>
         </div>
     </main>
     <div class="bottom-nav">
         <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
-        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
-        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
-        <a href="#cart" onclick="showCart()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
-        <a href="#account" onclick="showSection('account')"><i class="fas fa-user"></i><span>الحساب</span></a>
+        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجال</span></a>
+        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نساء</span></a>
+        <a href="#kids" onclick="showSection('kids')"><i class="fas fa-child"></i><span>أطفال</span></a>
+        <a href="#beauty" onclick="showSection('beauty')"><i class="fas fa-heart"></i><span>تجميل</span></a>
+        <a href="#electronics" onclick="showSection('electronics')"><i class="fas fa-plug"></i><span>إلكترونيات</span></a>
     </div>
-
     <script>
-        const firebaseConfig = {
+        // Firebase configuration
+        var firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
             projectId: "temu-yemen",
@@ -504,67 +424,103 @@
             measurementId: "G-NLSSTZM62R"
         };
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
 
-        auth.onAuthStateChanged(user => {
+        // Check if user is signed in on page load
+        firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in.
-                // Customize UI for signed-in user.
+                showUserInfo(user);
             } else {
-                // No user is signed in.
-                // Customize UI for not signed-in user.
+                document.getElementById('user-info').style.display = 'none';
             }
         });
 
+        // Google sign-in
+        function signInWithGoogle() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    showUserInfo(result.user);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        // Facebook sign-in
+        function signInWithFacebook() {
+            var provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then((result) => {
+                    showUserInfo(result.user);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        // Sign out
+        function signOut() {
+            firebase.auth().signOut()
+                .then(() => {
+                    document.getElementById('user-info').style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        // Show user info
+        function showUserInfo(user) {
+            document.getElementById('user-name').innerText = user.displayName;
+            document.getElementById('user-info').style.display = 'block';
+        }
+
+        // Navigation functions
         function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+            var sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                }
+            });
         }
 
-        function login() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    // Signed in
-                    showSection('home');
-                })
-                .catch(error => {
-                    console.error(error.message);
-                });
+        // Slideshow
+        var currentSlide = 0;
+        var slides = document.querySelectorAll('.slideshow img');
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 3000);
+
+        // Show product details
+        function showProductDetails(productId) {
+            var productDetails = document.getElementById('product-details');
+            productDetails.style.display = 'block';
+            // Load product details based on productId
         }
 
-        function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    // Signed in
-                    showSection('home');
-                })
-                .catch(error => {
-                    console.error(error.message);
-                });
-        }
-
-        function loginWithFacebook() {
-            const provider = new firebase.auth.FacebookAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    // Signed in
-                    showSection('home');
-                })
-                .catch(error => {
-                    console.error(error.message);
-                });
-        }
-
+        // Add to cart
         function addToCart() {
-            // Add product to cart logic
+            // Add the product to cart
         }
 
+        // Show cart
         function showCart() {
-            document.getElementById('cart-details').style.display = 'block';
+            var cartDetails = document.getElementById('cart-details');
+            cartDetails.style.display = 'block';
+            // Load cart details
+        }
+
+        // Select size
+        function selectSize(button) {
+            var buttons = document.querySelectorAll('.size-options button');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
         }
     </script>
 </body>
