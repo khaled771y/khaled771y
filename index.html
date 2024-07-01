@@ -123,6 +123,9 @@
         .slideshow img.active {
             display: block;
         }
+        .slideshow img.active {
+            display: block;
+        }
         .section {
             display: none;
         }
@@ -259,7 +262,7 @@
             display: block;
             font-size: 12px;
         }
-       .auth-container {
+         .auth-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -365,167 +368,105 @@
             <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
             <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i>رجالي</a>
             <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i>نسائي</a>
-            <a href="#kids" onclick="showSection('kids')"><i class="fas fa-child"></i>أطفال</a>
-            <a href="#brands" onclick="showSection('brands')"><i class="fas fa-star"></i>الماركات</a>
-            <a href="#about" onclick="showSection('about')"><i class="fas fa-info-circle"></i>حولنا</a>
+            <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i>ولادي</a>
+            <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i>بناتي</a>
+            <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i>تخفيضات</a>
         </nav>
     </header>
-
-    <main>
-        <div class="container">
-            <div id="home" class="section active">
-                <div class="banner">
-                    <h2>مرحبا بك في تيمو اليمن</h2>
-                    <p>المتجر الإلكتروني للملابس والإكسسوارات في اليمن</p>
+    <main class="container">
+        <div id="home" class="section active">
+            <div class="banner">إعلان مميز</div>
+            <div class="slideshow">
+                <img src="images/slide11.jpeg" class="active">
+                <img src="images/slide12.jpeg">
+                <img src="images/slide14.jpeg">
+            </div>
+            <h2>المنتجات المميزة</h2>
+            <div class="featured-products">
+                <div class="featured-product" onclick="showProductDetails('Product 1')">
+                    <img src="images/women2.jpeg">
+                    <h3>Product 1</h3>
+                    <p>Price: $100</p>
                 </div>
-                <div class="slideshow">
-                    <img class="active" src="https://via.placeholder.com/600x300?text=Slide%201" alt="Slide 1">
-                    <img src="https://via.placeholder.com/600x300?text=Slide%202" alt="Slide 2">
-                    <img src="https://via.placeholder.com/600x300?text=Slide%203" alt="Slide 3">
-                </div>
-                <h2>منتجات مميزة</h2>
-                <div class="featured-products">
-                    <div class="featured-product" onclick="showProductDetails('product1')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%201" alt="Product 1">
-                        <h3>منتج 1</h3>
-                        <p>السعر: $100</p>
-                    </div>
-                    <div class="featured-product" onclick="showProductDetails('product2')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%202" alt="Product 2">
-                        <h3>منتج 2</h3>
-                        <p>السعر: $120</p>
-                    </div>
-                    <div class="featured-product" onclick="showProductDetails('product3')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%203" alt="Product 3">
-                        <h3>منتج 3</h3>
-                        <p>السعر: $80</p>
-                    </div>
-                    <div class="featured-product" onclick="showProductDetails('product4')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%204" alt="Product 4">
-                        <h3>منتج 4</h3>
-                        <p>السعر: $90</p>
-                    </div>
-                </div>
-                <h2>أحدث المنتجات</h2>
-                <div class="products">
-                    <div class="product" onclick="showProductDetails('product5')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%205" alt="Product 5">
-                        <h3>منتج 5</h3>
-                        <p>السعر: $60</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product6')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%206" alt="Product 6">
-                        <h3>منتج 6</h3>
-                        <p>السعر: $70</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product7')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%207" alt="Product 7">
-                        <h3>منتج 7</h3>
-                        <p>السعر: $50</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product8')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%208" alt="Product 8">
-                        <h3>منتج 8</h3>
-                        <p>السعر: $65</p>
-                    </div>
+                <div class="featured-product" onclick="showProductDetails('Product 2')">
+                    <img src="images/men4.jpg">
+                    <h3>Product 2</h3>
+                    <p>Price: $80</p>
                 </div>
             </div>
-
-            <div id="men" class="section">
-                <h2>منتجات رجالية</h2>
-                <div class="products">
-                    <div class="product" onclick="showProductDetails('product9')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%209" alt="Product 9">
-                        <h3>منتج 9</h3>
-                        <p>السعر: $80</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product10')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2010" alt="Product 10">
-                        <h3>منتج 10</h3>
-                        <p>السعر: $90</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product11')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2011" alt="Product 11">
-                        <h3>منتج 11</h3>
-                        <p>السعر: $100</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product12')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2012" alt="Product 12">
-                        <h3>منتج 12</h3>
-                        <p>السعر: $110</p>
-                    </div>
-                </div>
+            <div class="carousel">
+                <img src="images/kids2.jpeg" alt="item">
+                <img src="images/women3.jpg" alt="item">
+                <img src="images/men5.jpg" alt="item">
+                <img src="images/kids1.jpeg" alt="item">
             </div>
-
-            <div id="women" class="section">
-                <h2>منتجات نسائية</h2>
-                <div class="products">
-                    <div class="product" onclick="showProductDetails('product13')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2013" alt="Product 13">
-                        <h3>منتج 13</h3>
-                        <p>السعر: $70</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product14')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2014" alt="Product 14">
-                        <h3>منتج 14</h3>
-                        <p>السعر: $75</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product15')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2015" alt="Product 15">
-                        <h3>منتج 15</h3>
-                        <p>السعر: $85</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product16')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2016" alt="Product 16">
-                        <h3>منتج 16</h3>
-                        <p>السعر: $95</p>
-                    </div>
+            <h2>كل المنتجات</h2>
+            <div class="products">
+                <div class="product" onclick="showProductDetails('Product A')">
+                    <img src="images/men2.jpg">
+                    <h3>Product A</h3>
+                    <p>Price: $50</p>
                 </div>
-            </div>
-
-            <div id="kids" class="section">
-                <h2>منتجات أطفالية</h2>
-                <div class="products">
-                    <div class="product" onclick="showProductDetails('product17')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2017" alt="Product 17">
-                        <h3>منتج 17</h3>
-                        <p>السعر: $50</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product18')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2018" alt="Product 18">
-                        <h3>منتج 18</h3>
-                        <p>السعر: $55</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product19')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2019" alt="Product 19">
-                        <h3>منتج 19</h3>
-                        <p>السعر: $60</p>
-                    </div>
-                    <div class="product" onclick="showProductDetails('product20')">
-                        <img src="https://via.placeholder.com/200x200?text=Product%2020" alt="Product 20">
-                        <h3>منتج 20</h3>
-                        <p>السعر: $55</p>
-                    </div>
+                <div class="product" onclick="showProductDetails('Product B')">
+                    <img src="images/men3.jpg">
+                    <h3>Product B</h3>
+                    <p>Price: $60</p>
                 </div>
-            </div>
-
-            <div id="brands" class="section">
-                <h2>الماركات الشهيرة</h2>
-                <div class="carousel">
-                    <img src="https://via.placeholder.com/80x80?text=Brand%201" alt="Brand 1">
-                    <img src="https://via.placeholder.com/80x80?text=Brand%202" alt="Brand 2">
-                    <img src="https://via.placeholder.com/80x80?text=Brand%203" alt="Brand 3">
-                    <img src="https://via.placeholder.com/80x80?text=Brand%204" alt="Brand 4">
-                    <img src="https://via.placeholder.com/80x80?text=Brand%205" alt="Brand 5">
-                </div>
-            </div>
-
-            <div id="about" class="section">
-                <h2>من نحن</h2>
-                <p>تيمو اليمن هو متجر إلكتروني يقدم مجموعة متنوعة من الملابس والإكسسوارات للرجال والنساء والأطفال. تأسس المتجر لتلبية احتياجات الأسر اليمنية بمنتجات ذات جودة عالية وأسعار مناسبة.</p>
             </div>
         </div>
-      <div id="account" class="section">
+        <div id="boys" class="section">
+            <h2>ولادي</h2>
+            <div class="products">
+                <div id="boys1" class="product" onclick="showProductDetails('boys1')">
+                    <img src="boys1.jpg" alt="Boys Product 1">
+                    <h3>منتج ولادي 1</h3>
+                </div>
+                <div id="boys2" class="product" onclick="showProductDetails('boys2')">
+                    <img src="boys2.jpg" alt="Boys Product 2">
+                    <h3>منتج ولادي 2</h3>
+                </div>
+            </div>
+        </div>
+        <div id="girls" class="section">
+            <h2>بناتي</h2>
+            <div class="products">
+                <div id="girls1" class="product" onclick="showProductDetails('girls1')">
+                    <img src="girls1.jpg" alt="Girls Product 1">
+                    <h3>منتج بناتي 1</h3>
+                </div>
+                <div id="girls2" class="product" onclick="showProductDetails('girls2')">
+                    <img src="girls2.jpg" alt="Girls Product 2">
+                    <h3>منتج بناتي 2</h3>
+                </div>
+            </div>
+        </div>
+        <div id="discounts" class="section">
+            <h2>تخفيضات</h2>
+            <div class="products">
+                <div id="discount1" class="product" onclick="showProductDetails('discount1')">
+                    <img src="discount1.jpg" alt="Discount Product 1">
+                    <h3>منتج تخفيضات 1</h3>
+                </div>
+                <div id="discount2" class="product" onclick="showProductDetails('discount2')">
+                    <img src="discount2.jpg" alt="Discount Product 2">
+                    <h3>منتج تخفيضات 2</h3>
+                </div>
+            </div>
+        </div>
+        <div id="product-details"></div>
+        <div id="cart-details">
+            <h2>سلة المشتريات</h2>
+            <div class="cart-items">
+                <!-- سيتم عرض عناصر السلة هنا -->
+            </div>
+            <div class="cart-total">
+                <h3>المجموع: <span id="total-price">0</span> ريال</h3>
+            </div>
+            <div class="cart-actions">
+                <button class="btn" onclick="checkout()">تأكيد السلة</button>
+            </div>
+        </div>
+        <div id="account" class="section">
         <div class="auth-container">
             <div id="user-info" style="display: none;">
                 <p>مرحبًا، <span id="user-name"></span></p>
@@ -551,212 +492,205 @@
             </button>
         </div>
     </div>
-
-            <div id="product-details" class="section">
-                <h2>تفاصيل المنتج</h2>
-                <div id="product1">
-                    <h3>منتج 1</h3>
-                    <p>وصف المنتج 1...</p>
-                    <p>السعر: $100</p>
-                    <div class="size-options">
-                        <button>XS</button>
-                        <button>S</button>
-                        <button class="active">M</button>
-                        <button>L</button>
-                        <button>XL</button>
-                    </div>
-                    <button class="btn" onclick="addToCart('product1', 'M')">أضف إلى السلة</button>
-                </div>
-                <!-- إضافة بيانات المنتجات الأخرى بنفس النمط -->
-            </div>
-
-            <div id="cart-details" class="section">
-                <h2>سلة المشتريات</h2>
-                <div class="cart-item">
-                    <img src="https://via.placeholder.com/50x50?text=Product%201" alt="Product 1">
-                    <div>
-                        <h3>منتج 1</h3>
-                        <p>السعر: $100</p>
-                        <p>الحجم: M</p>
-                    </div>
-                    <div>
-                        <input type="number" value="1">
-                        <button>تحديث</button>
-                    </div>
-                </div>
-                <!-- إضافة بيانات العناصر في السلة بنفس النمط -->
-                <div class="cart-total">
-                    <h3>المجموع الكلي: $100</h3>
-                    <button class="btn">إتمام الشراء</button>
-                </div>
-                <div class="cart-share">
-                    <a href="#">مشاركة السلة</a>
-                </div>
-            </div>
-        </div>
     </main>
-
-    <footer>
-        <div class="bottom-nav">
-            <a href="#home" onclick="showSection('home')">
-                <i class="fas fa-home"></i>
-                <span>الرئيسية</span>
-            </a>
-            <a href="#men" onclick="showSection('men')">
-                <i class="fas fa-male"></i>
-                <span>رجالي</span>
-            </a>
-            <a href="#women" onclick="showSection('women')">
-                <i class="fas fa-female"></i>
-                <span>نسائي</span>
-            </a>
-            <a href="#kids" onclick="showSection('kids')">
-                <i class="fas fa-child"></i>
-                <span>أطفال</span>
-            </a>
-            <a href="#brands" onclick="showSection('brands')">
-                <i class="fas fa-star"></i>
-                <span>الماركات</span>
-            </a>
-        </div>
+    <footer class="bottom-nav">
+        <a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="#men" onclick="showSection('men')"><i class="fas fa-male"></i><span>رجالي</span></a>
+        <a href="#women" onclick="showSection('women')"><i class="fas fa-female"></i><span>نسائي</span></a>
+        <a href="#boys" onclick="showSection('boys')"><i class="fas fa-child"></i><span>ولادي</span></a>
+        <a href="#girls" onclick="showSection('girls')"><i class="fas fa-child"></i><span>بناتي</span></a>
+        <a href="#discounts" onclick="showSection('discounts')"><i class="fas fa-tags"></i><span>تخفيضات</span></a>
     </footer>
-
     <script>
-        // Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+    // Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
+        authDomain: "temu-yemen.firebaseapp.com",
+        projectId: "temu-yemen",
+        storageBucket: "temu-yemen.appspot.com",
+        messagingSenderId: "687344852319",
+        appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
+        measurementId: "G-NLSSTZM62R"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-        var currentUser = null;
+    var currentUser = null;
+    var cartCount = 0;
 
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    function showProductDetails(title, description, image, price) {
+        const titleElement = document.getElementById('product-title');
+        const descriptionElement = document.getElementById('product-description');
+        const imageElement = document.getElementById('product-image');
+        const priceElement = document.getElementById('product-price');
+
+        if (titleElement && descriptionElement && imageElement && priceElement) {
+            titleElement.innerText = title;
+            descriptionElement.innerText = description;
+            imageElement.src = image;
+            priceElement.innerText = price + " ريال";
+            showSection('product-details');
+        } else {
+            console.error('One or more elements for product details not found');
+        }
+    }
+
+    function selectSize(button) {
+        document.querySelectorAll('.size-options button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+
+    function addToCart() {
+        cartCount++;
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = cartCount;
         }
 
-        function showProductDetails() {
-            document.getElementById('product-details').style.display = 'block';
-        }
+        const cartItems = document.getElementById('cart-items');
+        const productNameElement = document.getElementById('product-name');
+        const productImageElement = document.getElementById('product-image');
 
-        function selectSize(button) {
-            document.querySelectorAll('.size-options button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
-        }
+        if (cartItems && productNameElement && productImageElement) {
+            const productName = productNameElement.textContent;
+            const productImage = productImageElement.src;
 
-        function addToCart() {
-            var cartCount = document.querySelector('.cart-count');
-            var count = parseInt(cartCount.textContent) || 0;
-            cartCount.textContent = count + 1;
-            alert('تمت الإضافة إلى السلة');
-        }
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <img src="${productImage}" alt="${productName}">
+                <span>${productName}</span>
+                <button onclick="removeFromCart(this)">إزالة</button>
+            `;
+            cartItems.appendChild(cartItem);
 
-        function showCart() {
-            document.getElementById('cart-details').style.display = 'block';
-        }
-
-        function removeFromCart(button) {
-            button.closest('.cart-item').remove();
             updateCartTotal();
+        } else {
+            console.error('One or more elements for adding to cart not found');
         }
+    }
 
-        function updateCartTotal() {
-            var cartItems = document.querySelectorAll('.cart-item');
-            var total = 0;
-            cartItems.forEach(item => {
-                var price = parseInt(item.querySelector('span').textContent.replace(' ريال', ''));
-                total += price;
-            });
-            document.getElementById('cart-total').textContent = total;
+    function updateCartTotal() {
+        let total = 0;
+        document.querySelectorAll('.cart-item').forEach(item => {
+            // اجمع سعر المنتج هنا. يفترض أنك ستحتاج إلى طريقة لحساب السعر.
+        });
+        const cartTotalElement = document.getElementById('cart-total');
+        if (cartTotalElement) {
+            cartTotalElement.textContent = total;
         }
+    }
 
-        function loginWithGoogle() {
-            var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then((result) => {
-                currentUser = result.user;
-                saveUserToLocalStorage(currentUser);
-                updateUIForLoggedInUser();
-            }).catch((error) => {
-                console.error('Error during Google login:', error);
-            });
+    function removeFromCart(button) {
+        button.parentElement.remove();
+        cartCount--;
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = cartCount;
         }
+        updateCartTotal();
+    }
 
-        function loginWithEmail() {
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-            firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
-                currentUser = userCredential.user;
-                saveUserToLocalStorage(currentUser);
-                updateUIForLoggedInUser();
-            }).catch((error) => {
-                console.error('Error during email login:', error);
-                alert('خطأ في تسجيل الدخول');
-            });
+    function loginWithGoogle() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then((result) => {
+            currentUser = result.user;
+            saveUserToLocalStorage(currentUser);
+            updateUIForLoggedInUser();
+        }).catch((error) => {
+            console.error('Error during Google login:', error);
+        });
+    }
+
+    function loginWithEmail() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        firebase.auth().signInWithEmailAndPassword(email, password).then((userCredential) => {
+            currentUser = userCredential.user;
+            saveUserToLocalStorage(currentUser);
+            updateUIForLoggedInUser();
+        }).catch((error) => {
+            console.error('Error during email login:', error);
+            alert('خطأ في تسجيل الدخول');
+        });
+    }
+
+    function signUp() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
+            currentUser = userCredential.user;
+            saveUserToLocalStorage(currentUser);
+            updateUIForLoggedInUser();
+        }).catch((error) => {
+            console.error('Error during sign up:', error);
+            alert('خطأ في إنشاء الحساب');
+        });
+    }
+
+    function logout() {
+        firebase.auth().signOut().then(() => {
+            currentUser = null;
+            clearUserFromLocalStorage();
+            updateUIForLoggedOutUser();
+        }).catch((error) => {
+            console.error('Error during logout:', error);
+        });
+    }
+
+    function saveUserToLocalStorage(user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    function clearUserFromLocalStorage() {
+        localStorage.removeItem('currentUser');
+    }
+
+    function updateUIForLoggedInUser() {
+        const loginForm = document.getElementById('login-form');
+        const userInfo = document.getElementById('user-info');
+        const userNameElement = document.getElementById('user-name');
+
+        if (loginForm && userInfo && userNameElement) {
+            loginForm.style.display = 'none';
+            userInfo.style.display = 'block';
+            userNameElement.textContent = currentUser.displayName || currentUser.email;
+        } else {
+            console.error('One or more elements for logged in user UI not found');
         }
+    }
 
-        function signUp() {
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-            firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
-                currentUser = userCredential.user;
-                saveUserToLocalStorage(currentUser);
-                updateUIForLoggedInUser();
-            }).catch((error) => {
-                console.error('Error during sign up:', error);
-                alert('خطأ في إنشاء الحساب');
-            });
+    function updateUIForLoggedOutUser() {
+        const loginForm = document.getElementById('login-form');
+        const userInfo = document.getElementById('user-info');
+
+        if (loginForm && userInfo) {
+            loginForm.style.display = 'block';
+            userInfo.style.display = 'none';
+        } else {
+            console.error('One or more elements for logged out user UI not found');
         }
+    }
 
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                currentUser = null;
-                clearUserFromLocalStorage();
-                updateUIForLoggedOutUser();
-            }).catch((error) => {
-                console.error('Error during logout:', error);
-            });
+    // Check if user is logged in on page load
+    window.onload = function() {
+        var savedUser = localStorage.getItem('currentUser');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            updateUIForLoggedInUser();
+        } else {
+            updateUIForLoggedOutUser();
         }
-
-        function saveUserToLocalStorage(user) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-        }
-
-        function clearUserFromLocalStorage() {
-            localStorage.removeItem('currentUser');
-        }
-
-        function updateUIForLoggedInUser() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('user-info').style.display = 'block';
-            document.getElementById('user-name').textContent = currentUser.displayName || currentUser.email;
-        }
-
-        function updateUIForLoggedOutUser() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('user-info').style.display = 'none';
-        }
-
-        // Check if user is logged in on page load
-        window.onload = function() {
-            var savedUser = localStorage.getItem('currentUser');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                updateUIForLoggedInUser();
-            } else {
-                updateUIForLoggedOutUser();
-            }
-        };
-    </script>
+    };
+</script>
 </body>
 </html>
