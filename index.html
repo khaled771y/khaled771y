@@ -192,7 +192,7 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
-        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // Collect form data
@@ -207,19 +207,21 @@
             const id_front = document.getElementById('id_front').files[0];
             const id_back = document.getElementById('id_back').files[0];
 
-            // Upload images to Firebase Storage
-            const uploadFront = storage.ref('id_cards/' + id_front.name).put(id_front);
-            const uploadBack = storage.ref('id_cards/' + id_back.name).put(id_back);
+            try {
+                // Upload images to Firebase Storage
+                const idFrontRef = storage.ref('id_cards/' + id_front.name);
+                const idBackRef = storage.ref('id_cards/' + id_back.name);
 
-            // Wait for both images to upload
-            Promise.all([uploadFront, uploadBack]).then((uploads) => {
-                return Promise.all([uploads[0].ref.getDownloadURL(), uploads[1].ref.getDownloadURL()]);
-            }).then((urls) => {
-                const id_front_url = urls[0];
-                const id_back_url = urls[1];
+                const uploadFrontTask = idFrontRef.put(id_front);
+                const uploadBackTask = idBackRef.put(id_back);
+
+                await Promise.all([uploadFrontTask, uploadBackTask]);
+
+                const id_front_url = await idFrontRef.getDownloadURL();
+                const id_back_url = await idBackRef.getDownloadURL();
 
                 // Add a new document with a generated ID
-                return db.collection("appointments").add({
+                await db.collection("appointments").add({
                     fullname: fullname,
                     phone: phone,
                     id_type: id_type,
@@ -231,20 +233,22 @@
                     id_front_url: id_front_url,
                     id_back_url: id_back_url
                 });
-            }).then((docRef) => {
+
                 const alertDiv = document.getElementById('alert');
                 alertDiv.textContent = "تم حجز الموعد بنجاح!";
                 alertDiv.classList.remove('d-none');
+                alertDiv.classList.remove('alert-danger');
                 alertDiv.classList.add('alert-success');
                 document.getElementById('appointmentForm').reset();
                 document.getElementById('printButton').classList.remove('d-none');
-            }).catch((error) => {
+            } catch (error) {
                 const alertDiv = document.getElementById('alert');
                 alertDiv.textContent = "حدث خطأ أثناء حجز الموعد. حاول مرة أخرى.";
                 alertDiv.classList.remove('d-none');
+                alertDiv.classList.remove('alert-success');
                 alertDiv.classList.add('alert-danger');
                 console.error("Error adding document: ", error);
-            });
+            }
         });
 
         function printForm() {
