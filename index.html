@@ -9,14 +9,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f4f4f4;
+            background-color: #2c3e50;
+            color: #ecf0f1;
             font-family: 'Arial', sans-serif;
         }
         .main-container {
-            background-color: white;
+            background-color: #34495e;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
             max-width: 800px;
             margin: 20px auto;
         }
@@ -24,7 +25,7 @@
             text-align: center;
             margin-bottom: 20px;
             padding: 20px;
-            background-color: #004080;
+            background-color: #2980b9;
             color: white;
             border-radius: 10px;
         }
@@ -42,18 +43,26 @@
             margin-bottom: 20px;
         }
         label {
-            color: #004080;
+            color: #ecf0f1;
         }
         .form-control {
             margin-bottom: 15px;
         }
         .btn-primary {
-            background-color: #004080;
-            border-color: #004080;
+            background-color: #2980b9;
+            border-color: #2980b9;
         }
         .btn-primary:hover {
-            background-color: #003060;
-            border-color: #003060;
+            background-color: #1c5985;
+            border-color: #1c5985;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            border-color: #95a5a6;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+            border-color: #7f8c8d;
         }
         .alert {
             margin-top: 20px;
@@ -65,7 +74,7 @@
             margin-right: 10px;
         }
         .news-ticker {
-            background-color: #004080;
+            background-color: #2980b9;
             color: white;
             padding: 10px;
             border-radius: 5px;
@@ -85,7 +94,7 @@
         footer {
             text-align: center;
             padding: 10px;
-            background-color: #004080;
+            background-color: #2980b9;
             color: white;
             margin-top: 20px;
             border-radius: 5px;
@@ -94,6 +103,8 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
 </head>
 <body>
     <header>
@@ -142,6 +153,14 @@
                 <label for="appointment_time"><i class="fas fa-clock icon"></i>تحديد وقت الموعد:</label>
                 <input type="datetime-local" class="form-control" id="appointment_time" name="appointment_time" required>
             </div>
+            <div class="form-group">
+                <label for="id_front"><i class="fas fa-id-badge icon"></i>صورة البطاقة الشخصية (أمام):</label>
+                <input type="file" class="form-control" id="id_front" name="id_front" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="id_back"><i class="fas fa-id-badge icon"></i>صورة البطاقة الشخصية (خلف):</label>
+                <input type="file" class="form-control" id="id_back" name="id_back" accept="image/*" required>
+            </div>
             <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-calendar-check icon"></i>حجز الموعد</button>
         </form>
         <div id="alert" class="alert d-none" role="alert"></div>
@@ -171,11 +190,12 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
         document.getElementById('appointmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get form values
+            // Collect form data
             const fullname = document.getElementById('fullname').value;
             const phone = document.getElementById('phone').value;
             const id_type = document.getElementById('id_type').value;
@@ -184,27 +204,41 @@
             const street = document.getElementById('street').value;
             const birthdate = document.getElementById('birthdate').value;
             const appointment_time = document.getElementById('appointment_time').value;
+            const id_front = document.getElementById('id_front').files[0];
+            const id_back = document.getElementById('id_back').files[0];
 
-            // Add a new document with a generated ID
-            db.collection("appointments").add({
-                fullname: fullname,
-                phone: phone,
-                id_type: id_type,
-                id_number: id_number,
-                city: city,
-                street: street,
-                birthdate: birthdate,
-                appointment_time: appointment_time
-            })
-            .then((docRef) => {
+            // Upload images to Firebase Storage
+            const uploadFront = storage.ref('id_cards/' + id_front.name).put(id_front);
+            const uploadBack = storage.ref('id_cards/' + id_back.name).put(id_back);
+
+            // Wait for both images to upload
+            Promise.all([uploadFront, uploadBack]).then((uploads) => {
+                return Promise.all([uploads[0].ref.getDownloadURL(), uploads[1].ref.getDownloadURL()]);
+            }).then((urls) => {
+                const id_front_url = urls[0];
+                const id_back_url = urls[1];
+
+                // Add a new document with a generated ID
+                return db.collection("appointments").add({
+                    fullname: fullname,
+                    phone: phone,
+                    id_type: id_type,
+                    id_number: id_number,
+                    city: city,
+                    street: street,
+                    birthdate: birthdate,
+                    appointment_time: appointment_time,
+                    id_front_url: id_front_url,
+                    id_back_url: id_back_url
+                });
+            }).then((docRef) => {
                 const alertDiv = document.getElementById('alert');
                 alertDiv.textContent = "تم حجز الموعد بنجاح!";
                 alertDiv.classList.remove('d-none');
                 alertDiv.classList.add('alert-success');
                 document.getElementById('appointmentForm').reset();
                 document.getElementById('printButton').classList.remove('d-none');
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 const alertDiv = document.getElementById('alert');
                 alertDiv.textContent = "حدث خطأ أثناء حجز الموعد. حاول مرة أخرى.";
                 alertDiv.classList.remove('d-none');
