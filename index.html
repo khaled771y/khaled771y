@@ -3,180 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصلحة جوازات تعز - حجز موعد</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>Temu Yemen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            text-align: right;
         }
-        .main-container {
-            background-color: #34495e;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            margin: 20px auto;
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #FF5733;
+            color: #fff;
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
         }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #2980b9;
-            color: white;
-            border-radius: 10px;
+
+        .top-bar .logo {
+            display: flex;
+            align-items: center;
         }
-        .logo {
-            width: 100px;
-            height: auto;
-            margin-bottom: 10px;
+
+        .top-bar .logo i {
+            margin-left: 1rem;
+            font-size: 2rem;
         }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+
+        .top-bar .icons {
+            display: flex;
+            align-items: center;
         }
-        h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
+
+        .top-bar .icons div {
+            margin-left: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
         }
-        label {
-            color: #ecf0f1;
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 0 1rem;
         }
-        .form-control {
-            margin-bottom: 15px;
+
+        .search-bar input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem 0 0 0.5rem;
+            outline: none;
+            background-color: #fff;
+            color: #FF5733;
         }
-        .btn-primary {
-            background-color: #2980b9;
-            border-color: #2980b9;
+
+        .search-bar button {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 1px solid #FF5733;
+            background-color: #FF5733;
+            color: #fff;
+            border-radius: 0 0.5rem 0.5rem 0;
+            cursor: pointer;
         }
-        .btn-primary:hover {
-            background-color: #1c5985;
-            border-color: #1c5985;
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #FF7043;
+            padding: 1rem 0;
+            color: #fff;
+            font-size: 1.2rem;
         }
-        .btn-secondary {
-            background-color: #95a5a6;
-            border-color: #95a5a6;
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 2rem;
         }
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
-            border-color: #7f8c8d;
+
+        nav a:hover {
+            background-color: #FF5733;
         }
-        .alert {
-            margin-top: 20px;
+
+        .container {
+            padding: 2rem;
         }
-        .d-none {
-            display: none;
-        }
-        .icon {
-            margin-right: 10px;
-        }
-        .news-ticker {
-            background-color: #2980b9;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+
+        .slideshow {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
             overflow: hidden;
-            white-space: nowrap;
+            border-radius: 1rem;
         }
-        .news-ticker span {
-            display: inline-block;
-            padding-left: 100%;
-            animation: ticker 10s linear infinite;
+
+        .slideshow img {
+            width: 100%;
+            display: none;
+            border-radius: 1rem;
         }
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+
+        .slideshow img.active {
+            display: block;
         }
-        footer {
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            scroll-behavior: smooth;
+        }
+
+        .carousel img {
+            flex: 0 0 auto;
+            width: 10rem;
+            height: 10rem;
+            margin: 0 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 0.5rem;
+            flex: 1 1 calc(48% - 1rem);
+            box-sizing: border-box;
+            cursor: pointer;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .product:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+        }
+
+        .product-details-page {
+            display: none;
+            padding: 2rem;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .product-details img {
+            width: 100%;
+            max-width: 20rem;
+            height: auto;
+            border-radius: 1rem;
+        }
+
+        .product-details h3 {
+            font-size: 2rem;
+            margin: 0;
+            color: #FF5733;
+        }
+
+        .product-details p {
+            font-size: 1.5rem;
+        }
+
+        .cart-page {
+            display: none;
+            padding: 2rem;
+        }
+
+        .cart-page h2 {
             text-align: center;
-            padding: 10px;
-            background-color: #2980b9;
-            color: white;
-            margin-top: 20px;
-            border-radius: 5px;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .cart-item img {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 1rem;
+            margin-left: 2rem;
+        }
+
+        .cart-item h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            flex: 1;
+            color: #FF5733;
+        }
+
+        .cart-item .remove-item {
+            background: none;
+            border: none;
+            color: #FF5733;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #FF5733;
+            color: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 5rem;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+        }
+
+        .bottom-nav a {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .bottom-nav a i {
+            display: block;
+            font-size: 1.5rem;
+        }
+
+        .bottom-nav a span {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .bottom-nav .wide-button {
+            flex: 3;
+            background-color: #FF7043;
+            border-radius: 0.5rem;
+            text-align: center;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .bottom-nav .wide-button span {
+            display: inline;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                font-size: 1.2rem;
+            }
+
+            .top-bar .logo i,
+            .top-bar .icons div {
+                font-size: 1.2rem;
+            }
+
+            .search-bar input,
+            .search-bar button {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+
+            nav {
+                font-size: 1rem;
+            }
+
+            nav a {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .carousel img {
+                width: 8rem;
+                height: 8rem;
+            }
+
+            .product {
+                flex: 1 1 calc(100% - 1rem);
+            }
+
+            .product-details img {
+                max-width: 15rem;
+            }
+
+            .cart-item img {
+                width: 4rem;
+                height: 4rem;
+            }
+
+            .cart-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .cart-item .remove-item {
+                font-size: 1.2rem;
+            }
+
+            .bottom-nav {
+                height: 4rem;
+            }
+
+            .bottom-nav a i {
+                font-size: 1.2rem;
+            }
+
+            .bottom-nav .wide-button {
+                font-size: 1rem;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: #FF5733;
+        }
+
+        .modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal form label {
+            color: #FF5733;
+        }
+
+        .modal form input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .modal form button {
+            padding: 1rem;
+            border: none;
+            background-color: #FF5733;
+            color: #fff;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .modal form p {
+            text-align: center;
+        }
+
+        .modal form p a {
+            color: #FF5733;
+            text-decoration: none;
+        }
+
+        .modal form p a:hover {
+            text-decoration: underline;
         }
     </style>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="شعار المصلحة" class="logo">
-        <h1>مصلحة جوازات تعز</h1>
-        <h2>خدمة حجز موعد للحصول على جواز سفر</h2>
-    </header>
-    <div class="main-container">
-        <div class="news-ticker">
-            <span>مرحبًا بكم في موقع مصلحة جوازات تعز. يرجى التأكد من إدخال جميع البيانات بشكل صحيح.</span>
+
+  <div class="top-bar">
+        <div class="logo">
+            <i class="fas fa-shopping-cart"></i>
+            Temu Yemen
         </div>
-        <form id="appointmentForm">
-            <div class="form-group">
-                <label for="fullname"><i class="fas fa-user icon"></i>الاسم الكامل:</label>
-                <input type="text" class="form-control" id="fullname" name="fullname" required>
+        <div class="icons">
+            <div id="user-icon" onclick="showLogin()">
+                <i class="fas fa-user"></i>
             </div>
-            <div class="form-group">
-                <label for="phone"><i class="fas fa-phone icon"></i>رقم الهاتف:</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
+            <div onclick="showCart()">
+                <i class="fas fa-shopping-cart"></i>
             </div>
-            <div class="form-group">
-                <label for="id_type"><i class="fas fa-id-card icon"></i>نوع الهوية:</label>
-                <select class="form-control" id="id_type" name="id_type" required>
-                    <option value="personal_id">بطاقة شخصية</option>
-                    <option value="birth_certificate">شهادة ميلاد</option>
-                    <option value="passport">جواز سفر</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="id_number"><i class="fas fa-hashtag icon"></i>رقم الهوية:</label>
-                <input type="text" class="form-control" id="id_number" name="id_number" required>
-            </div>
-            <div class="form-group">
-                <label for="city"><i class="fas fa-city icon"></i>المدينة:</label>
-                <input type="text" class="form-control" id="city" name="city" required>
-            </div>
-            <div class="form-group">
-                <label for="street"><i class="fas fa-road icon"></i>الشارع:</label>
-                <input type="text" class="form-control" id="street" name="street" required>
-            </div>
-            <div class="form-group">
-                <label for="birthdate"><i class="fas fa-calendar-alt icon"></i>تاريخ الميلاد:</label>
-                <input type="date" class="form-control" id="birthdate" name="birthdate" required>
-            </div>
-            <div class="form-group">
-                <label for="appointment_time"><i class="fas fa-clock icon"></i>تحديد وقت الموعد:</label>
-                <input type="datetime-local" class="form-control" id="appointment_time" name="appointment_time" required>
-            </div>
-            <div class="form-group">
-                <label for="id_front"><i class="fas fa-id-badge icon"></i>صورة البطاقة الشخصية (أمام):</label>
-                <input type="file" class="form-control" id="id_front" name="id_front" accept="image/*" required>
-            </div>
-            <div class="form-group">
-                <label for="id_back"><i class="fas fa-id-badge icon"></i>صورة البطاقة الشخصية (خلف):</label>
-                <input type="file" class="form-control" id="id_back" name="id_back" accept="image/*" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-calendar-check icon"></i>حجز الموعد</button>
-        </form>
-        <div id="alert" class="alert d-none" role="alert"></div>
-        <button id="printButton" class="btn btn-secondary btn-block d-none" onclick="printForm()"><i class="fas fa-print icon"></i>طباعة الاستمارة</button>
+        </div>
     </div>
-    <footer>
-        <div class="container">
-            <p>© 2024 مصلحة جوازات تعز. جميع الحقوق محفوظة.</p>
+
+    <div class="search-bar">
+        <input type="text" placeholder="ابحث عن المنتجات...">
+        <button>ابحث</button>
+    </div>
+
+      <nav>
+        <a href="#">الصفحة الرئيسية</a>
+        <a href="#">المنتجات</a>
+        <a href="#">تواصل معنا</a>
+        <a href="#">عن الموقع</a>
+    </nav>
+
+    <div class="container">
+        <div class="slideshow">
+            <img src="images/slide11.jpeg" class="active" alt="Slideshow Image 1">
+            <img src="images/slide13.jpeg" alt="Slideshow Image 2">
         </div>
-    </footer>
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // Firebase configuration
+
+        <div class="carousel">
+            <img src="https://via.placeholder.com/200?text=Product+1" alt="Product 1">
+            <img src="https://via.placeholder.com/200?text=Product+2" alt="Product 2">
+            <img src="https://via.placeholder.com/200?text=Product+3" alt="Product 3">
+            <img src="https://via.placeholder.com/200?text=Product+4" alt="Product 4">
+            <img src="https://via.placeholder.com/200?text=Product+5" alt="Product 5">
+        </div>
+
+        <div class="products">
+            <div class="product" onclick="showProductDetails('1')">
+                <img src="https://via.placeholder.com/300x300?text=Product+1" alt="Product 1">
+                <h3>منتج 1</h3>
+                <p>وصف قصير للمنتج 1</p>
+            </div>
+            <div class="product" onclick="showProductDetails('2')">
+                <img src="https://via.placeholder.com/300x300?text=Product+2" alt="Product 2">
+                <h3>منتج 2</h3>
+                <p>وصف قصير للمنتج 2</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="#"><i class="fas fa-store"></i><span>المتجر</span></a>
+        <div class="wide-button"><span>أضف إلى السلة</span></div>
+        <a href="#"><i class="fas fa-tags"></i><span>العروض</span></a>
+        <a href="#"><i class="fas fa-user"></i><span>الحساب</span></a>
+    </div>
+
+    <div id="product-details" class="product-details-page">
+        <div class="product-details">
+            <img id="product-image" src="" alt="Product Image">
+            <h3 id="product-name"></h3>
+            <p id="product-description"></p>
+            <button onclick="addToCart()">أضف إلى السلة</button>
+        </div>
+    </div>
+
+    <div id="cart-page" class="cart-page">
+        <h2>سلة المشتريات</h2>
+        <div class="cart-items" id="cart-items"></div>
+    </div>
+
+   <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>تسجيل الدخول</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">تسجيل الدخول</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>إنشاء حساب</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-email">البريد الإلكتروني</label>
+                    <input type="email" id="register-email" name="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">كلمة المرور</label>
+                    <input type="password" id="register-password" name="register-password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">إنشاء حساب</button>
+                </div>
+            </form>
+        </div>
+    </div>
+     <script>
+        // إعدادات Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -187,73 +569,121 @@
             measurementId: "G-NLSSTZM62R"
         };
 
-        // Initialize Firebase
+        // تهيئة Firebase
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
 
-        document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Collect form data
-            const fullname = document.getElementById('fullname').value;
-            const phone = document.getElementById('phone').value;
-            const id_type = document.getElementById('id_type').value;
-            const id_number = document.getElementById('id_number').value;
-            const city = document.getElementById('city').value;
-            const street = document.getElementById('street').value;
-            const birthdate = document.getElementById('birthdate').value;
-            const appointment_time = document.getElementById('appointment_time').value;
-            const id_front = document.getElementById('id_front').files[0];
-            const id_back = document.getElementById('id_back').files[0];
-
-            try {
-                // Upload images to Firebase Storage
-                const idFrontRef = storage.ref('id_cards/' + id_front.name);
-                const idBackRef = storage.ref('id_cards/' + id_back.name);
-
-                const uploadFrontTask = idFrontRef.put(id_front);
-                const uploadBackTask = idBackRef.put(id_back);
-
-                await Promise.all([uploadFrontTask, uploadBackTask]);
-
-                const id_front_url = await idFrontRef.getDownloadURL();
-                const id_back_url = await idBackRef.getDownloadURL();
-
-                // Add a new document with a generated ID
-                await db.collection("appointments").add({
-                    fullname: fullname,
-                    phone: phone,
-                    id_type: id_type,
-                    id_number: id_number,
-                    city: city,
-                    street: street,
-                    birthdate: birthdate,
-                    appointment_time: appointment_time,
-                    id_front_url: id_front_url,
-                    id_back_url: id_back_url
+        // تسجيل مستخدم جديد
+        function registerUser(email, password) {
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("User registered:", userCredential.user);
+                    closeModal();
+                })
+                .catch((error) => {
+                    console.error("Error registering user:", error.message);
                 });
+        }
 
-                const alertDiv = document.getElementById('alert');
-                alertDiv.textContent = "تم حجز الموعد بنجاح!";
-                alertDiv.classList.remove('d-none');
-                alertDiv.classList.remove('alert-danger');
-                alertDiv.classList.add('alert-success');
-                document.getElementById('appointmentForm').reset();
-                document.getElementById('printButton').classList.remove('d-none');
-            } catch (error) {
-                const alertDiv = document.getElementById('alert');
-                alertDiv.textContent = "حدث خطأ أثناء حجز الموعد. حاول مرة أخرى.";
-                alertDiv.classList.remove('d-none');
-                alertDiv.classList.remove('alert-success');
-                alertDiv.classList.add('alert-danger');
-                console.error("Error adding document: ", error);
+        // تسجيل الدخول
+        function loginUser(email, password) {
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("User logged in:", userCredential.user);
+                    closeModal();
+                })
+                .catch((error) => {
+                    console.error("Error logging in:", error.message);
+                });
+        }
+
+        // عرض تفاصيل المنتج
+        function showProductDetails(productId) {
+            // افترض وجود قائمة منتجات جاهزة
+            const products = [
+                { id: 1, name: "منتج 1", description: "وصف المنتج 1", image: "https://via.placeholder.com/300" },
+                { id: 2, name: "منتج 2", description: "وصف المنتج 2", image: "https://via.placeholder.com/300" },
+                { id: 3, name: "منتج 3", description: "وصف المنتج 3", image: "https://via.placeholder.com/300" }
+            ];
+
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                document.getElementById('product-image').src = product.image;
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-description').textContent = product.description;
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('product-details').style.display = 'block';
             }
+        }
+
+        // عرض صفحة سلة التسوق
+        function showCart() {
+            document.getElementById('cart-page').style.display = 'block';
+            document.querySelector('.container').style.display = 'none';
+        }
+
+        // عرض مودال تسجيل الدخول
+        function showLogin() {
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        // عرض مودال التسجيل
+        function showRegister() {
+            closeModal();
+            document.getElementById('register-modal').style.display = 'flex';
+        }
+
+        // إغلاق جميع المودالات
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+        }
+
+        // معالجة نماذج التسجيل وتسجيل الدخول
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            registerUser(email, password);
         });
 
-        function printForm() {
-            window.print();
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            loginUser(email, password);
+        });
+
+        // التدوير التلقائي للصور في السلايدر
+        let slideIndex = 0;
+        function showSlides() {
+            const slides = document.querySelectorAll('.slideshow img');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 5000);
         }
+        showSlides();
+
+        // إضافة المنتجات إلى الصفحة
+        const productsContainer = document.querySelector('.products');
+        const products = [
+            { id: 1, name: "منتج 1", description: "وصف المنتج 1", image: "https://via.placeholder.com/300" },
+            { id: 2, name: "منتج 2", description: "وصف المنتج 2", image: "https://via.placeholder.com/300" },
+            { id: 3, name: "منتج 3", description: "وصف المنتج 3", image: "https://via.placeholder.com/300" },
+            { id: 4, name: "منتج 4", description: "وصف المنتج 4", image: "https://via.placeholder.com/300" }
+        ];
+
+        products.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.className = 'product';
+            productElement.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <button onclick="showProductDetails(${product.id})">عرض التفاصيل</button>
+            `;
+            productsContainer.appendChild(productElement);
+        });
     </script>
 </body>
 </html>
