@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <style>
-        body {
+       body {
             font-family: Arial, sans-serif;
             direction: rtl;
             text-align: right;
@@ -443,6 +443,19 @@
     </div>
 
     <script>
+        // Firebase Configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
+            authDomain: "temu-yemen.firebaseapp.com",
+            projectId: "temu-yemen",
+            storageBucket: "temu-yemen.appspot.com",
+            messagingSenderId: "687344852319",
+            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
+            measurementId: "G-NLSSTZM62R"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slideshow img');
             let currentSlide = 0;
@@ -491,48 +504,52 @@
         function toggleCartDetails() {
             const cartDetails = document.getElementById('cart-details');
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartDetails.innerHTML = '<h3>سلة التسوق</h3>';
-            cart.forEach(productId => {
-                cartDetails.innerHTML += `<div class="cart-item">
-                    <img src="https://via.placeholder.com/50" alt="Product ${productId}">
-                    <p>منتج ${productId}</p>
-                    <button onclick="removeFromCart(${productId})">حذف</button>
-                </div>`;
-            });
-            cartDetails.innerHTML += `<div class="cart-total"><button class="btn">اتمام الشراء</button></div>`;
-            cartDetails.style.display = 'block';
+            cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
+                ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
+                <button onclick="clearCart()">إفراغ السلة</button>`;
+            cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
         }
 
-        function removeFromCart(productId) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart = cart.filter(id => id !== productId);
-            localStorage.setItem('cart', JSON.stringify(cart));
+        function clearCart() {
+            localStorage.removeItem('cart');
             updateCartCount();
             toggleCartDetails();
+            alert('تم إفراغ السلة');
         }
 
         function toggleAuthForm() {
-            document.getElementById('auth-form').classList.toggle('show');
+            const authForm = document.getElementById('auth-form');
+            authForm.style.display = authForm.style.display === 'block' ? 'none' : 'block';
         }
 
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            // هنا نضيف منطق تسجيل الدخول مع Firebase أو أي نظام تسجيل دخول آخر
-            // for demonstration, we'll just save the email to localStorage
-            localStorage.setItem('user', email);
-            document.getElementById('user-name').textContent = email;
-            toggleAuthForm();
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    localStorage.setItem('user', JSON.stringify(userCredential.user));
+                    document.getElementById('user-name').textContent = userCredential.user.email;
+                    toggleAuthForm();
+                })
+                .catch(error => {
+                    console.error('Login error:', error);
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
+                });
         }
 
         function loginWithGoogle() {
-            // هنا نضيف منطق تسجيل الدخول مع Google
-            const userEmail = 'user@example.com'; // سنقوم بمحاكاة تسجيل الدخول مع Google
-            localStorage.setItem('user', userEmail);
-            document.getElementById('user-name').textContent = userEmail;
-            toggleAuthForm();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(result => {
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    document.getElementById('user-name').textContent = result.user.displayName;
+                    toggleAuthForm();
+                })
+                .catch(error => {
+                    console.error('Google login error:', error);
+                    alert('خطأ في تسجيل الدخول باستخدام جوجل: ' + error.message);
+                });
         }
     </script>
-
 </body>
 </html>
