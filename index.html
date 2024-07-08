@@ -3,246 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temu Yemen</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>تيمو يمن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script defer src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
             direction: rtl;
             text-align: right;
+            margin: 0;
+            padding-bottom: 60px;
         }
-
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #FF5733;
-            color: #fff;
-            padding: 1rem 2rem;
-            font-size: 1.5rem;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
         .top-bar .logo {
             display: flex;
             align-items: center;
         }
-
         .top-bar .logo i {
-            margin-left: 1rem;
-            font-size: 2rem;
+            font-size: 28px;
+            color: #fff;
         }
-
+        .top-bar .logo span {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .top-bar .search-bar {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 20px;
+        }
+        .top-bar .search-bar input[type="text"] {
+            width: 100%;
+            max-width: 800px;
+            padding: 7px 20px;
+            border: none;
+            border-radius: 11px;
+            font-size: 20px;
+            background-color: #fff;
+            color: #FF5733;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .top-bar .search-bar input[type="text"]::placeholder {
+            color: #FF5733;
+        }
+        .top-bar .search-bar input[type="text"]:focus {
+            outline: none;
+        }
         .top-bar .icons {
             display: flex;
             align-items: center;
         }
-
         .top-bar .icons div {
-            margin-left: 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
+            margin-left: 20px;
         }
-
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            padding: 0 1rem;
-        }
-
-        .search-bar input {
-            width: 100%;
-            max-width: 600px;
-            padding: 1rem;
-            font-size: 1.2rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem 0 0 0.5rem;
-            outline: none;
-            background-color: #fff;
-            color: #FF5733;
-        }
-
-        .search-bar button {
-            padding: 1rem;
-            font-size: 1.2rem;
-            border: 1px solid #FF5733;
-            background-color: #FF5733;
+        .top-bar .icons i {
+            font-size: 24px;
             color: #fff;
-            border-radius: 0 0.5rem 0.5rem 0;
             cursor: pointer;
         }
-
+        .top-bar .cart-count {
+            position: relative;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 14px;
+            padding: 5px 8px;
+            border-radius: 50%;
+        }
         nav {
-            display: flex;
-            justify-content: space-around;
             background-color: #FF7043;
-            padding: 1rem 0;
-            color: #fff;
-            font-size: 1.2rem;
+            padding: 10px;
+            display: flex;
+            overflow-x: auto;
         }
-
         nav a {
             color: #fff;
             text-decoration: none;
-            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
         }
-
-        nav a:hover {
-            background-color: #FF5733;
+        nav a i {
+            margin-left: 5px;
         }
-
         .container {
-            padding: 2rem;
+            padding: 20px;
         }
-
+        .banner {
+            background-color: #FFC300;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
         .slideshow {
             position: relative;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 2rem;
+            max-width: 600px;
+            margin: 0 auto;
             overflow: hidden;
-            border-radius: 1rem;
         }
-
         .slideshow img {
             width: 100%;
             display: none;
-            border-radius: 1rem;
         }
-
         .slideshow img.active {
             display: block;
         }
-
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .products, .featured-products {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .product, .featured-product {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 5px;
+            margin: 6px;
+            flex: 1 1 calc(40% - 20px);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .product img, .featured-product img {
+            width: 100%;
+            height: auto;
+        }
         .carousel {
             display: flex;
             overflow-x: auto;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
-            gap: 1rem;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            gap: 10px;
             scroll-behavior: smooth;
         }
-
         .carousel img {
             flex: 0 0 auto;
-            width: 10rem;
-            height: 10rem;
-            margin: 0 0.5rem;
-            border-radius: 0.5rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 5px;
+            border-radius: 50%;
+            animation: slide 30s linear infinite;
         }
-
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        @keyframes slide {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
-
-        .product {
+        #product-details, #cart-details {
+            display: none;
             border: 1px solid #ddd;
-            border-radius: 1rem;
-            padding: 1rem;
-            margin: 0.5rem;
-            flex: 1 1 calc(48% - 1rem);
-            box-sizing: border-box;
-            cursor: pointer;
-            background-color: #fff;
-            transition: all 0.3s ease;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
         }
-
-        .product:hover {
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .product img {
-            width: 100%;
-            height: auto;
-            border-radius: 1rem;
-        }
-
-        .product-details-page {
-            display: none;
-            padding: 2rem;
-        }
-
-        .product-details {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .product-details img {
-            width: 100%;
-            max-width: 20rem;
-            height: auto;
-            border-radius: 1rem;
-        }
-
-        .product-details h3 {
-            font-size: 2rem;
-            margin: 0;
-            color: #FF5733;
-        }
-
-        .product-details p {
-            font-size: 1.5rem;
-        }
-
-        .cart-page {
-            display: none;
-            padding: 2rem;
-        }
-
-        .cart-page h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-
-        .cart-items {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
         .cart-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 1rem;
-            padding: 1rem;
-            background-color: #fff;
-            position: relative;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
         }
-
         .cart-item img {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 1rem;
-            margin-left: 2rem;
+            width: 50px;
+            height: auto;
         }
-
-        .cart-item h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            flex: 1;
-            color: #FF5733;
+        .cart-total, .cart-share {
+            text-align: center;
+            margin-top: 20px;
         }
-
-        .cart-item .remove-item {
-            background: none;
+        .btn {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #FF5733;
             border: none;
-            color: #FF5733;
-            font-size: 1.5rem;
+            border-radius: 5px;
             cursor: pointer;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+            text-decoration: none;
         }
-
+        .btn-google {
+            background-color: #db4437;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            padding: 10px 0;
+            width: 100%;
+            max-width: 200px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-google i {
+            margin-right: 10px;
+        }
+        .cart-share a:hover {
+            background-color: #FF7043;
+        }
+        .size-options button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .size-options button.active {
+            background-color: #FF5733;
+            color: #fff;
+        }
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -252,313 +243,177 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            height: 5rem;
+            height: 60px;
             box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
         }
-
         .bottom-nav a {
             color: #fff;
             text-decoration: none;
             text-align: center;
             flex: 1;
-            font-size: 1rem;
         }
-
         .bottom-nav a i {
             display: block;
-            font-size: 1.5rem;
+            font-size: 24px;
         }
-
         .bottom-nav a span {
             display: block;
-            font-size: 1rem;
+            font-size: 12px;
         }
-
-        .bottom-nav .wide-button {
-            flex: 3;
-            background-color: #FF7043;
-            border-radius: 0.5rem;
-            text-align: center;
-            padding: 0.5rem;
-            cursor: pointer;
-            font-size: 1.2rem;
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
-
-        .bottom-nav .wide-button span {
-            display: inline;
-            font-size: 1rem;
+        .auth-input {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
         }
-
-        @media (max-width: 768px) {
-            .top-bar {
-                font-size: 1.2rem;
-            }
-
-            .top-bar .logo i,
-            .top-bar .icons div {
-                font-size: 1.2rem;
-            }
-
-            .search-bar input,
-            .search-bar button {
-                font-size: 1rem;
-                padding: 0.8rem;
-            }
-
-            nav {
-                font-size: 1rem;
-            }
-
-            nav a {
-                padding: 0.8rem 1.5rem;
-            }
-
-            .carousel img {
-                width: 8rem;
-                height: 8rem;
-            }
-
-            .product {
-                flex: 1 1 calc(100% - 1rem);
-            }
-
-            .product-details img {
-                max-width: 15rem;
-            }
-
-            .cart-item img {
-                width: 4rem;
-                height: 4rem;
-            }
-
-            .cart-item h3 {
-                font-size: 1.2rem;
-            }
-
-            .cart-item .remove-item {
-                font-size: 1.2rem;
-            }
-
-            .bottom-nav {
-                height: 4rem;
-            }
-
-            .bottom-nav a i {
-                font-size: 1.2rem;
-            }
-
-            .bottom-nav .wide-button {
-                font-size: 1rem;
-            }
-        }
-
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 400px;
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            justify-content: center;
+        }
+        .modal.show {
+            display: block;
+        }
+        .modal-header, .modal-footer {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-
-        .modal-content {
-            background-color: #fff;
-            margin: auto;
-            padding: 2rem;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 1rem;
-            position: relative;
+        .modal-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
-
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 2rem;
-            font-weight: bold;
+        .modal-body {
+            padding: 10px 0;
+        }
+        .modal-close {
             cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-        }
-
-        .modal h2 {
-            margin-top: 0;
-            color: #FF5733;
-        }
-
-        .modal form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .modal form label {
-            color: #FF5733;
-        }
-
-        .modal form input {
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .modal form button {
-            padding: 1rem;
-            border: none;
-            background-color: #FF5733;
-            color: #fff;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .modal form p {
-            text-align: center;
-        }
-
-        .modal form p a {
-            color: #FF5733;
-            text-decoration: none;
-        }
-
-        .modal form p a:hover {
-            text-decoration: underline;
+            font-size: 20px;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-  <div class="top-bar">
+    <div class="top-bar">
         <div class="logo">
             <i class="fas fa-shopping-cart"></i>
-            Temu Yemen
+            <span>تيمو يمن</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="بحث...">
         </div>
         <div class="icons">
-            <div id="user-icon" onclick="showLogin()">
-                <i class="fas fa-user"></i>
+            <div>
+                <i class="fas fa-heart"></i>
             </div>
-            <div onclick="showCart()">
-                <i class="fas fa-shopping-cart"></i>
+            <div>
+                <i class="fas fa-shopping-cart" onclick="toggleCartDetails()"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+            <div>
+                <i class="fas fa-user" onclick="showAuthModal()"></i>
             </div>
         </div>
     </div>
 
-    <div class="search-bar">
-        <input type="text" placeholder="ابحث عن المنتجات...">
-        <button>ابحث</button>
-    </div>
-
-      <nav>
-        <a href="#">الصفحة الرئيسية</a>
-        <a href="#">المنتجات</a>
-        <a href="#">تواصل معنا</a>
-        <a href="#">عن الموقع</a>
+    <nav>
+        <a href="#" onclick="showSection('home')"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="#" onclick="showSection('products')"><i class="fas fa-th-large"></i> المنتجات</a>
+        <a href="#" onclick="showSection('featured')"><i class="fas fa-star"></i> المنتجات المميزة</a>
     </nav>
 
     <div class="container">
-        <div class="slideshow">
-            <img src="images/slide11.jpeg" class="active" alt="Slideshow Image 1">
-            <img src="images/slide13.jpeg" alt="Slideshow Image 2">
+        <div class="banner">
+            <h2>مرحبا بكم في متجر تيمو يمن</h2>
+            <p>أفضل المنتجات بأفضل الأسعار</p>
         </div>
 
-        <div class="carousel">
-            <img src="https://via.placeholder.com/200?text=Product+1" alt="Product 1">
-            <img src="https://via.placeholder.com/200?text=Product+2" alt="Product 2">
-            <img src="https://via.placeholder.com/200?text=Product+3" alt="Product 3">
-            <img src="https://via.placeholder.com/200?text=Product+4" alt="Product 4">
-            <img src="https://via.placeholder.com/200?text=Product+5" alt="Product 5">
-        </div>
-
-        <div class="products">
-            <div class="product" onclick="showProductDetails('1')">
-                <img src="https://via.placeholder.com/300x300?text=Product+1" alt="Product 1">
-                <h3>منتج 1</h3>
-                <p>وصف قصير للمنتج 1</p>
+        <div id="home" class="section active">
+            <div class="slideshow">
+                <img src="https://via.placeholder.com/600x400?text=Slide+1" class="active" alt="Slide 1">
+                <img src="https://via.placeholder.com/600x400?text=Slide+2" alt="Slide 2">
+                <img src="https://via.placeholder.com/600x400?text=Slide+3" alt="Slide 3">
             </div>
-            <div class="product" onclick="showProductDetails('2')">
-                <img src="https://via.placeholder.com/300x300?text=Product+2" alt="Product 2">
-                <h3>منتج 2</h3>
-                <p>وصف قصير للمنتج 2</p>
+        </div>
+
+        <div id="products" class="section">
+            <h2>المنتجات</h2>
+            <div class="products">
+                <!-- Placeholder for dynamically added products -->
+            </div>
+        </div>
+
+        <div id="featured" class="section">
+            <h2>المنتجات المميزة</h2>
+            <div class="featured-products">
+                <!-- Placeholder for dynamically added featured products -->
+            </div>
+        </div>
+
+        <div id="product-details">
+            <!-- Placeholder for dynamically added product details -->
+        </div>
+
+        <div id="cart-details">
+            <h2>سلة التسوق</h2>
+            <div id="cart-items">
+                <!-- Placeholder for dynamically added cart items -->
+            </div>
+            <div class="cart-total">
+                الإجمالي: <span id="cart-total">0</span> ر.ي
+            </div>
+            <div class="cart-share">
+                <a href="#" class="btn" onclick="shareCart()">مشاركة سلة التسوق</a>
+            </div>
+        </div>
+
+        <div id="auth-modal" class="modal">
+            <div class="modal-header">
+                <h2>تسجيل الدخول / إنشاء حساب</h2>
+                <span class="modal-close" onclick="hideAuthModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="auth-container" class="auth-container">
+                    <input id="auth-email" type="email" class="auth-input" placeholder="البريد الإلكتروني">
+                    <input id="auth-password" type="password" class="auth-input" placeholder="كلمة المرور">
+                    <button id="auth-login-btn" class="btn" onclick="login()">تسجيل الدخول</button>
+                    <button id="auth-register-btn" class="btn" onclick="register()">إنشاء حساب</button>
+                    <button id="auth-google-btn" class="btn-google" onclick="loginWithGoogle()">
+                        <i class="fab fa-google"></i> تسجيل الدخول باستخدام Google
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="bottom-nav">
-        <a href="#"><i class="fas fa-home"></i><span>الرئيسية</span></a>
-        <a href="#"><i class="fas fa-store"></i><span>المتجر</span></a>
-        <div class="wide-button"><span>أضف إلى السلة</span></div>
-        <a href="#"><i class="fas fa-tags"></i><span>العروض</span></a>
-        <a href="#"><i class="fas fa-user"></i><span>الحساب</span></a>
+        <a href="#" onclick="showSection('home')"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="#" onclick="showSection('products')"><i class="fas fa-th-large"></i><span>المنتجات</span></a>
+        <a href="#" onclick="showSection('featured')"><i class="fas fa-star"></i><span>المميزة</span></a>
+        <a href="#" onclick="toggleCartDetails()"><i class="fas fa-shopping-cart"></i><span>السلة</span></a>
     </div>
 
-    <div id="product-details" class="product-details-page">
-        <div class="product-details">
-            <img id="product-image" src="" alt="Product Image">
-            <h3 id="product-name"></h3>
-            <p id="product-description"></p>
-            <button onclick="addToCart()">أضف إلى السلة</button>
-        </div>
-    </div>
-
-    <div id="cart-page" class="cart-page">
-        <h2>سلة المشتريات</h2>
-        <div class="cart-items" id="cart-items"></div>
-    </div>
-
-   <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>تسجيل الدخول</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="email">البريد الإلكتروني</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">كلمة المرور</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit">تسجيل الدخول</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>إنشاء حساب</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-email">البريد الإلكتروني</label>
-                    <input type="email" id="register-email" name="register-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">كلمة المرور</label>
-                    <input type="password" id="register-password" name="register-password" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit">إنشاء حساب</button>
-                </div>
-            </form>
-        </div>
-    </div>
-     <script>
-        // إعدادات Firebase
+    <script>
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -569,121 +424,149 @@
             measurementId: "G-NLSSTZM62R"
         };
 
-        // تهيئة Firebase
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-        // تسجيل مستخدم جديد
-        function registerUser(email, password) {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("User registered:", userCredential.user);
-                    closeModal();
+        let cart = [];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function showAuthModal() {
+            document.getElementById('auth-modal').classList.add('show');
+        }
+
+        function hideAuthModal() {
+            document.getElementById('auth-modal').classList.remove('show');
+        }
+
+        function login() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    hideAuthModal();
+                    alert('تم تسجيل الدخول بنجاح');
                 })
-                .catch((error) => {
-                    console.error("Error registering user:", error.message);
+                .catch(error => {
+                    alert('خطأ في تسجيل الدخول: ' + error.message);
                 });
         }
 
-        // تسجيل الدخول
-        function loginUser(email, password) {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("User logged in:", userCredential.user);
-                    closeModal();
+        function register() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    hideAuthModal();
+                    alert('تم إنشاء الحساب بنجاح');
                 })
-                .catch((error) => {
-                    console.error("Error logging in:", error.message);
+                .catch(error => {
+                    alert('خطأ في إنشاء الحساب: ' + error.message);
                 });
         }
 
-        // عرض تفاصيل المنتج
-        function showProductDetails(productId) {
-            // افترض وجود قائمة منتجات جاهزة
-            const products = [
-                { id: 1, name: "منتج 1", description: "وصف المنتج 1", image: "https://via.placeholder.com/300" },
-                { id: 2, name: "منتج 2", description: "وصف المنتج 2", image: "https://via.placeholder.com/300" },
-                { id: 3, name: "منتج 3", description: "وصف المنتج 3", image: "https://via.placeholder.com/300" }
-            ];
+        function loginWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    hideAuthModal();
+                    alert('تم تسجيل الدخول باستخدام Google بنجاح');
+                })
+                .catch(error => {
+                    alert('خطأ في تسجيل الدخول باستخدام Google: ' + error.message);
+                });
+        }
 
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                document.getElementById('product-image').src = product.image;
-                document.getElementById('product-name').textContent = product.name;
-                document.getElementById('product-description').textContent = product.description;
-                document.querySelector('.container').style.display = 'none';
-                document.getElementById('product-details').style.display = 'block';
+        function toggleCartDetails() {
+            const cartDetails = document.getElementById('cart-details');
+            cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function addToCart(product) {
+            const existingProduct = cart.find(item => item.id === product.id);
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                product.quantity = 1;
+                cart.push(product);
             }
+            updateCart();
         }
 
-        // عرض صفحة سلة التسوق
-        function showCart() {
-            document.getElementById('cart-page').style.display = 'block';
-            document.querySelector('.container').style.display = 'none';
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach(product => {
+                total += product.price * product.quantity;
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <span>${product.name}</span>
+                    <span>${product.price} ر.ي × ${product.quantity}</span>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+            document.getElementById('cart-total').innerText = total;
+            document.getElementById('cart-count').innerText = cart.length;
         }
 
-        // عرض مودال تسجيل الدخول
-        function showLogin() {
-            document.getElementById('login-modal').style.display = 'flex';
+        function shareCart() {
+            let cartText = 'محتويات سلة التسوق:\n';
+            cart.forEach(product => {
+                cartText += `${product.name} - ${product.price} ر.ي × ${product.quantity}\n`;
+            });
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(cartText)}`;
+            window.open(whatsappUrl, '_blank');
         }
 
-        // عرض مودال التسجيل
-        function showRegister() {
-            closeModal();
-            document.getElementById('register-modal').style.display = 'flex';
+        function loadProducts() {
+            db.collection('products').get().then(querySnapshot => {
+                const productsContainer = document.querySelector('.products');
+                const featuredProductsContainer = document.querySelector('.featured-products');
+                querySnapshot.forEach(doc => {
+                    const product = doc.data();
+                    product.id = doc.id;
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product';
+                    productElement.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <span>${product.name}</span>
+                        <span>${product.price} ر.ي</span>
+                        <button onclick='addToCart(${JSON.stringify(product)})'>إضافة إلى السلة</button>
+                    `;
+                    productsContainer.appendChild(productElement);
+                    if (product.featured) {
+                        featuredProductsContainer.appendChild(productElement.cloneNode(true));
+                    }
+                });
+            });
         }
 
-        // إغلاق جميع المودالات
-        function closeModal() {
-            document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
-        }
+        document.addEventListener('DOMContentLoaded', loadProducts);
 
-        // معالجة نماذج التسجيل وتسجيل الدخول
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            registerUser(email, password);
-        });
-
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            loginUser(email, password);
-        });
-
-        // التدوير التلقائي للصور في السلايدر
         let slideIndex = 0;
         function showSlides() {
             const slides = document.querySelectorAll('.slideshow img');
             slides.forEach(slide => slide.classList.remove('active'));
             slideIndex++;
-            if (slideIndex > slides.length) slideIndex = 1;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
             slides[slideIndex - 1].classList.add('active');
-            setTimeout(showSlides, 5000);
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
         }
+
         showSlides();
-
-        // إضافة المنتجات إلى الصفحة
-        const productsContainer = document.querySelector('.products');
-        const products = [
-            { id: 1, name: "منتج 1", description: "وصف المنتج 1", image: "https://via.placeholder.com/300" },
-            { id: 2, name: "منتج 2", description: "وصف المنتج 2", image: "https://via.placeholder.com/300" },
-            { id: 3, name: "منتج 3", description: "وصف المنتج 3", image: "https://via.placeholder.com/300" },
-            { id: 4, name: "منتج 4", description: "وصف المنتج 4", image: "https://via.placeholder.com/300" }
-        ];
-
-        products.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.className = 'product';
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>${product.description}</p>
-                <button onclick="showProductDetails(${product.id})">عرض التفاصيل</button>
-            `;
-            productsContainer.appendChild(productElement);
-        });
     </script>
+
 </body>
 </html>
