@@ -434,6 +434,7 @@
 
         <div id="product-details"></div>
         <div id="cart-details"></div>
+        <div id="user-profile" style="display: none;"></div>
     </div>
 
     <div class="bottom-nav">
@@ -461,7 +462,7 @@
 
     <div id="auth-form" class="modal">
         <div class="modal-content">
-            <div class="close-btn" onclick="toggleAuthForm()">&times;</div>
+            <span class="close-btn" onclick="toggleAuthForm()">&times;</span>
             <h2>تسجيل الدخول</h2>
             <input type="email" id="email" placeholder="البريد الإلكتروني">
             <input type="password" id="password" placeholder="كلمة المرور">
@@ -499,6 +500,7 @@
                 if (user) {
                     document.getElementById('user-name').textContent = user.email;
                     loadCart(user.uid);
+                    displayUserProfile(user);
                 } else {
                     document.getElementById('user-name').textContent = '';
                 }
@@ -610,6 +612,7 @@
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(userCredential => {
                     toggleAuthForm();
+                    displayUserProfile(userCredential.user);
                 })
                 .catch(error => {
                     console.error('Login error:', error);
@@ -622,6 +625,7 @@
             firebase.auth().signInWithPopup(provider)
                 .then(result => {
                     toggleAuthForm();
+                    displayUserProfile(result.user);
                 })
                 .catch(error => {
                     console.error('Google login error:', error);
@@ -652,6 +656,14 @@
             }).catch(e => {
                 console.error('Error loading cart:', e);
             });
+        }
+
+        function displayUserProfile(user) {
+            const userProfile = document.getElementById('user-profile');
+            userProfile.innerHTML = `<h3>ملف المستخدم</h3>
+                <p>البريد الإلكتروني: ${user.email}</p>
+                <button onclick="loadCart('${user.uid}')">عرض السلة</button>`;
+            userProfile.style.display = 'block';
         }
     </script>
 </body>
