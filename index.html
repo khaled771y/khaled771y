@@ -358,6 +358,19 @@
                 <img src="https://via.placeholder.com/100" alt="Product 3">
                 <img src="https://via.placeholder.com/100" alt="Product 4">
             </div>
+            <div class="offers">
+                <h3>عروض مميزة</h3>
+                <div class="products">
+                    <div class="product" onclick="showProductDetails(5)">
+                        <img src="https://via.placeholder.com/150" alt="Offer 1">
+                        <p>عرض 1</p>
+                    </div>
+                    <div class="product" onclick="showProductDetails(6)">
+                        <img src="https://via.placeholder.com/150" alt="Offer 2">
+                        <p>عرض 2</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="products" class="section">
@@ -371,26 +384,47 @@
                     <img src="https://via.placeholder.com/150" alt="Product 2">
                     <p>منتج 2</p>
                 </div>
+                <div class="product" onclick="showProductDetails(3)">
+                    <img src="https://via.placeholder.com/150" alt="Product 3">
+                    <p>منتج 3</p>
+                </div>
+                <div class="product" onclick="showProductDetails(4)">
+                    <img src="https://via.placeholder.com/150" alt="Product 4">
+                    <p>منتج 4</p>
+                </div>
             </div>
         </div>
 
         <div id="featured" class="section">
             <h2>منتجات مميزة</h2>
             <div class="featured-products">
-                <div class="featured-product" onclick="showProductDetails(3)">
+                <div class="featured-product" onclick="showProductDetails(7)">
                     <img src="https://via.placeholder.com/150" alt="Featured Product 1">
                     <p>منتج مميز 1</p>
                 </div>
-                <div class="featured-product" onclick="showProductDetails(4)">
+                <div class="featured-product" onclick="showProductDetails(8)">
                     <img src="https://via.placeholder.com/150" alt="Featured Product 2">
                     <p>منتج مميز 2</p>
+                </div>
+                <div class="featured-product" onclick="showProductDetails(9)">
+                    <img src="https://via.placeholder.com/150" alt="Featured Product 3">
+                    <p>منتج مميز 3</p>
                 </div>
             </div>
         </div>
 
         <div id="offers" class="section">
             <h2>العروض</h2>
-            <p>لا توجد عروض متاحة حاليا.</p>
+            <div class="products">
+                <div class="product" onclick="showProductDetails(10)">
+                    <img src="https://via.placeholder.com/150" alt="Offer Product 1">
+                    <p>منتج عرض 1</p>
+                </div>
+                <div class="product" onclick="showProductDetails(11)">
+                    <img src="https://via.placeholder.com/150" alt="Offer Product 2">
+                    <p>منتج عرض 2</p>
+                </div>
+            </div>
         </div>
 
         <div id="categories" class="section">
@@ -427,24 +461,17 @@
 
     <div id="auth-form" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-btn" onclick="toggleAuthForm()">×</span>
-                <h2>تسجيل الدخول</h2>
-            </div>
-            <div class="auth-container">
-                <input id="email" type="email" class="auth-input" placeholder="البريد الإلكتروني">
-                <input id="password" type="password" class="auth-input" placeholder="كلمة المرور">
-                <button class="btn" onclick="login()">تسجيل الدخول</button>
-                <button class="btn-google" onclick="loginWithGoogle()">
-                    <i class="fab fa-google"></i>
-                    تسجيل الدخول باستخدام جوجل
-                </button>
-            </div>
+            <div class="close-btn" onclick="toggleAuthForm()">&times;</div>
+            <h2>تسجيل الدخول</h2>
+            <input type="email" id="email" placeholder="البريد الإلكتروني">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <button onclick="login()">تسجيل الدخول</button>
+            <button onclick="loginWithGoogle()">تسجيل الدخول باستخدام جوجل</button>
         </div>
     </div>
 
     <script>
-        // Firebase Configuration
+        // Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -456,36 +483,26 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.slideshow img');
-            let currentSlide = 0;
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 3000);
+        // Display login modal after 1 minute
+        setTimeout(toggleAuthForm, 60000);
 
+        document.addEventListener('DOMContentLoaded', function () {
             checkAuthState();
-            setTimeout(() => {
-                if (!localStorage.getItem('user')) {
-                    toggleAuthForm();
-                }
-            }, 60000);
-
             updateCartCount();
+            initializeSlideshow();
         });
 
         function checkAuthState() {
-            try {
-                const user = JSON.parse(localStorage.getItem('user'));
+            firebase.auth().onAuthStateChanged(user => {
                 if (user) {
-                    document.getElementById('user-name').textContent = user.email || user.displayName;
+                    document.getElementById('user-name').textContent = user.email;
+                    loadCart(user.uid);
+                } else {
+                    document.getElementById('user-name').textContent = '';
                 }
-            } catch (e) {
-                console.error('Error parsing user data:', e);
-                localStorage.removeItem('user');
-            }
+            });
         }
 
         function showSection(sectionId) {
@@ -504,45 +521,82 @@
         }
 
         function addToCart(productId) {
-            try {
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                cart.push(productId);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartCount();
-                alert('تم إضافة المنتج إلى السلة');
-            } catch (e) {
-                console.error('Error updating cart:', e);
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const cartRef = db.collection('carts').doc(user.uid);
+                cartRef.get().then(doc => {
+                    if (doc.exists) {
+                        const cart = doc.data().items || [];
+                        cart.push(productId);
+                        cartRef.set({ items: cart });
+                    } else {
+                        cartRef.set({ items: [productId] });
+                    }
+                    updateCartCount();
+                    alert('تم إضافة المنتج إلى السلة');
+                }).catch(e => {
+                    console.error('Error updating cart:', e);
+                });
+            } else {
+                alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة');
             }
         }
 
         function updateCartCount() {
-            try {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                document.getElementById('cart-count').textContent = cart.length;
-            } catch (e) {
-                console.error('Error updating cart count:', e);
+            const user = firebase.auth().currentUser;
+            if (user) {
+                db.collection('carts').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const cart = doc.data().items || [];
+                        document.getElementById('cart-count').textContent = cart.length;
+                    } else {
+                        document.getElementById('cart-count').textContent = 0;
+                    }
+                }).catch(e => {
+                    console.error('Error updating cart count:', e);
+                    document.getElementById('cart-count').textContent = 0;
+                });
+            } else {
                 document.getElementById('cart-count').textContent = 0;
             }
         }
 
         function toggleCartDetails() {
             const cartDetails = document.getElementById('cart-details');
-            try {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
-                    ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
-                    <button onclick="clearCart()">إفراغ السلة</button>`;
-                cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
-            } catch (e) {
-                console.error('Error displaying cart details:', e);
+            const user = firebase.auth().currentUser;
+            if (user) {
+                db.collection('carts').doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const cart = doc.data().items || [];
+                        cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
+                            ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
+                            <button onclick="clearCart()">إفراغ السلة</button>`;
+                        cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
+                    } else {
+                        cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>السلة فارغة</p>';
+                    }
+                }).catch(e => {
+                    console.error('Error displaying cart details:', e);
+                });
+            } else {
+                cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>يرجى تسجيل الدخول لعرض السلة</p>';
+                cartDetails.style.display = 'block';
             }
         }
 
         function clearCart() {
-            localStorage.removeItem('cart');
-            updateCartCount();
-            toggleCartDetails();
-            alert('تم إفراغ السلة');
+            const user = firebase.auth().currentUser;
+            if (user) {
+                db.collection('carts').doc(user.uid).set({ items: [] }).then(() => {
+                    updateCartCount();
+                    toggleCartDetails();
+                    alert('تم إفراغ السلة');
+                }).catch(e => {
+                    console.error('Error clearing cart:', e);
+                });
+            } else {
+                alert('يرجى تسجيل الدخول لإفراغ السلة');
+            }
         }
 
         function toggleAuthForm() {
@@ -555,8 +609,6 @@
             const password = document.getElementById('password').value;
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                    localStorage.setItem('user', JSON.stringify(userCredential.user));
-                    document.getElementById('user-name').textContent = userCredential.user.email;
                     toggleAuthForm();
                 })
                 .catch(error => {
@@ -569,14 +621,37 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(provider)
                 .then(result => {
-                    localStorage.setItem('user', JSON.stringify(result.user));
-                    document.getElementById('user-name').textContent = result.user.displayName;
                     toggleAuthForm();
                 })
                 .catch(error => {
                     console.error('Google login error:', error);
                     alert('خطأ في تسجيل الدخول باستخدام جوجل: ' + error.message);
                 });
+        }
+
+        function initializeSlideshow() {
+            let slideIndex = 0;
+            const slides = document.querySelectorAll('.slideshow img');
+            setInterval(() => {
+                slides[slideIndex].classList.remove('active');
+                slideIndex = (slideIndex + 1) % slides.length;
+                slides[slideIndex].classList.add('active');
+            }, 3000);
+        }
+
+        function loadCart(uid) {
+            db.collection('carts').doc(uid).get().then(doc => {
+                if (doc.exists) {
+                    const cart = doc.data().items || [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                } else {
+                    localStorage.setItem('cart', JSON.stringify([]));
+                    updateCartCount();
+                }
+            }).catch(e => {
+                console.error('Error loading cart:', e);
+            });
         }
     </script>
 </body>
