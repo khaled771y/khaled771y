@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <style>
-       body {
+        body {
             font-family: Arial, sans-serif;
             direction: rtl;
             text-align: right;
@@ -304,8 +304,7 @@
             border-top: 1px solid #ddd;
             padding-top: 10px;
         }
-        .close-btn {
-            background: none;
+        .close-btn            background: none;
             border: none;
             font-size: 18px;
             cursor: pointer;
@@ -427,18 +426,20 @@
     </div>
 
     <div id="auth-form" class="modal">
-        <div class="modal-header">
-            <h2>تسجيل الدخول</h2>
-            <button class="close-btn" onclick="toggleAuthForm()">×</button>
-        </div>
-        <div class="auth-container">
-            <input id="email" type="email" class="auth-input" placeholder="البريد الإلكتروني">
-            <input id="password" type="password" class="auth-input" placeholder="كلمة المرور">
-            <button class="btn" onclick="login()">تسجيل الدخول</button>
-            <button class="btn-google" onclick="loginWithGoogle()">
-                <i class="fab fa-google"></i>
-                تسجيل الدخول باستخدام جوجل
-            </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="toggleAuthForm()">×</span>
+                <h2>تسجيل الدخول</h2>
+            </div>
+            <div class="auth-container">
+                <input id="email" type="email" class="auth-input" placeholder="البريد الإلكتروني">
+                <input id="password" type="password" class="auth-input" placeholder="كلمة المرور">
+                <button class="btn" onclick="login()">تسجيل الدخول</button>
+                <button class="btn-google" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    تسجيل الدخول باستخدام جوجل
+                </button>
+            </div>
         </div>
     </div>
 
@@ -465,6 +466,7 @@
                 slides[currentSlide].classList.add('active');
             }, 3000);
 
+            checkAuthState();
             setTimeout(() => {
                 if (!localStorage.getItem('user')) {
                     toggleAuthForm();
@@ -473,6 +475,18 @@
 
             updateCartCount();
         });
+
+        function checkAuthState() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user) {
+                    document.getElementById('user-name').textContent = user.email || user.displayName;
+                }
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                localStorage.removeItem('user');
+            }
+        }
 
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => {
@@ -484,30 +498,44 @@
         function showProductDetails(productId) {
             const productDetails = document.getElementById('product-details');
             productDetails.innerHTML = `<h3>تفاصيل المنتج ${productId}</h3>
-                <button onclick="addToCart(${productId})">أضف إلى السلة</button>`;
+                <p>وصف مفصل للمنتج ${productId}</p>
+                <button onclick="addToCart(${productId})">إضافة إلى السلة</button>`;
             productDetails.style.display = 'block';
         }
 
         function addToCart(productId) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push(productId);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            alert('تم إضافة المنتج إلى السلة');
+            try {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(productId);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                alert('تم إضافة المنتج إلى السلة');
+            } catch (e) {
+                console.error('Error updating cart:', e);
+            }
         }
 
         function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cart-count').textContent = cart.length;
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                document.getElementById('cart-count').textContent = cart.length;
+            } catch (e) {
+                console.error('Error updating cart count:', e);
+                document.getElementById('cart-count').textContent = 0;
+            }
         }
 
         function toggleCartDetails() {
             const cartDetails = document.getElementById('cart-details');
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
-                ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
-                <button onclick="clearCart()">إفراغ السلة</button>`;
-            cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
+                    ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
+                    <button onclick="clearCart()">إفراغ السلة</button>`;
+                cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
+            } catch (e) {
+                console.error('Error displaying cart details:', e);
+            }
         }
 
         function clearCart() {
