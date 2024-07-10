@@ -472,6 +472,7 @@
     </div>
 
     <script>
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
@@ -482,10 +483,10 @@
             measurementId: "G-NLSSTZM62R"
         };
 
-        firebase.initializeApp(firebaseConfig);
-
-        const auth = firebase.auth();
-        const database = firebase.database();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
 
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slideshow img');
@@ -496,7 +497,7 @@
                 slides[currentSlide].classList.add('active');
             }, 3000);
 
-            auth.onAuthStateChanged(user => {
+            onAuthStateChanged(auth, user => {
                 if (user) {
                     document.getElementById('user-name').textContent = user.email;
                     loadCart(user.uid);
@@ -528,64 +529,60 @@
             productDetails.style.display = 'block';
         }
 
-        function addToCart(productId) {
+        async function addToCart(productId) {
             const user = auth.currentUser;
             if (user) {
-                const cartRef = database.ref('carts/' + user.uid);
-                cartRef.push(productId).then(() => {
-                    updateCartCount();
-                    alert('تم إضافة المنتج إلى السلة');
-                });
+                const cartRef = ref(database, 'carts/' + user.uid);
+                await push(cartRef, productId);
+                updateCartCount();
+                alert('تم إضافة المنتج إلى السلة');
             } else {
                 alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة');
             }
         }
 
-        function updateCartCount() {
+        async function updateCartCount() {
             const user = auth.currentUser;
             if (user) {
-                const cartRef = database.ref('carts/' + user.uid);
-                cartRef.once('value').then(snapshot => {
-                    const cart = snapshot.val() || [];
-                    document.getElementById('cart-count').textContent = Object.keys(cart).length;
-                });
+                const cartRef = ref(database, 'carts/' + user.uid);
+                const snapshot = await get(cartRef);
+                const cart = snapshot.val() || [];
+                document.getElementById('cart-count').textContent = Object.keys(cart).length;
             } else {
                 document.getElementById('cart-count').textContent = '0';
             }
         }
 
-        function toggleCartDetails() {
+        async function toggleCartDetails() {
             const user = auth.currentUser;
             if (user) {
                 const cartDetails = document.getElementById('cart-details');
-                const cartRef = database.ref('carts/' + user.uid);
-                cartRef.once('value').then(snapshot => {
-                    const cart = snapshot.val() || [];
-                    cartDetails.innerHTML = '<h3>سلة التسوق</h3>';
-                    Object.keys(cart).forEach(key => {
-                        const productId = cart[key];
-                        cartDetails.innerHTML += `<div class="cart-item">
-                            <img src="https://via.placeholder.com/50" alt="Product ${productId}">
-                            <p>منتج ${productId}</p>
-                            <button onclick="removeFromCart('${key}')">حذف</button>
-                        </div>`;
-                    });
-                    cartDetails.innerHTML += `<div class="cart-total"><button class="btn">اتمام الشراء</button></div>`;
-                    cartDetails.style.display = 'block';
+                const cartRef = ref(database, 'carts/' + user.uid);
+                const snapshot = await get(cartRef);
+                const cart = snapshot.val() || [];
+                cartDetails.innerHTML = '<h3>سلة التسوق</h3>';
+                Object.keys(cart).forEach(key => {
+                    const productId = cart[key];
+                    cartDetails.innerHTML += `<div class="cart-item">
+                        <img src="https://via.placeholder.com/50" alt="Product ${productId}">
+                        <p>منتج ${productId}</p>
+                        <button onclick="removeFromCart('${key}')">حذف</button>
+                    </div>`;
                 });
+                cartDetails.innerHTML += `<div class="cart-total"><button class="btn">اتمام الشراء</button></div>`;
+                cartDetails.style.display = 'block';
             } else {
                 alert('يرجى تسجيل الدخول لعرض السلة');
             }
         }
 
-        function removeFromCart(cartItemId) {
+        async function removeFromCart(cartItemId) {
             const user = auth.currentUser;
             if (user) {
-                const cartRef = database.ref('carts/' + user.uid + '/' + cartItemId);
-                cartRef.remove().then(() => {
-                    updateCartCount();
-                    toggleCartDetails();
-                });
+                const cartItemRef = ref(database, 'carts/' + user.uid + '/' + cartItemId);
+                await remove(cartItemRef);
+                updateCartCount();
+                toggleCartDetails();
             }
         }
 
@@ -596,7 +593,7 @@
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, password).then(() => {
+            signInWithEmailAndPassword(auth, email, password).then(() => {
                 toggleAuthForm();
             }).catch(error => {
                 alert('فشل تسجيل الدخول: ' + error.message);
@@ -604,20 +601,19 @@
         }
 
         function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then(result => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider).then(result => {
                 toggleAuthForm();
             }).catch(error => {
                 alert('فشل تسجيل الدخول: ' + error.message);
             });
         }
 
-        function loadCart(userId) {
-            const cartRef = database.ref('carts/' + userId);
-            cartRef.once('value').then(snapshot => {
-                const cart = snapshot.val() || [];
-                document.getElementById('cart-count').textContent = Object.keys(cart).length;
-            });
+        async function loadCart(userId) {
+            const cartRef = ref(database, 'carts/' + userId);
+            const snapshot = await get(cartRef);
+            const cart = snapshot.val() || [];
+            document.getElementById('cart-count').textContent = Object.keys(cart).length;
         }
     </script>
 
