@@ -742,8 +742,8 @@ function loadCart(uid) {
 }
 
 function displayUserProfile(user) {
-    const userProfile = document.getElementById('user-profile');
-    userProfile.innerHTML = `<h3>ملف المستخدم</h3>
+    const userProfile = document.getElementById('user');
+    Profile.innerHTML = `<h3>ملف المستخدم</h3>
         <p>البريد الإلكتروني: ${user}</p>
         <button onclick="loadCart('${user.uid}')">عرض السلة</button>`;
     userProfile.style.display = 'block';
