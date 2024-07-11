@@ -277,43 +277,83 @@
         .modal {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 400px;
+            z-index: 1;
+            left: 0;
+            top: 0;
             width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
         }
-        .modal.show {
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .carousel, .products, .featured-products {
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .carousel img, .products .product img, .featured-products .featured-product img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+        }
+
+        .product, .featured-product {
+            margin: 10px;
+        }
+
+        .user-profile {
+            display: none;
+        }
+
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .notification.show {
             display: block;
         }
-        .modal-header, .modal-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        .modal-footer {
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-        }
-        .close-btn            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
+
+        .notification p {
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
+     <div class="top-bar">
         <div class="logo">
             <i class="fas fa-star"></i><span>تيمو يمن</span>
         </div>
@@ -323,6 +363,7 @@
         <div class="icons">
             <div id="login-container">
                 <i class="fas fa-sign-in-alt" id="login-icon" onclick="toggleAuthForm()"></i>
+                <i class="fas fa-user" id="user-icon" onclick="showUserProfile()" style="display: none;"></i>
                 <span id="user-name"></span>
             </div>
             <div>
@@ -434,7 +475,7 @@
 
         <div id="product-details"></div>
         <div id="cart-details"></div>
-        <div id="user-profile" style="display: none;"></div>
+        <div id="user-profile" class="user-profile"></div>
     </div>
 
     <div class="bottom-nav">
@@ -471,10 +512,30 @@
         </div>
     </div>
 
+    <div class="notification" id="greeting-notification">
+        <p id="greeting-message"></p>
+    </div>
+
+    <script src="scripts.js"></script>
+    
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-form" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleRegisterForm()">&times;</span>
+            <h2>إنشاء حساب</h2>
+            <input type="email" id="register-email" placeholder="البريد الإلكتروني">
+            <input type="password" id="register-password" placeholder="كلمة المرور">
+            <button onclick="register()">إنشاء حساب</button>
+        </div>
+    </div>
+
     <script>
         // Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
+var firebaseConfig = {
+    apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
             authDomain: "temu-yemen.firebaseapp.com",
             projectId: "temu-yemen",
             storageBucket: "temu-yemen.appspot.com",
@@ -482,189 +543,221 @@
             appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
             measurementId: "G-NLSSTZM62R"
         };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-        // Display login modal after 1 minute
-        setTimeout(toggleAuthForm, 60000);
+// Display login modal after 1 minute
+setTimeout(toggleAuthForm, 60000);
 
-        document.addEventListener('DOMContentLoaded', function () {
-            checkAuthState();
-            updateCartCount();
-            initializeSlideshow();
-        });
+document.addEventListener('DOMContentLoaded', function () {
+    checkAuthState();
+    updateCartCount();
+    initializeSlideshow();
+});
 
-        function checkAuthState() {
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('user-name').textContent = user.email;
-                    loadCart(user.uid);
-                    displayUserProfile(user);
-                } else {
-                    document.getElementById('user-name').textContent = '';
-                }
-            });
+function checkAuthState() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            document.getElementById('login-icon').style.display = 'none';
+            document.getElementById('user-icon').style.display = 'inline';
+            document.getElementById('user-name').textContent = user.email;
+            loadCart(user.uid);
+            showGreetingNotification(user.email);
+        } else {
+            document.getElementById('login-icon').style.display = 'inline';
+            document.getElementById('user-icon').style.display = 'none';
+            document.getElementById('user-name').textContent = '';
         }
+    });
+}
 
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        }
+function showGreetingNotification(email) {
+    const greetingMessage = document.getElementById('greeting-message');
+    const hours = new Date().getHours();
+    let greeting;
+    if (hours < 12) {
+        greeting = `صباح الخير يا ${email}`;
+    } else {
+        greeting = `مساء الخير يا ${email}`;
+    }
+    greetingMessage.textContent = greeting;
 
-        function showProductDetails(productId) {
-            const productDetails = document.getElementById('product-details');
-            productDetails.innerHTML = `<h3>تفاصيل المنتج ${productId}</h3>
-                <p>وصف مفصل للمنتج ${productId}</p>
-                <button onclick="addToCart(${productId})">إضافة إلى السلة</button>`;
-            productDetails.style.display = 'block';
-        }
+    const notification = document.getElementById('greeting-notification');
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 5000);
+}
 
-        function addToCart(productId) {
-            const user = firebase.auth().currentUser;
-            if (user) {
-                const cartRef = db.collection('carts').doc(user.uid);
-                cartRef.get().then(doc => {
-                    if (doc.exists) {
-                        const cart = doc.data().items || [];
-                        cart.push(productId);
-                        cartRef.set({ items: cart });
-                    } else {
-                        cartRef.set({ items: [productId] });
-                    }
-                    updateCartCount();
-                    alert('تم إضافة المنتج إلى السلة');
-                }).catch(e => {
-                    console.error('Error updating cart:', e);
-                });
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+}
+
+function showProductDetails(productId) {
+    const productDetails = document.getElementById('product-details');
+    productDetails.innerHTML = `<h3>تفاصيل المنتج ${productId}</h3>
+        <p>وصف مفصل للمنتج ${productId}</p>
+        <button onclick="addToCart(${productId})">إضافة إلى السلة</button>`;
+    productDetails.style.display = 'block';
+}
+
+function addToCart(productId) {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const cartRef = db.collection('carts').doc(user.uid);
+        cartRef.get().then(doc => {
+            if (doc.exists) {
+                const cart = doc.data().items || [];
+                cart.push(productId);
+                cartRef.set({ items: cart });
             } else {
-                alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة');
+                cartRef.set({ items: [productId] });
             }
-        }
+            updateCartCount();
+            alert('تم إضافة المنتج إلى السلة');
+        }).catch(e => {
+            console.error('Error updating cart:', e);
+        });
+    } else {
+        alert('يرجى تسجيل الدخول لإضافة منتجات إلى السلة');
+    }
+}
 
-        function updateCartCount() {
-            const user = firebase.auth().currentUser;
-            if (user) {
-                db.collection('carts').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        const cart = doc.data().items || [];
-                        document.getElementById('cart-count').textContent = cart.length;
-                    } else {
-                        document.getElementById('cart-count').textContent = 0;
-                    }
-                }).catch(e => {
-                    console.error('Error updating cart count:', e);
-                    document.getElementById('cart-count').textContent = 0;
-                });
+function updateCartCount() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        db.collection('carts').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const cart = doc.data().items || [];
+                document.getElementById('cart-count').textContent = cart.length;
             } else {
                 document.getElementById('cart-count').textContent = 0;
             }
-        }
+        }).catch(e => {
+            console.error('Error updating cart count:', e);
+            document.getElementById('cart-count').textContent = 0;
+        });
+    } else {
+        document.getElementById('cart-count').textContent = 0;
+    }
+}
 
-        function toggleCartDetails() {
-            const cartDetails = document.getElementById('cart-details');
-            const user = firebase.auth().currentUser;
-            if (user) {
-                db.collection('carts').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        const cart = doc.data().items || [];
-                        cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
-                            ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
-                            <button onclick="clearCart()">إفراغ السلة</button>`;
-                        cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
-                    } else {
-                        cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>السلة فارغة</p>';
-                    }
-                }).catch(e => {
-                    console.error('Error displaying cart details:', e);
-                });
+function toggleCartDetails() {
+    const cartDetails = document.getElementById('cart-details');
+    const user = firebase.auth().currentUser;
+    if (user) {
+        db.collection('carts').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const cart = doc.data().items || [];
+                cartDetails.innerHTML = `<h3>تفاصيل السلة</h3>
+                    ${cart.map(id => `<p>منتج ${id}</p>`).join('')}
+                    <button onclick="clearCart()">إفراغ السلة</button>`;
+                cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
             } else {
-                cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>يرجى تسجيل الدخول لعرض السلة</p>';
-                cartDetails.style.display = 'block';
+                cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>السلة فارغة</p>';
             }
-        }
+        }).catch(e => {
+            console.error('Error displaying cart details:', e);
+        });
+    } else {
+        cartDetails.innerHTML = '<h3>تفاصيل السلة</h3><p>يرجى تسجيل الدخول لعرض السلة</p>';
+        cartDetails.style.display = 'block';
+    }
+}
 
-        function clearCart() {
-            const user = firebase.auth().currentUser;
-            if (user) {
-                db.collection('carts').doc(user.uid).set({ items: [] }).then(() => {
-                    updateCartCount();
-                    toggleCartDetails();
-                    alert('تم إفراغ السلة');
-                }).catch(e => {
-                    console.error('Error clearing cart:', e);
-                });
-            } else {
-                alert('يرجى تسجيل الدخول لإفراغ السلة');
-            }
-        }
+function clearCart() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        db.collection('carts').doc(user.uid).set({ items: [] }).then(() => {
+            updateCartCount();
+            toggleCartDetails();
+            alert('تم إفراغ السلة');
+        }).catch(e => {
+            console.error('Error clearing cart:', e);
+        });
+    } else {
+        alert('يرجى تسجيل الدخول لإفراغ السلة');
+    }
+}
 
-        function toggleAuthForm() {
-            const authForm = document.getElementById('auth-form');
-            authForm.style.display = authForm.style.display === 'block' ? 'none' : 'block';
-        }
+function toggleAuthForm() {
+    const authForm = document.getElementById('auth-form');
+    authForm.style.display = authForm.style.display === 'block' ? 'none' : 'block';
+}
 
-        function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    toggleAuthForm();
-                    displayUserProfile(userCredential.user);
-                })
-                .catch(error => {
-                    console.error('Login error:', error);
-                    alert('خطأ في تسجيل الدخول: ' + error.message);
-                });
-        }
+function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            toggleAuthForm();
+            checkAuthState();
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('خطأ في تسجيل الدخول: ' + error.message);
+        });
+}
 
-        function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-                .then(result => {
-                    toggleAuthForm();
-                    displayUserProfile(result.user);
-                })
-                .catch(error => {
-                    console.error('Google login error:', error);
-                    alert('خطأ في تسجيل الدخول باستخدام جوجل: ' + error.message);
-                });
-        }
+function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+        .then(result => {
+            toggleAuthForm();
+            checkAuthState();
+        })
+        .catch(error => {
+            console.error('Google login error:', error);
+            alert('خطأ في تسجيل الدخول باستخدام جوجل: ' + error.message);
+        });
+}
 
-        function initializeSlideshow() {
-            let slideIndex = 0;
-            const slides = document.querySelectorAll('.slideshow img');
-            setInterval(() => {
-                slides[slideIndex].classList.remove('active');
-                slideIndex = (slideIndex + 1) % slides.length;
-                slides[slideIndex].classList.add('active');
-            }, 3000);
-        }
+function initializeSlideshow() {
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slideshow img');
+    setInterval(() => {
+        slides[slideIndex].classList.remove('active');
+        slideIndex = (slideIndex + 1) % slides.length;
+        slides[slideIndex].classList.add('active');
+    }, 3000);
+}
 
-        function loadCart(uid) {
-            db.collection('carts').doc(uid).get().then(doc => {
-                if (doc.exists) {
-                    const cart = doc.data().items || [];
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    updateCartCount();
-                } else {
-                    localStorage.setItem('cart', JSON.stringify([]));
-                    updateCartCount();
-                }
-            }).catch(e => {
-                console.error('Error loading cart:', e);
-            });
+function loadCart(uid) {
+    db.collection('carts').doc(uid).get().then(doc => {
+        if (doc.exists) {
+            const cart = doc.data().items || [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        } else {
+            localStorage.setItem('cart', JSON.stringify([]));
+            updateCartCount();
         }
+    }).catch(e => {
+        console.error('Error loading cart:', e);
+    });
+}
 
-        function displayUserProfile(user) {
-            const userProfile = document.getElementById('user-profile');
-            userProfile.innerHTML = `<h3>ملف المستخدم</h3>
-                <p>البريد الإلكتروني: ${user.email}</p>
-                <button onclick="loadCart('${user.uid}')">عرض السلة</button>`;
-            userProfile.style.display = 'block';
-        }
+function displayUserProfile(user) {
+    const userProfile = document.getElementById('user-profile');
+    userProfile.innerHTML = `<h3>ملف المستخدم</h3>
+        <p>البريد الإلكتروني: ${user.email}</p>
+        <button onclick="loadCart('${user.uid}')">عرض السلة</button>`;
+    userProfile.style.display = 'block';
+}
+
+function showUserProfile() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+        displayUserProfile(user);
+    } else {
+        alert('يرجى تسجيل الدخول لعرض ملف المستخدم');
+    }
+}
+
     </script>
 </body>
 </html>
