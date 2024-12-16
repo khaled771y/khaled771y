@@ -25,23 +25,50 @@
             --text-color-dark: #e0e0e0;
             --footer-text-color-dark: #999;
             --navbar-bg: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+
+            --frame-color: #006699; /* لون إطار الصفحة */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* منع التمرير */
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: "Tajawal", sans-serif;
             background: var(--bg-color);
             color: var(--text-color);
             transition: background 0.3s, color 0.3s;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            box-sizing: border-box;
+            border: 15px solid var(--frame-color); /* إطار فخم حول الصفحة */
         }
 
         body.dark {
             background: var(--bg-color-dark);
             color: var(--text-color-dark);
+        }
+
+        /* توزيع الصفحة: 
+           - هيدر في الأعلى
+           - محتوى في الوسط
+           - فوتر في الأسفل
+         */
+
+        header, footer {
+            flex-shrink: 0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
         }
 
         /* الشريط العلوي */
@@ -56,26 +83,10 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             margin: 0;
             white-space: nowrap;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-            font-size: 1rem;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #f0f0f0;
         }
 
         .toolbar {
@@ -107,20 +118,15 @@
             background: rgba(255,255,255,0.5);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
-        }
-
         .video-container {
             position: relative;
-            overflow: hidden;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             background: #000;
+            overflow: hidden;
         }
 
         .video-container iframe {
@@ -139,13 +145,19 @@
             color: var(--footer-text-color);
         }
 
+        body.dark .branding {
+            color: var(--footer-text-color-dark);
+        }
+
         .ai-section {
-            margin-top: 2rem;
+            margin-top: 1rem;
             background: linear-gradient(to right, #f0f0f0, #e0e0e0);
             border-radius: 10px;
             padding: 1rem;
             text-align: center;
             transition: background 0.3s;
+            max-width: 600px;
+            width: 100%;
         }
 
         body.dark .ai-section {
@@ -155,6 +167,7 @@
         .ai-section h2 {
             margin-top: 0;
             margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
 
         .quote {
@@ -172,7 +185,7 @@
 
         footer {
             text-align: center;
-            margin: 2rem 0 1rem 0;
+            margin: 1rem 0 0 0;
             font-size: 0.9rem;
             color: var(--footer-text-color);
         }
@@ -182,20 +195,6 @@
         }
 
         /* استجابة */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* يمكن لاحقاً إضافة أيقونة قائمة للهواتف */
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .toolbar {
-                gap: 0.5rem;
-            }
-        }
-
         @media (max-width: 480px) {
             .toggle-dark-mode {
                 font-size: 0.8rem;
@@ -205,30 +204,34 @@
                 font-size: 0.8rem;
                 padding: 0.2rem 0.5rem;
             }
+            .logo {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <h1 class="logo">Khaled Alnderi Live</h1>
-        <div class="nav-links">
-            <a href="#home">الرئيسية</a>
-            <a href="#about">عن القناة</a>
-            <a href="#contact">اتصل بنا</a>
-        </div>
         <div class="toolbar">
             <div class="time-display" id="timeDisplay"></div>
             <button class="toggle-dark-mode" onclick="toggleDarkMode()">الوضع الليلي</button>
         </div>
     </header>
 
-    <div class="container">
+    <div class="content">
         <div class="video-container">
-            <!-- تضمين البث المباشر من يوتيوب -->
+            <!-- تطبيق بعض الخيارات لإزالة معظم الروابط الخارجية:
+                 modestbranding=1 لإزالة شعار يوتيوب الكبير
+                 rel=0 لمنع عرض فيديوهات مقترحة من قنوات أخرى
+                 fs=0 لإخفاء زر ملء الشاشة
+                 disablekb=1 لتعطيل التنقل بلوحة المفاتيح
+                 controls=1 لإبقاء بعض التحكم للمستخدم دون إظهار روابط كثيرة
+            -->
             <iframe 
-                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=1&playsinline=1" 
-                allow="autoplay; encrypted-media; picture-in-picture" 
-                allowfullscreen>
+                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=1&playsinline=1&modestbranding=1&rel=0&controls=1&fs=0&disablekb=1&iv_load_policy=3"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen="false">
             </iframe>
         </div>
         <div class="branding">© Khaled Alnderi</div>
@@ -244,10 +247,12 @@
     </footer>
 
     <script>
+        // وضع ليلي
         function toggleDarkMode() {
             document.body.classList.toggle('dark');
         }
 
+        // تحديث الوقت
         function updateTime() {
             var now = new Date();
             var hours = now.getHours().toString().padStart(2, '0');
@@ -259,14 +264,14 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // مجموعة اقتباسات لتظهر بشكل عشوائي (كنوع من الذكاء الاصطناعي المبسّط)
+        // اقتباسات عشوائية (ذكاء اصطناعي مبسط)
         var quotes = [
-            "النجاح يأتي لمن يبحث عنه بجد.",
-            "الحكمة تبدأ بأبسط الأسئلة.",
-            "لا يوجد مستحيل أمام الإرادة.",
-            "اجعل كل يوم فرصة جديدة للتطور.",
-            "تذكر أن الإبداع يخرج من رحم التحدي.",
-            "الحياة قصيرة، عشها بشغف."
+            "النجاح حليف من يصنع الفرص.",
+            "لا مستحيل أمام الإرادة القوية.",
+            "أبدع في الصغير قبل الكبير.",
+            "التقدم يأتي بخطوات ثابتة.",
+            "استثمر وقتك لما يرفعك.",
+            "الإبداع يولد في لحظات الهدوء."
         ];
 
         function showRandomQuote() {
