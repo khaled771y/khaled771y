@@ -59,6 +59,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin: 0;
+            white-space: nowrap;
         }
 
         .nav-links {
@@ -99,6 +100,7 @@
             font-size: 0.9rem;
             border-radius: 5px;
             transition: background 0.3s;
+            white-space: nowrap;
         }
 
         .toggle-dark-mode:hover {
@@ -137,6 +139,37 @@
             color: var(--footer-text-color);
         }
 
+        .ai-section {
+            margin-top: 2rem;
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        body.dark .ai-section {
+            background: linear-gradient(to right, #333, #444);
+        }
+
+        .ai-section h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .quote {
+            font-size: 1rem;
+            font-style: italic;
+            background: rgba(0,0,0,0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        body.dark .quote {
+            background: rgba(255,255,255,0.1);
+        }
+
         footer {
             text-align: center;
             margin: 2rem 0 1rem 0;
@@ -151,20 +184,26 @@
         /* استجابة */
         @media (max-width: 768px) {
             .nav-links {
-                display: none; /* يمكن لاحقاً عمل قائمة جانبية للهواتف */
+                display: none; /* يمكن لاحقاً إضافة أيقونة قائمة للهواتف */
             }
 
             .logo {
                 font-size: 1.2rem;
+            }
+
+            .toolbar {
+                gap: 0.5rem;
             }
         }
 
         @media (max-width: 480px) {
             .toggle-dark-mode {
                 font-size: 0.8rem;
+                padding: 0.3rem 0.5rem;
             }
             .time-display {
                 font-size: 0.8rem;
+                padding: 0.2rem 0.5rem;
             }
         }
     </style>
@@ -175,7 +214,7 @@
         <div class="nav-links">
             <a href="#home">الرئيسية</a>
             <a href="#about">عن القناة</a>
-            <a href="#contact">اتصال</a>
+            <a href="#contact">اتصل بنا</a>
         </div>
         <div class="toolbar">
             <div class="time-display" id="timeDisplay"></div>
@@ -185,14 +224,19 @@
 
     <div class="container">
         <div class="video-container">
-            <!-- استبدل O_02mf1vpQo بمعرّف البث الخاص بك -->
+            <!-- تضمين البث المباشر من يوتيوب -->
             <iframe 
-                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=1" 
-                allow="autoplay; encrypted-media;" 
+                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=1&playsinline=1" 
+                allow="autoplay; encrypted-media; picture-in-picture" 
                 allowfullscreen>
             </iframe>
         </div>
         <div class="branding">© Khaled Alnderi</div>
+
+        <div class="ai-section">
+            <h2>رسالة اليوم الذكية</h2>
+            <div class="quote" id="quote"></div>
+        </div>
     </div>
 
     <footer>
@@ -212,9 +256,25 @@
             var timeString = hours + ':' + minutes + ':' + seconds;
             document.getElementById('timeDisplay').textContent = timeString;
         }
-
         setInterval(updateTime, 1000);
-        updateTime(); // استدعاء فوري لعرض الوقت عند التحميل
+        updateTime();
+
+        // مجموعة اقتباسات لتظهر بشكل عشوائي (كنوع من الذكاء الاصطناعي المبسّط)
+        var quotes = [
+            "النجاح يأتي لمن يبحث عنه بجد.",
+            "الحكمة تبدأ بأبسط الأسئلة.",
+            "لا يوجد مستحيل أمام الإرادة.",
+            "اجعل كل يوم فرصة جديدة للتطور.",
+            "تذكر أن الإبداع يخرج من رحم التحدي.",
+            "الحياة قصيرة، عشها بشغف."
+        ];
+
+        function showRandomQuote() {
+            var randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quote').textContent = quotes[randomIndex];
+        }
+        
+        showRandomQuote();
     </script>
 </body>
 </html>
