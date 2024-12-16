@@ -12,17 +12,6 @@
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" 
       rel="stylesheet">
 
-    <!-- Video.js -->
-    <link 
-      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video-js.min.css" 
-      rel="stylesheet"/>
-    <script 
-      src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video.min.js">
-    </script>
-
-    <!-- HLS.js -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
     <style>
         :root {
             --primary-color: #006699;
@@ -35,6 +24,7 @@
             --bg-color-dark: #121212;
             --text-color-dark: #e0e0e0;
             --footer-text-color-dark: #999;
+            --navbar-bg: linear-gradient(to right, var(--secondary-color), var(--primary-color));
         }
 
         body {
@@ -44,6 +34,9 @@
             background: var(--bg-color);
             color: var(--text-color);
             transition: background 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         body.dark {
@@ -51,24 +44,53 @@
             color: var(--text-color-dark);
         }
 
+        /* الشريط العلوي */
         header {
-            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
-            padding: 1rem;
-            text-align: center;
+            background: var(--navbar-bg);
             color: var(--header-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
             position: relative;
         }
 
-        header h1 {
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin: 0;
-            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            font-size: 1rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f0f0f0;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .time-display {
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
         }
 
         .toggle-dark-mode {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 1rem;
             background: rgba(255,255,255,0.3);
             border: none;
             padding: 0.5rem 1rem;
@@ -87,47 +109,37 @@
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
+            flex: 1;
         }
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
             overflow: hidden;
+            padding-bottom: 56.25%; /* نسبة 16:9 */
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             background: #000;
         }
 
-        .video-container .video-js {
+        .video-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            border:0;
         }
 
         .branding {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.5);
-            padding: 0.3rem 0.5rem;
-            border-radius: 3px;
-            color: #fff;
-            font-size: 0.8rem;
-        }
-
-        .error-message {
             text-align: center;
-            margin-top: 2rem;
-            font-size: 1rem;
-            color: #c00;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--footer-text-color);
         }
 
         footer {
             text-align: center;
-            margin: 2rem 0;
+            margin: 2rem 0 1rem 0;
             font-size: 0.9rem;
             color: var(--footer-text-color);
         }
@@ -136,84 +148,73 @@
             color: var(--footer-text-color-dark);
         }
 
+        /* استجابة */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
+            .nav-links {
+                display: none; /* يمكن لاحقاً عمل قائمة جانبية للهواتف */
             }
-            .container {
-                margin: 1rem auto;
+
+            .logo {
+                font-size: 1.2rem;
             }
         }
 
         @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.2rem;
+            .toggle-dark-mode {
+                font-size: 0.8rem;
+            }
+            .time-display {
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <button class="toggle-dark-mode" onclick="toggleDarkMode()">الوضع الليلي</button>
-        <h1>البث المباشر - Khaled Alnderi</h1>
+        <h1 class="logo">Khaled Alnderi Live</h1>
+        <div class="nav-links">
+            <a href="#home">الرئيسية</a>
+            <a href="#about">عن القناة</a>
+            <a href="#contact">اتصال</a>
+        </div>
+        <div class="toolbar">
+            <div class="time-display" id="timeDisplay"></div>
+            <button class="toggle-dark-mode" onclick="toggleDarkMode()">الوضع الليلي</button>
+        </div>
     </header>
 
     <div class="container">
         <div class="video-container">
-            <video
-                id="live_stream"
-                class="video-js vjs-default-skin vjs-big-play-centered"
-                controls
-                preload="auto"
-                playsinline
-                webkit-playsinline
-                muted
-                poster="poster.jpg">
-            </video>
-            <div class="branding">© Khaled Alnderi</div>
+            <!-- استبدل O_02mf1vpQo بمعرّف البث الخاص بك -->
+            <iframe 
+                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=1" 
+                allow="autoplay; encrypted-media;" 
+                allowfullscreen>
+            </iframe>
         </div>
-        <div class="error-message" id="errorMessage" style="display:none;">
-            عذراً، لم يتمكن المتصفح من تشغيل البث.
-        </div>
+        <div class="branding">© Khaled Alnderi</div>
     </div>
 
     <footer>
-        جميع الحقوق محفوظة © 2024 - Khaled Alnderi
+        جميع الحقوق محفوظة © 2025 - Khaled Alnderi
     </footer>
 
     <script>
-        // رابط بث تجريبي - يمكنك تغييره لاحقاً
-        var videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
-
-        var player = videojs('live_stream');
-
         function toggleDarkMode() {
             document.body.classList.toggle('dark');
         }
 
-        function setupHLS() {
-            if (Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(videoSrc);
-                hls.attachMedia(player.tech_.el_);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    // عند جاهزية المانيفيست، يمكن للمستخدم النقر على تشغيل
-                    // يمكننا عدم إجبار التشغيل تلقائياً
-                });
-                hls.on(Hls.Events.ERROR, function(event, data) {
-                    console.error('HLS error:', data);
-                    document.getElementById('errorMessage').style.display = 'block';
-                });
-            } else if (player.tech_.el_.canPlayType('application/vnd.apple.mpegurl')) {
-                // Safari (أو متصفحات iOS الأصلية)
-                player.src({ src: videoSrc, type: 'application/x-mpegURL' });
-            } else {
-                // لا يدعم HLS
-                document.getElementById('errorMessage').style.display = 'block';
-            }
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            var timeString = hours + ':' + minutes + ':' + seconds;
+            document.getElementById('timeDisplay').textContent = timeString;
         }
 
-        setupHLS();
+        setInterval(updateTime, 1000);
+        updateTime(); // استدعاء فوري لعرض الوقت عند التحميل
     </script>
 </body>
 </html>
