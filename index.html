@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>البث المباشر - Khaled Alnderi</title>
+    <title>البث الذكي - Khaled Alnderi</title>
 
     <!-- خط Tajawal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +36,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            transition: background 0.3s, color 0.3s;
         }
 
         body.dark {
@@ -43,9 +44,9 @@
             color: var(--dark-text-color);
         }
 
-        /* الإطار الفخم */
+        /* الإطار الفاخر */
         body {
-            border: 10px solid var(--frame-color);
+            border: 15px solid var(--frame-color);
         }
 
         /* الحاوية الرئيسية */
@@ -60,39 +61,42 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #fff;
             padding: 1rem;
-            border-radius: 10px 10px 0 0;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            font-size: 1.7rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* الرسائل الذكية */
+        .ai-message {
+            margin: 1.5rem 0;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--secondary-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        body.dark .ai-message {
+            color: var(--accent-color);
         }
 
         /* مشغل الفيديو */
         .video-container {
             position: relative;
             width: 100%;
+            max-width: 900px;
             aspect-ratio: 16 / 9;
             background: black;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            margin-top: 1rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            margin: 1rem auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
         }
 
         .video-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-        }
-
-        /* رسالة الذكاء الاصطناعي */
-        .ai-message {
-            margin: 1rem 0;
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--secondary-color);
-        }
-
-        body.dark .ai-message {
-            color: var(--accent-color);
         }
 
         /* الوضع الليلي */
@@ -114,44 +118,28 @@
 
         footer {
             margin-top: 1.5rem;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-color);
         }
 
         body.dark footer {
             color: var(--dark-text-color);
         }
-
-        /* تصميم متجاوب */
-        @media (max-width: 768px) {
-            .header {
-                font-size: 1.2rem;
-            }
-
-            .toggle-dark-mode {
-                font-size: 0.9rem;
-                padding: 0.5rem 1rem;
-            }
-
-            .ai-message {
-                font-size: 1rem;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- الشريط العلوي -->
-        <div class="header">البث المباشر - Khaled Alnderi</div>
+        <div class="header">مرحبًا بك في البث الذكي - Khaled Alnderi</div>
 
-        <!-- رسالة الذكاء الاصطناعي -->
+        <!-- الرسالة الترحيبية الذكية -->
         <div class="ai-message" id="aiMessage">مرحبًا بك!</div>
 
         <!-- مشغل الفيديو -->
         <div class="video-container">
             <iframe 
-                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=0&playsinline=1&modestbranding=1&rel=0&controls=1"
+                allow="autoplay; encrypted-media; picture-in-picture" 
                 allowfullscreen>
             </iframe>
         </div>
@@ -169,29 +157,29 @@
             document.body.classList.toggle("dark");
         }
 
-        // تفعيل الوضع الليلي تلقائيًا بعد الساعة 8 مساءً
+        // وضع ليلي تلقائي بعد الساعة 8 مساءً
         const now = new Date();
         if (now.getHours() >= 20 || now.getHours() < 6) {
             document.body.classList.add("dark");
         }
 
-        // رسالة ترحيب ديناميكية
-        function setAIMessage() {
+        // رسائل الترحيب الذكية
+        const messages = [
+            "نتمنى لك مشاهدة ممتعة!",
+            "أنت في المكان الصحيح للاستمتاع!",
+            "مرحبًا بك في عالم التميز!",
+            "نتمنى لك يومًا سعيدًا!",
+            "كل لحظة هنا مخصصة لك!"
+        ];
+
+        function showDynamicMessage() {
             const hours = now.getHours();
-            let message = "";
-
-            if (hours >= 5 && hours < 12) {
-                message = "صباح الخير! نتمنى لك يومًا جميلًا.";
-            } else if (hours >= 12 && hours < 18) {
-                message = "مساء الخير! استمتع بالبث.";
-            } else {
-                message = "مساء الخير! نتمنى لك مشاهدة ممتعة.";
-            }
-
-            document.getElementById("aiMessage").textContent = message;
+            const greeting = hours < 12 ? "صباح الخير!" : "مساء الخير!";
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("aiMessage").textContent = `${greeting} ${randomMessage}`;
         }
 
-        setAIMessage();
+        showDynamicMessage();
     </script>
 </body>
 </html>
