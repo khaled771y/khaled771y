@@ -1,610 +1,207 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temu Yemen</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>بث مباشر - Khaled Alnderi</title>
+
+    <!-- خط Tajawal من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Video.js -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video-js.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video.min.js"></script>
+
+    <!-- HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
     <style>
-    body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
+        body {
             margin: 0;
-            padding-bottom: 60px;
+            padding: 0;
+            font-family: "Tajawal", sans-serif;
+            background: var(--bg-color, #f5f5f5);
+            color: var(--text-color, #333);
+            transition: background 0.3s, color 0.3s;
         }
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #FF5733;
-            padding: 10px 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        :root {
+            --primary-color: #006699;
+            --secondary-color: #0099cc;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --header-text-color: #fff;
+            --footer-text-color: #666;
         }
-        .top-bar .logo {
-            display: flex;
-            align-items: center;
+
+        /* الوضع الليلي */
+        body.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --footer-text-color: #999;
         }
-        .top-bar .logo i {
-            font-size: 28px;
-            color: #fff;
+
+        header {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            padding: 1rem;
+            text-align: center;
+            color: var(--header-text-color);
+            position: relative;
         }
-        .top-bar .logo span {
-            margin-left: 10px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
         }
-        .top-bar .search-bar {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 20px;
-        }
-        .top-bar .search-bar input[type="text"] {
-            width: 100%;
-            max-width: 800px;
-            padding: 7px 20px;
+
+        .toggle-dark-mode {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 1rem;
+            background: rgba(255,255,255,0.3);
             border: none;
-            border-radius: 11px;
-            font-size: 20px;
-            background-color: #fff;
-            color: #FF5733;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .top-bar .search-bar input[type="text"]::placeholder {
-            color: #FF5733;
-        }
-        .top-bar .search-bar input[type="text"]:focus {
-            outline: none;
-        }
-        .top-bar .icons {
-            display: flex;
-            align-items: center;
-        }
-        .top-bar .icons div {
-            margin-left: 20px;
-        }
-        .top-bar .icons i {
-            font-size: 24px;
+            padding: 0.5rem 1rem;
             color: #fff;
             cursor: pointer;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background 0.3s;
         }
-        .top-bar .cart-count {
-            position: relative;
-            top: -10px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            font-size: 14px;
-            padding: 5px 8px;
-            border-radius: 50%;
+
+        .toggle-dark-mode:hover {
+            background: rgba(255,255,255,0.5);
         }
-        nav {
-            background-color: #FF7043;
-            padding: 10px;
-            display: flex;
-            overflow-x: auto;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-        }
-        nav a i {
-            margin-left: 5px;
-        }
+
         .container {
-            padding: 20px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        .banner {
-            background-color: #FFC300;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .slideshow {
+
+        .video-container {
             position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            padding-bottom: 56.25%; /* نسبة 16:9 */
+            height: 0;
             overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            background: #000;
         }
-        .slideshow img {
-            width: 100%;
-            display: none;
-        }
-        .slideshow img.active {
-            display: block;
-        }
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
-        .products, .featured-products {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .product, .featured-product {
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            padding: 5px;
-            margin: 6px;
-            flex: 1 1 calc(40% - 20px);
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-        .product img, .featured-product img {
-            width: 100%;
-            height: auto;
-        }
-        .carousel {
-            display: flex;
-            overflow-x: auto;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            gap: 10px;
-            scroll-behavior: smooth;
-        }
-        .carousel img {
-            flex: 0 0 auto;
-            width: 80px;
-            height: 80px;
-            margin: 0 5px;
-            border-radius: 50%;
-            animation: slide 30s linear infinite;
-        }
-        @keyframes slide {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        #product-details, #cart-details {
-            display: none;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .cart-item img {
-            width: 50px;
-            height: auto;
-        }
-        .cart-total, .cart-share {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .btn {
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #FF5733;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn-google {
-            background-color: #db4437;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            padding: 10px 0;
-            width: 100%;
-            max-width: 200px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-google i {
-            margin-right: 10px;
-        }
-        .cart-share a:hover {
-            background-color: #FF7043;
-        }
-        .size-options button {
-            margin: 5px;
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-            cursor: pointer;
-        }
-        .size-options button.active {
-            background-color: #FF5733;
-            color: #fff;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #FF5733;
-            color: #fff;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 60px;
-            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
-        }
-        .bottom-nav a {
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-            flex: 1;
-        }
-        .bottom-nav a i {
-            display: block;
-            font-size: 24px;
-        }
-        .bottom-nav a span {
-            display: block;
-            font-size: 12px;
-        }
-        .auth-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        .auth-input {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            width: 100%;
-            max-width: 300px;
-            box-sizing: border-box;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
+
+        .video-container .video-js {
+            position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
         }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            border-radius: 10px;
+
+        footer {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+            color: var(--footer-text-color);
         }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+
+        .error-message {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: #c00;
         }
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+
+        /* تحسين الاستجابة */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .container {
+                margin: 1rem auto;
+            }
         }
-        .carousel, .products, .featured-products {
-            display: flex;
-            overflow-x: auto;
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.2rem;
+            }
         }
-        .carousel img, .products .product img, .featured-products .featured-product img {
-            flex: 0 0 auto;
-            width: 150px;
-            height: auto;
-            margin: 10px;
+
+        .branding {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 0.3rem 0.5rem;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 0.8rem;
         }
+
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">
-            <i class="fas fa-store"></i>
-            <span>Temu Yemen</span>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="بحث...">
-        </div>
-        <div class="icons">
-            <div id="auth-icon">
-                <i class="fas fa-user" onclick="toggleModal('authModal')"></i>
-            </div>
-            <div>
-                <i class="fas fa-shopping-cart" onclick="toggleCart()"></i>
-                <span class="cart-count">0</span>
-            </div>
-        </div>
-    </div>
-     <nav>
-        <a href="#" onclick="showSection('home')"><i class="fas fa-home"></i>الرئيسية</a>
-        <a href="#" onclick="showSection('products')"><i class="fas fa-th"></i>المنتجات</a>
-        <a href="#" onclick="showSection('featured')"><i class="fas fa-star"></i>مميزة</a>
-        <a href="#" onclick="showSection('offers')"><i class="fas fa-tags"></i>عروض</a>
-        <a href="#" onclick="showSection('categories')"><i class="fas fa-list"></i>الفئات</a>
-    </nav>
+    <header>
+        <button class="toggle-dark-mode" onclick="toggleDarkMode()">الوضع الليلي</button>
+        <h1>البث المباشر - Khaled Alnderi</h1>
+    </header>
+
     <div class="container">
-        <div id="home" class="section active">
-            <div class="banner">مرحبا بكم في Temu Yemen</div>
-            <div class="slideshow">
-                <img src="https://via.placeholder.com/600x300?text=Welcome+to+Temu+Yemen" alt="Slide 1" class="active">
-                <img src="https://via.placeholder.com/600x300?text=Exclusive+Offers" alt="Slide 2">
-            </div>
-            <div class="products">
-                <div class="product" onclick="showProductDetails('Product 1', 'Description of product 1', 'https://via.placeholder.com/150')">
-                    <img src="https://via.placeholder.com/150" alt="Product 1">
-                    <p>Product 1</p>
-                </div>
-                <div class="product" onclick="showProductDetails('Product 2', 'Description of product 2', 'https://via.placeholder.com/150')">
-                    <img src="https://via.placeholder.com/150" alt="Product 2">
-                    <p>Product 2</p>
-                </div>
-                <!-- Add more products as needed -->
-            </div>
+        <div class="video-container">
+            <video
+                id="live_stream"
+                class="video-js vjs-default-skin vjs-big-play-centered"
+                controls
+                preload="auto"
+                playsinline
+                webkit-playsinline
+                muted
+                poster="poster.jpg">
+            </video>
+            <div class="branding">© Khaled Alnderi</div>
         </div>
-        <div id="deals" class="section">
-            <div class="banner">العروض الخاصة</div>
-            <div class="featured-products">
-                <div class="featured-product" onclick="showProductDetails('Deal 1', 'Description of deal 1', 'https://via.placeholder.com/150')">
-                    <img src="https://via.placeholder.com/150" alt="Deal 1">
-                    <p>Deal 1</p>
-                </div>
-                <div class="featured-product" onclick="showProductDetails('Deal 2', 'Description of deal 2', 'https://via.placeholder.com/150')">
-                    <img src="https://via.placeholder.com/150" alt="Deal 2">
-                    <p>Deal 2</p>
-                </div>
-                <!-- Add more deals as needed -->
-            </div>
-        </div>
-        <div id="categories" class="section">
-            <div class="banner">تصفح الفئات</div>
-            <div class="carousel">
-                <img src="https://via.placeholder.com/150?text=Category+1" alt="Category 1">
-                <img src="https://via.placeholder.com/150?text=Category+2" alt="Category 2">
-                <!-- Add more categories as needed -->
-            </div>
-        </div>
-        <div id="profile" class="section">
-            <div class="banner">ملفك الشخصي</div>
-            <!-- Profile details and options go here -->
-        </div>
-        <div id="product-details">
-            <div class="close-btn" onclick="closeDetails()">&times;</div>
-            <h2 id="product-title">Product Title</h2>
-            <img id="product-image" src="" alt="Product Image">
-            <p id="product-description">Product Description</p>
-            <div class="size-options">
-                <button onclick="selectSize(this)">S</button>
-                <button onclick="selectSize(this)">M</button>
-                <button onclick="selectSize(this)">L</button>
-                <button onclick="selectSize(this)">XL</button>
-            </div>
-            <button class="btn" onclick="addToCart()">إضافة إلى السلة</button>
-        </div>
-        <div id="cart-details">
-            <h2>عربة التسوق</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>المجموع:</strong> <span id="cart-total">0</span> ريال
-            </div>
-            <div class="cart-share">
-                <a href="#" class="btn">مشاركة السلة</a>
-            </div>
+        <div class="error-message" id="errorMessage" style="display:none;">
+            عذراً، المتصفح لا يدعم تقنية HLS.
         </div>
     </div>
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="toggleModal('authModal')">&times;</span>
-            <div id="auth-container" class="auth-container">
-                <h2>تسجيل الدخول أو إنشاء حساب</h2>
-                <input type="email" id="email" class="auth-input" placeholder="البريد الإلكتروني">
-                <input type="password" id="password" class="auth-input" placeholder="كلمة المرور">
-                <button class="btn" onclick="signIn()">تسجيل الدخول</button>
-                <button class="btn" onclick="signUp()">إنشاء حساب</button>
-                <button class="btn-google" onclick="signInWithGoogle()">
-                    <i class="fab fa-google"></i> تسجيل الدخول باستخدام Google
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="bottom-nav">
-        <a href="#" onclick="showSection('home')">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="#" onclick="showSection('products')">
-            <i class="fas fa-th"></i>
-            <span>المنتجات</span>
-        </a>
-        <a href="#" onclick="showSection('featured')">
-            <i class="fas fa-star"></i>
-            <span>مميزة</span>
-        </a>
-        <a href="#" onclick="showSection('offers')">
-            <i class="fas fa-tags"></i>
-            <span>عروض</span>
-        </a>
-        <a href="#" onclick="showSection('categories')">
-            <i class="fas fa-list"></i>
-            <span>الفئات</span>
-        </a>
-    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © 2024 - Khaled Alnderi
+    </footer>
+
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAatuXY7VPtB39zcN3L-z2jfHBX6NTfqoA",
-            authDomain: "temu-yemen.firebaseapp.com",
-            projectId: "temu-yemen",
-            storageBucket: "temu-yemen.appspot.com",
-            messagingSenderId: "687344852319",
-            appId: "1:687344852319:web:dc5f95ce4dd7572ef96aea",
-            measurementId: "G-NLSSTZM62R"
-        };
-        firebase.initializeApp(firebaseConfig);
+        var videoSrc = "hls/test-stream.m3u8"; // ضع رابط البث هنا
+        var player = videojs('live_stream');
 
-        const auth = firebase.auth();
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+        }
 
-        // Monitor auth state
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                loadProfile(user);
-                document.getElementById('auth-icon').style.display = 'none';
-                document.querySelector('.nav-link[onclick="showSection(\'profile\')"]').style.display = 'block';
+        // وظيفة تحضير البث
+        function setupHLS() {
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(videoSrc);
+                hls.attachMedia(player.tech_.el_);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    player.play().catch(function(){});
+                });
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    console.error('HLS error:', data);
+                });
+            } else if (player.tech_.el_.canPlayType('application/vnd.apple.mpegurl')) {
+                // Safari
+                player.src({ src: videoSrc, type: 'application/x-mpegURL' });
+                player.play().catch(function(){});
             } else {
-                document.getElementById('auth-icon').style.display = 'block';
-                document.querySelector('.nav-link[onclick="showSection(\'profile\')"]').style.display = 'none';
+                // لا يدعم HLS
+                document.getElementById('errorMessage').style.display = 'block';
             }
-        });
-
-        // Sections handling
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const productDetails = document.getElementById('product-details');
-        const cartDetails = document.getElementById('cart-details');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalElement = document.getElementById('cart-total');
-        const cartCountElement = document.querySelector('.cart-count');
-        const cart = [];
-
-        function showSection(id) {
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            navLinks.forEach(link => link.classList.remove('active'));
-            document.querySelector(`.nav-link[onclick="showSection('${id}')"]`).classList.add('active');
         }
 
-        function showProductDetails(title, description, image) {
-            productDetails.querySelector('#product-title').textContent = title;
-            productDetails.querySelector('#product-description').textContent = description;
-            productDetails.querySelector('#product-image').src = image;
-            productDetails.style.display = 'block';
-        }
-
-        function closeDetails() {
-            productDetails.style.display = 'none';
-        }
-
-        function addToCart() {
-            const title = productDetails.querySelector('#product-title').textContent;
-            const image = productDetails.querySelector('#product-image').src;
-            const size = document.querySelector('.size-options .selected') ? document.querySelector('.size-options .selected').textContent : 'N/A';
-            const cartItem = { title, image, size };
-            cart.push(cartItem);
-            updateCart();
-            closeDetails();
-        }
-
-        function updateCart() {
-            cartItemsContainer.innerHTML = '';
-            cart.forEach((item, index) => {
-                const cartItemElement = document.createElement('div');
-                cartItemElement.classList.add('cart-item');
-                cartItemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
-                    <div>
-                        <p>${item.title}</p>
-                        <p>الحجم: ${item.size}</p>
-                        <button onclick="removeFromCart(${index})">إزالة</button>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(cartItemElement);
-            });
-            cartTotalElement.textContent = cart.length * 10; // Assume each item costs 10 for simplicity
-            cartCountElement.textContent = cart.length;
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function selectSize(button) {
-            const sizeOptions = document.querySelectorAll('.size-options button');
-            sizeOptions.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        }
-
-        function signIn() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    alert('تم تسجيل الدخول بنجاح');
-                    toggleModal('authModal');
-                })
-                .catch(error => {
-                    alert('خطأ: ' + error.message);
-                });
-        }
-
-        function signUp() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    alert('تم إنشاء الحساب بنجاح');
-                    toggleModal('authModal');
-                })
-                .catch(error => {
-                    alert('خطأ: ' + error.message);
-                });
-        }
-
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    alert('تم تسجيل الدخول باستخدام Google');
-                    toggleModal('authModal');
-                })
-                .catch(error => {
-                    alert('خطأ: ' + error.message);
-                });
-        }
-
-        function loadProfile(user) {
-            const profileDetails = document.getElementById('profile-details');
-            profileDetails.innerHTML = `
-                <p><strong>البريد الإلكتروني:</strong> ${user.email}</p>
-                <button onclick="signOut()">تسجيل الخروج</button>
-            `;
-        }
-
-        function signOut() {
-            auth.signOut().then(() => {
-                alert('تم تسجيل الخروج بنجاح');
-                showSection('home');
-            }).catch(error => {
-                alert('خطأ: ' + error.message);
-            });
-        }
+        setupHLS();
     </script>
 </body>
 </html>
