@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>البث المباشر - Khaled Alnderi</title>
 
-    <!-- خط Tajawal من Google Fonts -->
+    <!-- خط Tajawal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* إعدادات الألوان */
         :root {
-            --primary-color: #004c70;
-            --secondary-color: #007a99;
-            --text-color: #fff;
-            --bg-color: #0e2a47;
-            --accent-color: #00cfcf;
-            --border-color: #94d2bd;
+            --primary-color: #005f73;
+            --secondary-color: #0a9396;
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --dark-bg-color: #001219;
+            --dark-text-color: #e0e0e0;
+            --accent-color: #94d2bd;
+            --frame-color: #00cfcf;
         }
 
-        /* إعداد الصفحة */
         * {
             margin: 0;
             padding: 0;
@@ -35,66 +35,91 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
+        body.dark {
+            background: var(--dark-bg-color);
+            color: var(--dark-text-color);
+        }
+
+        /* الإطار الفخم */
         body {
-            border: 15px solid var(--border-color);
+            border: 10px solid var(--frame-color);
         }
 
         /* الحاوية الرئيسية */
         .container {
             width: 100%;
             max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            padding: 1rem;
         }
 
         /* الشريط العلوي */
         .header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--text-color);
-            font-size: 1.5rem;
-            font-weight: bold;
-            width: 100%;
+            color: #fff;
             padding: 1rem;
             border-radius: 10px 10px 0 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* مشغل الفيديو */
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 900px;
             aspect-ratio: 16 / 9;
-            margin: 1rem 0;
-            border-radius: 15px;
+            background: black;
+            border-radius: 10px;
             overflow: hidden;
+            margin-top: 1rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            background-color: black;
         }
 
         .video-container iframe {
-            position: absolute;
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        /* الحقوق السفلية */
-        .footer {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            color: var(--text-color);
+        /* رسالة الذكاء الاصطناعي */
+        .ai-message {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        body.dark .ai-message {
+            color: var(--accent-color);
+        }
+
+        /* الوضع الليلي */
+        .toggle-dark-mode {
+            margin-top: 1rem;
+            background: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
             font-size: 1rem;
-            padding: 0.8rem;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-dark-mode:hover {
+            background: var(--primary-color);
+        }
+
+        footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        body.dark footer {
+            color: var(--dark-text-color);
         }
 
         /* تصميم متجاوب */
@@ -103,23 +128,13 @@
                 font-size: 1.2rem;
             }
 
-            .footer {
+            .toggle-dark-mode {
                 font-size: 0.9rem;
+                padding: 0.5rem 1rem;
             }
-        }
 
-        @media (max-width: 480px) {
-            .header {
+            .ai-message {
                 font-size: 1rem;
-                padding: 0.7rem;
-            }
-
-            .video-container {
-                border-radius: 10px;
-            }
-
-            .footer {
-                font-size: 0.8rem;
             }
         }
     </style>
@@ -127,23 +142,56 @@
 <body>
     <div class="container">
         <!-- الشريط العلوي -->
-        <div class="header">
-            <span>البث المباشر - Khaled Alnderi</span>
-        </div>
+        <div class="header">البث المباشر - Khaled Alnderi</div>
+
+        <!-- رسالة الذكاء الاصطناعي -->
+        <div class="ai-message" id="aiMessage">مرحبًا بك!</div>
 
         <!-- مشغل الفيديو -->
         <div class="video-container">
             <iframe 
-                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=0&playsinline=1&modestbranding=1&rel=0&controls=1&iv_load_policy=3&fs=0&disablekb=1" 
-                allow="autoplay; encrypted-media; picture-in-picture" 
+                src="https://www.youtube.com/embed/O_02mf1vpQo?autoplay=1&mute=0&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0&disablekb=1"
+                allow="autoplay; encrypted-media; picture-in-picture"
                 allowfullscreen>
             </iframe>
         </div>
 
+        <!-- زر الوضع الليلي -->
+        <button class="toggle-dark-mode" onclick="toggleDarkMode()">تفعيل الوضع الليلي</button>
+
         <!-- الحقوق -->
-        <div class="footer">
-            جميع الحقوق محفوظة © 2025 - Khaled Alnderi
-        </div>
+        <footer>© 2025 - جميع الحقوق محفوظة لـ Khaled Alnderi</footer>
     </div>
+
+    <script>
+        // تفعيل الوضع الليلي
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark");
+        }
+
+        // تفعيل الوضع الليلي تلقائيًا بعد الساعة 8 مساءً
+        const now = new Date();
+        if (now.getHours() >= 20 || now.getHours() < 6) {
+            document.body.classList.add("dark");
+        }
+
+        // رسالة ترحيب ديناميكية
+        function setAIMessage() {
+            const hours = now.getHours();
+            let message = "";
+
+            if (hours >= 5 && hours < 12) {
+                message = "صباح الخير! نتمنى لك يومًا جميلًا.";
+            } else if (hours >= 12 && hours < 18) {
+                message = "مساء الخير! استمتع بالبث.";
+            } else {
+                message = "مساء الخير! نتمنى لك مشاهدة ممتعة.";
+            }
+
+            document.getElementById("aiMessage").textContent = message;
+        }
+
+        setAIMessage();
+    </script>
 </body>
 </html>
