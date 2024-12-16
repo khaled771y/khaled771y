@@ -32,7 +32,6 @@
             --header-text-color: #fff;
             --footer-text-color: #666;
 
-            /* ألوان الوضع الليلي */
             --bg-color-dark: #121212;
             --text-color-dark: #e0e0e0;
             --footer-text-color-dark: #999;
@@ -92,7 +91,7 @@
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 10px;
@@ -137,7 +136,6 @@
             color: var(--footer-text-color-dark);
         }
 
-        /* استجابة */
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5rem;
@@ -184,11 +182,11 @@
     </footer>
 
     <script>
-        // بث تجريبي معروف يعمل بشكل جيد
+        // رابط بث تجريبي - يمكنك تغييره لاحقاً
         var videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
 
         var player = videojs('live_stream');
-        
+
         function toggleDarkMode() {
             document.body.classList.toggle('dark');
         }
@@ -199,16 +197,16 @@
                 hls.loadSource(videoSrc);
                 hls.attachMedia(player.tech_.el_);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    player.play().catch(function(){});
+                    // عند جاهزية المانيفيست، يمكن للمستخدم النقر على تشغيل
+                    // يمكننا عدم إجبار التشغيل تلقائياً
                 });
                 hls.on(Hls.Events.ERROR, function(event, data) {
                     console.error('HLS error:', data);
                     document.getElementById('errorMessage').style.display = 'block';
                 });
             } else if (player.tech_.el_.canPlayType('application/vnd.apple.mpegurl')) {
-                // Safari
+                // Safari (أو متصفحات iOS الأصلية)
                 player.src({ src: videoSrc, type: 'application/x-mpegURL' });
-                player.play().catch(function(){});
             } else {
                 // لا يدعم HLS
                 document.getElementById('errorMessage').style.display = 'block';
