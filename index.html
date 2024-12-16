@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>بث مباشر - Khaled Alnderi</title>
+    <title>البث المباشر - Khaled Alnderi</title>
 
     <!-- خط Tajawal من Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" 
+      rel="stylesheet">
 
     <!-- Video.js -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video-js.min.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video.min.js"></script>
+    <link 
+      href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video-js.min.css" 
+      rel="stylesheet"/>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video.min.js">
+    </script>
 
     <!-- HLS.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Tajawal", sans-serif;
-            background: var(--bg-color, #f5f5f5);
-            color: var(--text-color, #333);
-            transition: background 0.3s, color 0.3s;
-        }
-
         :root {
             --primary-color: #006699;
             --secondary-color: #0099cc;
@@ -34,13 +31,25 @@
             --bg-color: #f5f5f5;
             --header-text-color: #fff;
             --footer-text-color: #666;
+
+            /* ألوان الوضع الليلي */
+            --bg-color-dark: #121212;
+            --text-color-dark: #e0e0e0;
+            --footer-text-color-dark: #999;
         }
 
-        /* الوضع الليلي */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Tajawal", sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s, color 0.3s;
+        }
+
         body.dark {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --footer-text-color: #999;
+            background: var(--bg-color-dark);
+            color: var(--text-color-dark);
         }
 
         header {
@@ -99,11 +108,15 @@
             height: 100%;
         }
 
-        footer {
-            text-align: center;
-            margin: 2rem 0;
-            font-size: 0.9rem;
-            color: var(--footer-text-color);
+        .branding {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 0.3rem 0.5rem;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 0.8rem;
         }
 
         .error-message {
@@ -113,7 +126,18 @@
             color: #c00;
         }
 
-        /* تحسين الاستجابة */
+        footer {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+            color: var(--footer-text-color);
+        }
+
+        body.dark footer {
+            color: var(--footer-text-color-dark);
+        }
+
+        /* استجابة */
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5rem;
@@ -128,18 +152,6 @@
                 font-size: 1.2rem;
             }
         }
-
-        .branding {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.5);
-            padding: 0.3rem 0.5rem;
-            border-radius: 3px;
-            color: #fff;
-            font-size: 0.8rem;
-        }
-
     </style>
 </head>
 <body>
@@ -163,7 +175,7 @@
             <div class="branding">© Khaled Alnderi</div>
         </div>
         <div class="error-message" id="errorMessage" style="display:none;">
-            عذراً، المتصفح لا يدعم تقنية HLS.
+            عذراً، لم يتمكن المتصفح من تشغيل البث.
         </div>
     </div>
 
@@ -172,14 +184,15 @@
     </footer>
 
     <script>
-        var videoSrc = "hls/test-stream.m3u8"; // ضع رابط البث هنا
-        var player = videojs('live_stream');
+        // بث تجريبي معروف يعمل بشكل جيد
+        var videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
 
+        var player = videojs('live_stream');
+        
         function toggleDarkMode() {
             document.body.classList.toggle('dark');
         }
 
-        // وظيفة تحضير البث
         function setupHLS() {
             if (Hls.isSupported()) {
                 var hls = new Hls();
@@ -190,6 +203,7 @@
                 });
                 hls.on(Hls.Events.ERROR, function(event, data) {
                     console.error('HLS error:', data);
+                    document.getElementById('errorMessage').style.display = 'block';
                 });
             } else if (player.tech_.el_.canPlayType('application/vnd.apple.mpegurl')) {
                 // Safari
