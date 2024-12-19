@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TechnoChic Responsive</title>
+    <title>TechnoChic</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -17,10 +17,11 @@
             --bg-color: #e0f7fa;
             --text-color: #004d40;
             --font-family: Arial, sans-serif;
+            --base-font-size: 16px;
         }
 
         html {
-            font-size: 16px;
+            font-size: var(--base-font-size);
         }
         body {
             font-family: var(--font-family);
@@ -34,23 +35,16 @@
         }
 
         h1, h2, h3, h4 {
+            margin: 0;
+            padding: 0;
             font-weight: bold;
-            margin-top: 0;
         }
 
-        /* تكبير الخطوط للشاشات الكبيرة */
-        h1 {
-            font-size: 3vw;
-        }
-        h2 {
-            font-size: 2vw;
-        }
-        h3 {
-            font-size: 1.5vw;
-        }
-        p, span, a, button, input {
-            font-size: 1vw;
-        }
+        /* قياسات أساسية */
+        h1 { font-size: 1.8rem; }
+        h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.2rem; }
+        p, span, a, button, input { font-size: 1rem; }
 
         /* Top Bar */
         .top-bar {
@@ -58,7 +52,7 @@
             justify-content: space-between;
             align-items: center;
             background-color: var(--main-color);
-            padding: 1vw 2vw;
+            padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .top-bar .logo {
@@ -66,13 +60,12 @@
             align-items: center;
         }
         .top-bar .logo i {
-            font-size: 2.5vw;
+            font-size: 1.5rem;
             color: #fff;
         }
         .top-bar .logo span {
-            margin-left: 1vw;
-            font-size: 2vw;
-            font-weight: bold;
+            margin-left: 10px;
+            font-size: 1.3rem;
             color: #fff;
         }
         .top-bar .search-bar {
@@ -80,102 +73,92 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 2vw;
+            margin: 0 20px;
         }
         .top-bar .search-bar input[type="text"] {
             width: 100%;
-            max-width: 60vw;
-            padding: 0.5vw 1vw;
+            max-width: 400px;
+            padding: 8px 15px;
             border: none;
-            border-radius: 1vw;
-            font-size: 1vw;
+            border-radius: 20px;
             background-color: #fff;
             color: var(--main-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .top-bar .search-bar input[type="text"]::placeholder {
-            color: var(--main-color);
-        }
-        .top-bar .search-bar input[type="text"]:focus {
-            outline: none;
         }
         .top-bar .icons {
             display: flex;
             align-items: center;
         }
         .top-bar .icons div {
-            margin-left: 2vw;
+            margin-left: 20px;
+            position: relative;
         }
         .top-bar .icons i {
-            font-size: 2vw;
+            font-size: 1.2rem;
             color: #fff;
             cursor: pointer;
         }
         .top-bar .cart-count {
-            position: relative;
-            top: -1vw;
-            right: -1vw;
+            position: absolute;
+            top: -10px;
+            right: -10px;
             background-color: red;
             color: white;
-            font-size: 1vw;
-            padding: 0.5vw;
+            font-size: 0.8rem;
+            padding: 2px 6px;
             border-radius: 50%;
         }
 
         nav {
             background-color: var(--secondary-color);
-            padding: 1vw;
             display: flex;
             overflow-x: auto;
         }
         nav a {
             color: #fff;
             text-decoration: none;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            padding: 0 1vw;
         }
         nav a i {
-            margin-left: 0.5vw;
-            font-size: 1.5vw;
+            margin-left: 5px;
         }
         nav a.active {
             background-color: var(--main-color);
-            border-radius: 0.5vw;
-            padding: 0.5vw 1vw;
+            border-radius: 5px;
         }
 
         .container {
-            padding: 2vw;
+            padding: 20px;
         }
 
         .banner {
-            position: relative;
-            background: url('banner-image.jpg') no-repeat center center/cover;
+            background-color: var(--main-color);
             color: white;
-            padding: 5vw;
+            padding: 40px 20px;
             text-align: center;
-            border-radius: 1vw;
-            margin-bottom: 2vw;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
         .banner h1 {
-            color: #fff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+        .banner p {
+            font-size: 1rem;
         }
 
         .slideshow {
             position: relative;
             width: 100%;
-            max-width: 60vw;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
             overflow: hidden;
-            border-radius: 1vw;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .slideshow img {
             width: 100%;
             display: none;
-            border-radius: 1vw;
         }
         .slideshow img.active {
             display: block;
@@ -189,63 +172,59 @@
         }
 
         .products, .featured-products {
-            display: grid;
-            gap: 2vw;
-        }
-
-        /* عند الشاشات الكبيرة عرض 3-4 أعمدة */
-        .products, .featured-products {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
         }
 
         .product, .featured-product {
-            border: 1px solid #ddd;
-            border-radius: 1vw;
-            padding: 1vw;
             background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: calc(33.333% - 20px);
+            min-width: 150px;
             box-sizing: border-box;
-            cursor: pointer;
+            padding: 10px;
+            text-align: center;
+            transition: 0.2s;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
-            text-align: center;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         .product:hover, .featured-product:hover {
-            transform: translateY(-0.5vw);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
         }
         .product img, .featured-product img {
             width: 100%;
             height: auto;
-            border-radius: 0.5vw;
-            margin-bottom: 1vw;
+            border-radius: 5px;
+            margin-bottom: 10px;
             object-fit: cover;
         }
         .product h3, .featured-product h3 {
-            margin: 1vw 0 0.5vw 0;
+            margin: 10px 0 5px 0;
+            font-size: 1rem;
         }
         .product p, .featured-product p {
-            font-size: 0.8vw;
+            font-size: 0.9rem;
             color: #555;
-            height: 2em;
-            overflow: hidden;
-            margin-bottom: 1vw;
+            margin-bottom: 10px;
         }
         .price {
-            margin: 0.5vw 0;
+            margin-bottom: 10px;
             font-weight: bold;
             color: var(--main-color);
         }
         .add-to-cart {
-            padding: 0.5vw 1vw;
-            border: none;
             background-color: var(--main-color);
             color: #fff;
-            border-radius: 0.5vw;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 0.8vw;
+            font-size: 0.9rem;
         }
 
         #cart-details {
@@ -256,21 +235,25 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #ddd;
-            padding: 1vw 0;
-            font-size: 1vw;
+            padding: 10px 0;
+            font-size: 1rem;
         }
-        .cart-total, .cart-share {
+        .cart-total {
+            margin-top: 20px;
             text-align: center;
-            margin-top: 2vw;
+        }
+        .cart-share {
+            margin-top: 20px;
+            text-align: center;
         }
         .btn {
-            padding: 1vw 2vw;
-            color: #fff;
             background-color: var(--main-color);
+            color: #fff;
             border: none;
-            border-radius: 0.5vw;
-            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 5px;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .bottom-nav {
@@ -282,7 +265,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            height: 4vw;
+            height: 50px;
             box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
         }
         .bottom-nav a {
@@ -290,126 +273,81 @@
             text-decoration: none;
             text-align: center;
             flex: 1;
-            font-size: 1vw;
+            font-size: 0.9rem;
         }
         .bottom-nav a i {
             display: block;
-            font-size: 2vw;
+            font-size: 1.2rem;
         }
         .bottom-nav a span {
             display: block;
-            font-size: 0.8vw;
+            font-size: 0.8rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 100px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .auth-container {
             display: flex;
             flex-direction: column;
+            gap: 10px;
             align-items: center;
-            gap: 1vw;
         }
         .auth-input {
-            padding: 1vw;
-            margin: 0.5vw 0;
-            border-radius: 0.5vw;
-            border: 1px solid #ddd;
+            padding: 10px;
             width: 100%;
-            max-width: 30vw;
-            box-sizing: border-box;
-            font-size: 1vw;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         .toggle-auth {
             color: var(--main-color);
             cursor: pointer;
             text-decoration: underline;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 10vw;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 0 auto;
-            padding: 2vw;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 40vw;
-            position: relative;
-            border-radius: 1vw;
-        }
-        .close {
-            color: #aaa;
-            position: absolute;
-            right: 2vw;
-            top: 1vw;
-            font-size: 3vw;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
+            font-size: 0.9rem;
         }
 
-        /* للشاشات المتوسطة */
-        @media (max-width: 1920px) {
-            html {
-                font-size: 14px;
-            }
-            h1 {
-                font-size: 2.5vw;
-            }
-            h2 {
-                font-size: 1.8vw;
-            }
-            p, span, a, button, input {
-                font-size: 0.9vw;
-            }
-        }
-
-        /* للهواتف */
+        /* Media Queries */
         @media (max-width: 768px) {
-            html {
-                font-size: 12px;
+            .product, .featured-product {
+                width: calc(50% - 20px);
             }
-            .top-bar, nav, .bottom-nav {
-                padding: 10px;
+            h1 { font-size: 1.4rem; }
+            h2 { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .product, .featured-product {
+                width: 100%;
             }
-            h1 {
-                font-size: 2rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-            h3 {
-                font-size: 1.2rem;
-            }
-            p, span, a, button, input {
-                font-size: 1rem;
-            }
-            .slideshow {
-                max-width: 90vw;
-            }
-            .banner {
-                padding: 20px;
-                font-size: 1rem;
-            }
-            .add-to-cart, .btn {
-                font-size: 1rem;
-                padding: 10px;
-            }
-            .bottom-nav i {
-                font-size: 1.5rem;
-            }
-            .bottom-nav span {
-                font-size: 0.8rem;
+            .top-bar .search-bar input {
+                max-width: 200px;
             }
         }
     </style>
@@ -417,8 +355,7 @@
 <body>
     <div class="top-bar">
         <div class="logo">
-            <i class="fas fa-store"></i>
-            <span>TechnoChic</span>
+            <i class="fas fa-store"></i><span>TechnoChic</span>
         </div>
         <div class="search-bar">
             <input type="text" placeholder="ابحث عن منتج">
@@ -434,16 +371,16 @@
         </div>
     </div>
     <nav>
-        <a href="#" class="tab-link active" data-tab="home"><i class="fas fa-home"></i> الرئيسية</a>
-        <a href="#" class="tab-link" data-tab="electronics"><i class="fas fa-tv"></i> الإلكترونيات</a>
-        <a href="#" class="tab-link" data-tab="fashion"><i class="fas fa-tshirt"></i> الأزياء</a>
-        <a href="#" class="tab-link" data-tab="toys"><i class="fas fa-gamepad"></i> الألعاب</a>
-        <a href="#" class="tab-link" data-tab="cart"><i class="fas fa-shopping-cart"></i> السلة</a>
+        <a href="#" class="tab-link active" data-tab="home"><i class="fas fa-home"></i>الرئيسية</a>
+        <a href="#" class="tab-link" data-tab="electronics"><i class="fas fa-tv"></i>الإلكترونيات</a>
+        <a href="#" class="tab-link" data-tab="fashion"><i class="fas fa-tshirt"></i>الأزياء</a>
+        <a href="#" class="tab-link" data-tab="toys"><i class="fas fa-gamepad"></i>الألعاب</a>
+        <a href="#" class="tab-link" data-tab="cart"><i class="fas fa-shopping-cart"></i>السلة</a>
     </nav>
     <div class="container">
         <div class="banner">
             <h1>أهلاً بكم في TechnoChic</h1>
-            <p>تسوق بأفضل الأسعار على مختلف الأجهزة والشاشات</p>
+            <p>تسوق بأفضل الأسعار على مختلف الأجهزة والنشاطات</p>
         </div>
         <div class="slideshow">
             <img src="slide1.jpg" class="active" alt="Slide 1">
@@ -453,9 +390,7 @@
 
         <div id="home" class="section active">
             <h2>منتجات مميزة</h2>
-            <div class="featured-products" id="featured-products">
-                <!-- يتم تحميل المنتجات المميزة ديناميكياً (6 منتجات) -->
-            </div>
+            <div class="featured-products" id="featured-products"></div>
         </div>
 
         <div id="electronics" class="section">
@@ -517,17 +452,14 @@
     </div>
     
     <script>
-        // ---------------------------------
         // Firebase Configuration
-        // ---------------------------------
         var firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_PROJECT_ID.appspot.com",
             messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID",
-            measurementId: "YOUR_MEASUREMENT_ID"
+            appId: "YOUR_APP_ID"
         };
         firebase.initializeApp(firebaseConfig);
 
@@ -565,11 +497,13 @@
                         loadProducts("fashion", "fashion-products", 6);
                     } else if (target === "toys") {
                         loadProducts("toys", "toys-products", 6);
+                    } else if (target === "home") {
+                        loadProducts("electronics", "featured-products", 6);
                     }
                 });
             });
 
-            // عرض الشرائح
+            // Slideshow
             const slides = document.querySelectorAll('.slideshow img');
             let currentSlide = 0;
             function showSlide(index) {
@@ -601,27 +535,24 @@
             closeModal.addEventListener("click", () => {
                 modal.style.display = "none";
             });
-
             window.addEventListener("click", (event) => {
                 if (event.target === modal) {
                     modal.style.display = "none";
                 }
             });
 
-            // زر إتمام الشراء
             const checkoutBtn = document.getElementById("checkout-btn");
             checkoutBtn.addEventListener("click", () => {
                 if (!currentUser) {
                     alert("يرجى تسجيل الدخول لإتمام الشراء");
-                    document.getElementById("authModal").style.display = "block";
+                    modal.style.display = "block";
                 } else {
                     alert("سيتم توجيهك لبوابة الدفع (تجريبي)...");
                 }
             });
 
-            // تحميل المنتجات المميزة (مثلاً من قسم الالكترونيات)
+            // حمّل المنتجات المميزة (من قسم الالكترونيات كمثال)
             loadProducts("electronics", "featured-products", 6);
-
         });
 
         auth.onAuthStateChanged(async (user) => {
@@ -637,22 +568,26 @@
         async function loadProducts(category, containerId, limitCount = 6) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            container.innerHTML = "<p>يتم التحميل...</p>";
+            container.innerHTML = "<p>جاري التحميل...</p>";
             let query = db.collection("products").where("category", "==", category);
             if (limitCount) {
                 query = query.limit(limitCount);
             }
             const snapshot = await query.get();
             container.innerHTML = "";
+            if (snapshot.empty) {
+                container.innerHTML = "<p>لا توجد منتجات</p>";
+                return;
+            }
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const productDiv = document.createElement("div");
                 productDiv.classList.add(category === "electronics" && containerId === "featured-products" ? "featured-product" : "product");
                 productDiv.innerHTML = `
-                    <img src="${data.image}" alt="${data.name}">
+                    <img src="${data.image || 'placeholder.jpg'}" alt="${data.name}">
                     <h3>${data.name}</h3>
-                    <p>${data.description || 'منتج رائع من Google'}</p>
-                    <span class="price">${data.price} ريال</span>
+                    <p>${data.description || 'منتج رائع'}</p>
+                    <span class="price">${data.price || 100} ريال</span>
                     <button class="add-to-cart">أضف إلى السلة</button>
                 `;
                 productDiv.querySelector(".add-to-cart").addEventListener("click", () => handleAddToCart(data));
@@ -665,7 +600,6 @@
                 document.getElementById("authModal").style.display = "block";
                 return;
             }
-
             userCart.push({ name: productData.name, price: productData.price });
             await saveUserCart(currentUser.uid, userCart);
             updateCartUI();
@@ -757,7 +691,7 @@
 
             const email = phone + "@example.com"; 
             auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
+                .then(() => {
                     alert(`تم إنشاء الحساب برقم الهاتف: ${phone}`);
                     document.getElementById("authModal").style.display = "none";
                 })
