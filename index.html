@@ -272,10 +272,67 @@
             70% { box-shadow: 0 0 0 10px rgba(110, 72, 170, 0); }
             100% { box-shadow: 0 0 0 0 rgba(110, 72, 170, 0); }
         }
+
+        .settings-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .settings-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+        }
+
+        .save-settings {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <div class="settings-button" id="settingsButton">⚙️</div>
+        
         <header>
             <div class="logo">
                 <span class="logo-icon">✨</span>
@@ -316,11 +373,26 @@
         </div>
     </div>
 
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h2>الإعدادات</h2>
+            <div>
+                <label for="geminiKey">مفتاح Google Gemini API:</label>
+                <input type="text" id="geminiKey" class="api-key-input" placeholder="أدخل مفتاح Gemini API">
+            </div>
+            <div>
+                <label for="chatgptKey">مفتاح ChatGPT API:</label>
+                <input type="text" id="chatgptKey" class="api-key-input" placeholder="أدخل مفتاح ChatGPT API">
+            </div>
+            <button class="save-settings" id="saveSettings">حفظ الإعدادات</button>
+        </div>
+    </div>
+
     <script>
         // متغيرات التطبيق
-        const API_KEYS = {
-            gemini: "AIzaSyCB3r9pWjvxvVS7gKys3naXv8Rk7Ab_n60",
-            chatgpt: "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"
+        let API_KEYS = {
+            gemini: localStorage.getItem('gemini_api_key') || "AIzaSyCB3r9pWjvxvVS7gKys3naXv8Rk7Ab_n60",
+            chatgpt: localStorage.getItem('chatgpt_api_key') || "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"
         };
         
         let currentModel = 'gemini';
@@ -331,6 +403,16 @@
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
         const modelSelector = document.getElementById('modelSelector');
+        const settingsButton = document.getElementById('settingsButton');
+        const settingsModal = document.getElementById('settingsModal');
+        const geminiKeyInput = document.getElementById('geminiKey');
+        const chatgptKeyInput = document.getElementById('chatgptKey');
+        const saveSettings = document.getElementById('saveSettings');
+        const conversationHistory = document.getElementById('conversationHistory');
+        
+        // تهيئة الإعدادات
+        geminiKeyInput.value = API_KEYS.gemini;
+        chatgptKeyInput.value = API_KEYS.chatgpt;
         
         // تكبير منطقة النص تلقائياً
         messageInput.addEventListener('input', function() {
@@ -351,6 +433,28 @@
                 e.preventDefault();
                 sendMessage();
             }
+        });
+        
+        // فتح/إغلاق إعدادات API
+        settingsButton.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+        
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+        });
+        
+        saveSettings.addEventListener('click', () => {
+            API_KEYS.gemini = geminiKeyInput.value.trim();
+            API_KEYS.chatgpt = chatgptKeyInput.value.trim();
+            
+            localStorage.setItem('gemini_api_key', API_KEYS.gemini);
+            localStorage.setItem('chatgpt_api_key', API_KEYS.chatgpt);
+            
+            addSystemMessage('تم حفظ الإعدادات بنجاح');
+            settingsModal.style.display = 'none';
         });
         
         // دالة إرسال الرسالة
@@ -389,7 +493,7 @@
         
         // دالة جلب الرد من Gemini
         async function fetchGeminiResponse(message) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEYS.gemini}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEYS.gemini}`;
             
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -409,6 +513,10 @@
             
             if (!response.ok) {
                 throw new Error(data.error?.message || 'فشل في الحصول على الرد من Gemini');
+            }
+            
+            if (!data.candidates || !data.candidates[0].content.parts[0].text) {
+                throw new Error('رد غير متوقع من Gemini API');
             }
             
             return data.candidates[0].content.parts[0].text;
@@ -440,6 +548,10 @@
                 throw new Error(data.error?.message || 'فشل في الحصول على الرد من ChatGPT');
             }
             
+            if (!data.choices || !data.choices[0].message.content) {
+                throw new Error('رد غير متوقع من ChatGPT API');
+            }
+            
             return data.choices[0].message.content;
         }
         
@@ -461,7 +573,8 @@
             conversation.push({
                 role: 'user',
                 content: message,
-                model: currentModel
+                model: currentModel,
+                timestamp: new Date().toISOString()
             });
         }
         
@@ -486,8 +599,12 @@
             conversation.push({
                 role: 'assistant',
                 content: message,
-                model: currentModel
+                model: currentModel,
+                timestamp: new Date().toISOString()
             });
+            
+            // تحديث سجل المحادثات
+            updateConversationHistory();
         }
         
         // دالة إضافة رسالة النظام
@@ -537,12 +654,49 @@
         
         // دالة حفظ المحادثة
         function saveConversation(userMessage, aiMessage) {
-            // هنا يمكنك إضافة كود لحفظ المحادثة في localStorage أو قاعدة بيانات
-            console.log('تم حفظ المحادثة:', { userMessage, aiMessage });
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            conversations.push({
+                userMessage,
+                aiMessage,
+                model: currentModel,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('conversations', JSON.stringify(conversations));
+        }
+        
+        // دالة تحديث سجل المحادثات
+        function updateConversationHistory() {
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            conversationHistory.innerHTML = '';
+            
+            if (conversations.length === 0) {
+                conversationHistory.innerHTML = '<p>لا توجد محادثات سابقة</p>';
+                return;
+            }
+            
+            conversations.slice().reverse().forEach((conv, index) => {
+                const convElement = document.createElement('div');
+                convElement.className = 'conversation-item';
+                convElement.style.padding = '0.5rem';
+                convElement.style.borderBottom = '1px solid #eee';
+                convElement.style.cursor = 'pointer';
+                convElement.innerHTML = `
+                    <small>${new Date(conv.timestamp).toLocaleString()}</small>
+                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${conv.userMessage}</p>
+                `;
+                
+                convElement.addEventListener('click', () => {
+                    // يمكنك إضافة وظيفة لتحميل المحادثة عند النقر
+                    addSystemMessage(`عرض محادثة من ${new Date(conv.timestamp).toLocaleString()}`);
+                });
+                
+                conversationHistory.appendChild(convElement);
+            });
         }
         
         // تهيئة أولية
         scrollToBottom();
+        updateConversationHistory();
     </script>
 </body>
 </html>
