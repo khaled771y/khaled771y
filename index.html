@@ -3,1818 +3,1840 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هايبر شات - مساعد ذكي متطور مع قدرات البرمجة</title>
-    <meta name="description" content="هايبر شات - مساعد ذكي متطور من شركة هايبر مانجر بقيادة المهندس خالد النظاري مع قدرات برمجية متقدمة">
+    <title>هايبر شات - المساعد الذكي المتطور</title>
     
-    <!-- الخطوط والأيقونات -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="هايبر شات - مساعد ذكي متطور بثلاثة محركات AI وقدرات برمجية متقدمة">
+    <meta name="keywords" content="ذكاء اصطناعي، مساعد ذكي، برمجة، كود، GPT-4، Gemini">
+    <meta name="author" content="هايبر شات">
     
-    <!-- مكتبة تسليط الضوء على الكود -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="highlight-theme">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/html.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="هايبر شات - المساعد الذكي المتطور">
+    <meta property="og:description" content="مساعد ذكي متطور بثلاثة محركات AI وقدرات برمجية متقدمة">
+    <meta property="og:type" content="website">
+    
+    <!-- Icons -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23007bff'><path d='M12 2L2 7L12 12L22 7L12 2Z'/><path d='M2 17L12 22L22 17'/><path d='M2 12L12 17L22 12'/></svg>">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.2/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     
     <style>
         :root {
-            /* DeepSeek Color Palette */
-            --primary-blue: #2563eb;
-            --primary-blue-light: #3b82f6;
-            --primary-blue-dark: #1d4ed8;
-            --secondary-blue: #60a5fa;
-            --accent-blue: #93c5fd;
+            /* الألوان الأساسية */
+            --primary-color: #007bff;
+            --primary-dark: #0056b3;
+            --primary-light: #4dabf7;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
             
-            --background-primary: #ffffff;
-            --background-secondary: #f8fafc;
-            --background-tertiary: #f1f5f9;
+            /* ألوان الخلفيات */
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --bg-quaternary: #30363d;
+            --bg-overlay: rgba(13, 17, 23, 0.8);
             
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --text-light: #94a3b8;
+            /* ألوان النصوص */
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --text-accent: #58a6ff;
             
-            --border-light: #e2e8f0;
-            --border-medium: #cbd5e1;
-            --border-dark: #94a3b8;
+            /* الحدود والظلال */
+            --border-color: #30363d;
+            --border-hover: #8b949e;
+            --shadow-small: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-medium: 0 4px 6px rgba(0,0,0,0.16);
+            --shadow-large: 0 10px 25px rgba(0,0,0,0.2);
             
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            /* الخطوط */
+            --font-family: 'Segoe UI', Tahoma, Arial, 'Helvetica Neue', sans-serif, 'Noto Sans Arabic';
+            --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
             
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-
-            /* ألوان خاصة بالكود */
-            --code-background: #0d1117;
-            --code-text: #e6edf3;
-            --code-border: #30363d;
-            --copy-btn-bg: #21262d;
-            --copy-btn-hover: #30363d;
-            --copy-success: #238636;
+            /* المساحات */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-xxl: 3rem;
+            
+            /* الانتقالات */
+            --transition-fast: 0.15s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* نصوص القائم */
+            --border-radius-sm: 0.375rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            --border-radius-xl: 1rem;
         }
-
+        
+        /* السمة الفاتحة */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --bg-quaternary: #dee2e6;
+            --bg-overlay: rgba(255, 255, 255, 0.95);
+            
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-muted: #8e8e93;
+            --text-accent: #007bff;
+            
+            --border-color: #dee2e6;
+            --border-hover: #6c757d;
+        }
+        
+        /* السمة الملونة */
+        [data-theme="colorful"] {
+            --primary-color: #ff6b6b;
+            --primary-dark: #e55353;
+            --primary-light: #ff8e8e;
+            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.1);
+            --bg-tertiary: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* إعادة تعيين الأساسيات */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Inter', 'Cairo', sans-serif;
-            direction: rtl;
-            background: var(--background-secondary);
+            font-family: var(--font-family);
+            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            direction: rtl;
         }
-
-        /* Header Styles */
-        .header {
-            background: var(--background-primary);
-            border-bottom: 1px solid var(--border-light);
-            box-shadow: var(--shadow-sm);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+        
+        /* التخطيط الرئيسي */
+        .app-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: 60px 1fr;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main";
+            height: 100vh;
+            overflow: hidden;
         }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
+        
+        .app-header {
+            grid-area: header;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 var(--spacing-lg);
+            backdrop-filter: blur(10px);
         }
-
-        .logo-section {
+        
+        .app-sidebar {
+            grid-area: sidebar;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: var(--spacing-md);
+        }
+        
+        .app-main {
+            grid-area: main;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--bg-primary);
+        }
+        
+        /* العنوان والشعار */
+        .app-logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: var(--spacing-md);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-accent);
         }
-
-        .logo {
-            width: 3rem;
-            height: 3rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: var(--radius-lg);
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: var(--border-radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: 700;
-            font-size: 1.25rem;
-            position: relative;
-            box-shadow: var(--shadow-md);
+            font-weight: bold;
         }
-
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue), var(--accent-blue));
-            border-radius: var(--radius-lg);
-            z-index: -1;
-            opacity: 0.3;
-            filter: blur(4px);
-        }
-
-        .brand-info h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 0.25rem;
-        }
-
-        .brand-info p {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .header-middle {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .engine-badge {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-lg);
-            font-weight: 600;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.95); }
-        }
-
+        
+        /* أدوات التحكم */
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--spacing-md);
         }
-
-        .control-btn {
-            width: 2.5rem;
-            height: 2.5rem;
-            border: none;
-            background: var(--background-secondary);
-            color: var(--text-secondary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid var(--border-light);
-        }
-
-        .control-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Info Panels */
-        .info-panel {
-            position: absolute;
-            top: 100%;
-            right: 1.5rem;
-            background: var(--background-primary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xl);
-            padding: 1.5rem;
-            min-width: 300px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .info-panel.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .panel-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-item {
-            margin-bottom: 0.75rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .info-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .info-item strong {
+        
+        .engine-selector {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
             color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
         }
-
-        /* Main Chat Area */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-            min-height: calc(100vh - 200px);
+        
+        .engine-selector:hover {
+            border-color: var(--border-hover);
         }
-
-        .messages-container {
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+        
+        /* الشريط الجانبي */
+        .sidebar-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .conversation-list {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: var(--spacing-xs);
         }
-
-        /* Message Styles */
-        .message {
+        
+        .conversation-item {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            background: var(--bg-tertiary);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 0.875rem;
+        }
+        
+        .conversation-item:hover {
+            background: var(--bg-quaternary);
+            border-color: var(--border-color);
+        }
+        
+        .conversation-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .new-chat-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .new-chat-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        /* منطقة المحادثة */
+        .chat-area {
+            flex: 1;
             display: flex;
-            gap: 1rem;
-            max-width: 100%;
+            flex-direction: column;
+            overflow: hidden;
         }
-
+        
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+        
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .messages-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .messages-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        
+        .message {
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-md);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         .message.user {
             flex-direction: row-reverse;
         }
-
-        .message.user .message-content {
-            align-items: flex-end;
-        }
-
+        
         .message-avatar {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            color: white;
+            font-weight: 600;
             flex-shrink: 0;
         }
-
+        
         .message.user .message-avatar {
-            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+            background: var(--primary-color);
+            color: white;
         }
-
-        .message.ai .message-avatar {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+        
+        .message.assistant .message-avatar {
+            background: var(--bg-tertiary);
+            color: var(--text-accent);
         }
-
+        
         .message-content {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .message-bubble {
-            background: var(--background-primary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            padding: 1rem 1.5rem;
-            box-shadow: var(--shadow-sm);
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
             position: relative;
-            max-width: 100%;
-            word-wrap: break-word;
         }
-
-        .message.user .message-bubble {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+        
+        .message.user .message-content {
+            background: var(--primary-color);
             color: white;
-            border: none;
         }
-
-        .message-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-        }
-
-        .message-meta {
+        
+        .message-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid var(--border-light);
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.875rem;
         }
-
-        .message.user .message-meta {
-            border-top-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .message-time {
+        
+        .message-engine {
+            background: var(--bg-quaternary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
             font-size: 0.75rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
-
-        .message.user .message-time {
+        
+        .message.user .message-engine {
+            background: rgba(255, 255, 255, 0.2);
             color: rgba(255, 255, 255, 0.8);
         }
-
+        
         .message-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
         }
-
+        
         .action-btn {
-            width: 2rem;
-            height: 2rem;
-            border: none;
-            background: var(--background-secondary);
-            color: var(--text-muted);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.75rem;
-        }
-
-        .action-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* كود البرمجة */
-        .code-block {
-            background: var(--code-background);
-            border: 1px solid var(--code-border);
-            border-radius: var(--radius-lg);
-            margin: 1rem 0;
-            overflow: hidden;
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-            position: relative;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .code-header {
-            background: var(--copy-btn-bg);
-            border-bottom: 1px solid var(--code-border);
-            padding: 0.75rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.875rem;
-        }
-
-        .code-language {
-            color: var(--code-text);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .language-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 2px;
-        }
-
-        .copy-code-btn {
-            background: var(--copy-btn-bg);
-            border: 1px solid var(--code-border);
-            color: var(--code-text);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Inter', 'Cairo', sans-serif;
-        }
-
-        .copy-code-btn:hover {
-            background: var(--copy-btn-hover);
-            transform: translateY(-1px);
-        }
-
-        .copy-code-btn.success {
-            background: var(--copy-success);
-            border-color: var(--copy-success);
-        }
-
-        .code-content {
-            padding: 1rem;
-            overflow-x: auto;
-            background: var(--code-background);
-            color: var(--code-text);
-            line-height: 1.5;
-            font-size: 0.875rem;
-        }
-
-        .code-content pre {
-            margin: 0;
-            padding: 0;
             background: none;
-            color: inherit;
-            font-family: inherit;
-            font-size: inherit;
-            line-height: inherit;
-        }
-
-        .code-content code {
-            background: none;
-            padding: 0;
-            font-family: inherit;
-            color: inherit;
-            font-size: inherit;
-        }
-
-        /* تحسين hljs */
-        .hljs {
-            background: var(--code-background) !important;
-            color: var(--code-text) !important;
-            padding: 0 !important;
-        }
-
-        /* أزرار إضافية للكود */
-        .code-actions {
-            background: var(--copy-btn-bg);
-            border-top: 1px solid var(--code-border);
-            padding: 0.5rem 1rem;
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .code-action-btn {
-            background: var(--copy-btn-bg);
-            border: 1px solid var(--code-border);
-            color: var(--code-text);
-            padding: 0.375rem 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            font-family: 'Inter', 'Cairo', sans-serif;
-        }
-
-        .code-action-btn:hover {
-            background: var(--copy-btn-hover);
-            transform: translateY(-1px);
-        }
-
-        .code-action-btn i {
-            font-size: 0.75rem;
-        }
-
-        /* Typing Indicator */
-        .typing-indicator {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .typing-avatar {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .typing-content {
-            background: var(--background-primary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            padding: 1rem 1.5rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 0.25rem;
-            align-items: center;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Input Area */
-        .input-area {
-            background: var(--background-primary);
-            border-top: 1px solid var(--border-light);
-            box-shadow: var(--shadow-lg);
-            position: sticky;
-            bottom: 0;
-            z-index: 40;
-        }
-
-        .input-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
-
-        .input-wrapper {
-            background: var(--background-secondary);
-            border: 2px solid var(--border-light);
-            border-radius: var(--radius-xl);
-            display: flex;
-            align-items: flex-end;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            transition: border-color 0.2s ease;
-            position: relative;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .input-btn {
-            width: 2.75rem;
-            height: 2.75rem;
-            border: none;
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.125rem;
-            flex-shrink: 0;
-        }
-
-        .record-btn {
-            background: var(--background-primary);
+            border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            border: 1px solid var(--border-medium);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
         }
-
-        .record-btn:hover {
-            background: var(--primary-blue);
+        
+        .action-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+        
+        .action-btn.active {
+            background: var(--primary-color);
             color: white;
-            transform: scale(1.05);
+            border-color: var(--primary-color);
         }
-
-        .record-btn.recording {
-            background: #ef4444;
-            color: white;
-            animation: pulse 1s infinite;
+        
+        /* منطقة الإدخال */
+        .input-area {
+            padding: var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
         }
-
-        .send-btn {
-            background: var(--primary-blue);
-            color: white;
+        
+        .input-container {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: flex-end;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-md);
+            transition: all var(--transition-fast);
         }
-
-        .send-btn:hover {
-            background: var(--primary-blue-dark);
-            transform: scale(1.05);
+        
+        .input-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
-
-        .send-btn:disabled {
-            background: var(--border-medium);
-            color: var(--text-light);
-            cursor: not-allowed;
-            transform: none;
-        }
-
+        
         .message-input {
             flex: 1;
+            background: none;
             border: none;
-            background: transparent;
+            outline: none;
             color: var(--text-primary);
             font-size: 1rem;
-            font-family: inherit;
-            resize: none;
-            outline: none;
-            min-height: 2.75rem;
-            max-height: 200px;
-            padding: 0.625rem 0;
             line-height: 1.5;
+            resize: none;
+            min-height: 20px;
+            max-height: 150px;
+            overflow-y: auto;
         }
-
+        
         .message-input::placeholder {
             color: var(--text-muted);
         }
-
-        .engine-info {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-light);
-            margin-top: 0.75rem;
+        
+        .input-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
         }
-
-        /* Footer */
-        .footer {
-            background: var(--background-primary);
-            border-top: 1px solid var(--border-light);
-            padding: 1rem;
-            text-align: center;
-            color: var(--text-muted);
+        
+        .input-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .input-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+        
+        .input-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .input-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .input-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* تحميل الملفات */
+        .file-input {
+            display: none;
+        }
+        
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .file-item {
+            background: var(--bg-tertiary);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
             font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
-
-        /* Dark Mode */
-        body.dark {
-            --background-primary: #0f172a;
-            --background-secondary: #1e293b;
-            --background-tertiary: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --text-light: #64748b;
-            --border-light: #334155;
-            --border-medium: #475569;
-            --border-dark: #64748b;
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 1rem;
         }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 1rem;
+        
+        /* حالة الكتابة */
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .typing-indicator.show {
+            display: flex;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
             }
-
-            .brand-info h1 {
-                font-size: 1.25rem;
-            }
-
-            .brand-info p {
-                font-size: 0.75rem;
-            }
-
-            .engine-badge {
-                font-size: 0.75rem;
-                padding: 0.375rem 0.75rem;
-            }
-
-            .main-container {
-                padding: 1rem;
-            }
-
-            .message {
-                gap: 0.75rem;
-            }
-
-            .message-avatar {
-                width: 2rem;
-                height: 2rem;
-                font-size: 0.875rem;
-            }
-
-            .message-bubble {
-                padding: 0.75rem 1rem;
-            }
-
-            .input-container {
-                padding: 1rem;
-            }
-
-            .info-panel {
-                right: 1rem;
-                left: 1rem;
-                min-width: auto;
-            }
-
-            .code-header {
-                padding: 0.5rem 0.75rem;
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: flex-start;
-            }
-
-            .code-actions {
-                justify-content: center;
+            30% {
+                opacity: 1;
+                transform: scale(1.2);
             }
         }
-
-        /* تحسينات إضافية للكود */
-        .inline-code {
-            background: var(--background-tertiary);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-sm);
-            padding: 0.125rem 0.375rem;
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        
+        /* كود البرمجة */
+        .message-content pre {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            font-family: var(--font-mono);
             font-size: 0.875rem;
-            color: var(--primary-blue);
+            line-height: 1.5;
         }
-
+        
+        .message-content code {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            background: var(--bg-tertiary);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .message-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        /* الجداول */
+        .message-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .message-content th,
+        .message-content td {
+            border: 1px solid var(--border-color);
+            padding: var(--spacing-sm);
+            text-align: right;
+        }
+        
+        .message-content th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+        }
+        
+        /* القوائم */
+        .message-content ul,
+        .message-content ol {
+            margin: var(--spacing-md) 0;
+            padding-right: var(--spacing-lg);
+        }
+        
+        .message-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* الروابط */
+        .message-content a {
+            color: var(--text-accent);
+            text-decoration: none;
+        }
+        
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* الاقتباسات */
+        .message-content blockquote {
+            border-right: 3px solid var(--primary-color);
+            padding-right: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
         /* التنبيهات */
-        .notification {
+        .toast {
             position: fixed;
             top: 20px;
-            right: 20px;
-            background: var(--copy-success);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xl);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-large);
             z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-10px);
+            transition: all var(--transition-medium);
         }
-
-        .notification.show {
-            transform: translateX(0);
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
-
-        .notification.error {
-            background: #ef4444;
+        
+        .toast.success {
+            border-color: var(--success-color);
+            background: var(--success-color);
+            color: white;
         }
-
-        .notification.info {
-            background: var(--primary-blue);
+        
+        .toast.error {
+            border-color: var(--danger-color);
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        /* النوافذ المنبثقة */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-overlay);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-large);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        /* الاستجابة للجوال */
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main";
+            }
+            
+            .app-sidebar {
+                position: fixed;
+                top: 60px;
+                right: -300px;
+                width: 300px;
+                height: calc(100vh - 60px);
+                z-index: 100;
+                transition: right var(--transition-medium);
+            }
+            
+            .app-sidebar.open {
+                right: 0;
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-overlay);
+                z-index: 99;
+                display: none;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+            }
+            
+            .header-controls {
+                gap: var(--spacing-sm);
+            }
+            
+            .engine-selector {
+                padding: var(--spacing-xs) var(--spacing-sm);
+                font-size: 0.75rem;
+            }
+            
+            .messages-container {
+                padding: var(--spacing-md);
+            }
+            
+            .message {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .message-avatar {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .input-area {
+                padding: var(--spacing-md);
+            }
+        }
+        
+        /* التحسينات البصرية */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hover-lift {
+            transition: transform var(--transition-fast);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Animation for loading */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Hidden utility */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Text utilities */
+        .text-success {
+            color: var(--success-color) !important;
+        }
+        
+        .text-danger {
+            color: var(--danger-color) !important;
+        }
+        
+        .text-warning {
+            color: var(--warning-color) !important;
+        }
+        
+        .text-info {
+            color: var(--info-color) !important;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <!-- Logo Section -->
-            <div class="logo-section">
-                <div class="logo">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="brand-info">
-                    <h1>هايبر شات</h1>
-                    <p>مساعد ذكي متطور •</p>
-                </div>
+<body data-theme="dark">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="app-logo">
+                <div class="logo-icon">هـ</div>
+                <span class="gradient-text">هايبر شات</span>
             </div>
-
-            <!-- Engine Badge -->
-            <div class="header-middle">
-                <div class="engine-badge" id="engineBadge">
-                    <div class="pulse-dot"></div>
-                    <span>هايبر 4</span>
-                </div>
-            </div>
-
-            <!-- Header Controls -->
+            
             <div class="header-controls">
-                <button class="control-btn" id="switchEngineBtn" title="تبديل المحرك">
-                    <i class="fas fa-sync-alt"></i>
+                <select class="engine-selector" id="engineSelector">
+                    <option value="hyper-4">🚀 هايبر 4 (GPT-4)</option>
+                    <option value="hyper-1">⚡ هايبر 1 (Gemini)</option>
+                    <option value="hyper-plus">🎯 هايبر بلس (ذكي)</option>
+                </select>
+                
+                <button class="theme-toggle" id="themeToggle" title="تغيير السمة">
+                    🌙
                 </button>
-                <button class="control-btn" id="companyInfoBtn" title="معلومات الشركة">
-                    <i class="fas fa-info-circle"></i>
-                </button>
-                <button class="control-btn" id="settingsBtn" title="الإعدادات">
-                    <i class="fas fa-cog"></i>
-                </button>
-                <button class="control-btn" id="darkModeBtn" title="الوضع المظلم">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Company Info Panel -->
-        <div class="info-panel" id="companyInfo">
-            <h3 class="panel-title">
-                <i class="fas fa-building"></i>
-                شركة هايبر مانجر
-            </h3>
-            <div class="panel-content">
-                <div class="info-item"><strong>المطور:</strong> المهندس خالد النظاري</div>
-                <div class="info-item"><strong>الهاتف:</strong> 771774634</div>
-                <div class="info-item"><strong>التخصص:</strong> حلول الذكاء الاصطناعي المتقدمة</div>
-                <div class="info-item"><strong>الرؤية:</strong> ريادة مستقبل التكنولوجيا</div>
-                <div class="info-item"><strong>الجديد:</strong> قدرات برمجية متطورة مع تسليط الضوء على الكود</div>
-            </div>
-        </div>
-
-        <!-- Settings Panel -->
-        <div class="info-panel" id="settingsPanel">
-            <h3 class="panel-title">
-                <i class="fas fa-cog"></i>
-                الإعدادات
-            </h3>
-            <div class="panel-content">
-                <div class="info-item">
-                    <strong>المحرك الحالي:</strong> 
-                    <span id="currentEngineDisplay">هايبر 4</span>
-                </div>
-                <div class="info-item">
-                    <strong>تفعيل الصوت:</strong> مفعل
-                </div>
-                <div class="info-item">
-                    <strong>إنشاء الصور:</strong> مفعل
-                </div>
-                <div class="info-item">
-                    <strong>تسليط الضوء على الكود:</strong> مفعل
-                </div>
-                <div class="info-item">
-                    <strong>نسخ الكود:</strong> مفعل
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Chat Area -->
-    <main class="main-container">
-        <div class="messages-container" id="messagesContainer">
-            <!-- Messages will be rendered here -->
-        </div>
-    </main>
-
-    <!-- Input Area -->
-    <footer class="input-area">
-        <div class="input-container">
-            <!-- Input Field -->
-            <div class="input-wrapper">
-                <!-- Record Button -->
-                <button class="input-btn record-btn" id="recordBtn" title="التسجيل الصوتي">
-                    <i class="fas fa-microphone"></i>
-                </button>
-
-                <!-- Text Input -->
-                <textarea 
-                    id="messageInput" 
-                    class="message-input"
-                    placeholder="اكتب رسالتك هنا"
-                    rows="1"
-                ></textarea>
-
-                <!-- Send Button -->
-                <button class="input-btn send-btn" id="sendBtn" title="إرسال">
-                    <i class="fas fa-paper-plane"></i>
+                
+                <button class="input-btn" id="sidebarToggle" title="فتح القائمة">
+                    ☰
                 </button>
             </div>
-
-            <!-- Engine Info -->
-            <div class="engine-info" id="engineInfo">
-                مدعوم بـ هايبر 4 • محرك متقدم للمحادثات المعقدة والبرمجة
+        </header>
+        
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="sidebar">
+            <button class="new-chat-btn" id="newChatBtn">
+                ➕ محادثة جديدة
+            </button>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">المحادثات</h3>
+                <div class="conversation-list" id="conversationList">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
             </div>
-        </div>
-    </footer>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>تطوير هايبر مانجر © 2025•</p>
-    </div>
-
-    <!-- إشعارات -->
-    <div class="notification" id="notification"></div>
-
-    <script>
-        // Global Variables
-        let messages = [];
-        let currentEngine = 'hyper4';
-        let isDarkMode = false;
-        let isTyping = false;
-        let isRecording = false;
-
-        // API Keys
-        const OPENAI_API_KEY = "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";
-        const GEMINI_API_KEY = "AIzaSyCB3r9pWjvxvVS7gKys3naXv8Rk7Ab_n60";
-
-        // DOM Elements
-        const messagesContainer = document.getElementById('messagesContainer');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const recordBtn = document.getElementById('recordBtn');
-        const switchEngineBtn = document.getElementById('switchEngineBtn');
-        const darkModeBtn = document.getElementById('darkModeBtn');
-        const companyInfoBtn = document.getElementById('companyInfoBtn');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const companyInfo = document.getElementById('companyInfo');
-        const settingsPanel = document.getElementById('settingsPanel');
-        const engineBadge = document.getElementById('engineBadge');
-        const currentEngineDisplay = document.getElementById('currentEngineDisplay');
-        const engineInfo = document.getElementById('engineInfo');
-        const notification = document.getElementById('notification');
-
-        // البرمجة - كلمات مفتاحية للتعرف على طلبات البرمجة
-        const PROGRAMMING_KEYWORDS = [
-            // عربي
-            'اكتب كود', 'أنشئ كود', 'برمج', 'كود', 'دالة', 'فانكشن', 'كلاس', 'فئة',
-            'متغير', 'مصفوفة', 'قائمة', 'حلقة تكرار', 'شرط', 'استعلام', 'قاعدة بيانات',
-            'الگوریتم', 'خوارزمية', 'مكتبة', 'إطار عمل', 'API', 'JSON', 'XML', 'HTML', 'CSS', 'JavaScript',
-            'Python', 'Java', 'C++', 'PHP', 'SQL', 'React', 'Vue', 'Angular', 'Node.js',
-            'اكتب برنامج', 'أنشئ تطبيق', 'صمم موقع', 'طور', 'برمجة', 'تطوير',
-            // إنجليزي
-            'write code', 'create code', 'program', 'function', 'class', 'variable',
-            'array', 'list', 'loop', 'condition', 'query', 'database', 'algorithm',
-            'library', 'framework', 'script', 'code example', 'coding', 'programming',
-            'develop', 'build app', 'create function', 'write script'
-        ];
-
-        // لغات البرمجة المدعومة
-        const PROGRAMMING_LANGUAGES = {
-            'javascript': { name: 'JavaScript', icon: '🟨', color: '#f7df1e' },
-            'python': { name: 'Python', icon: '🐍', color: '#3776ab' },
-            'html': { name: 'HTML', icon: '🌐', color: '#e34c26' },
-            'css': { name: 'CSS', icon: '🎨', color: '#1572b6' },
-            'java': { name: 'Java', icon: '☕', color: '#ed8b00' },
-            'cpp': { name: 'C++', icon: '⚡', color: '#00599c' },
-            'php': { name: 'PHP', icon: '🐘', color: '#777bb4' },
-            'sql': { name: 'SQL', icon: '🗃️', color: '#336791' },
-            'json': { name: 'JSON', icon: '📋', color: '#000000' },
-            'xml': { name: 'XML', icon: '📄', color: '#ff6600' },
-            'bash': { name: 'Bash', icon: '💻', color: '#4eaa25' },
-            'powershell': { name: 'PowerShell', icon: '🔷', color: '#012456' }
-        };
-
-        // Initialize App
-        function initApp() {
-            // تهيئة highlight.js
-            hljs.highlightAll();
             
-            addMessage({
-                text: `مرحباً بك في هايبر شات المطور! 🚀💻 أنا مساعدك الذكي المتطور من شركة هايبر مانجر مع قدرات برمجية متقدمة.
-
-يمكنني الآن:
-
-• 💬 المحادثة الذكية مع هايبر 4 و هايبر 1
-• 🎤 التحدث معك بالصوت  
-• 🎨 إنشاء الصور بناءً على وصفك
-• 💻 **كتابة أكواد برمجية دقيقة مع تسليط الضوء على النحو**
-• 📋 **نسخ الأكواد بسهولة مع أزرار مخصصة**
-• 🔧 **شرح الأكواد وتحسينها**
-• 🌟 **دعم جميع لغات البرمجة الشائعة**
-
-**جرب طلبات البرمجة مثل:**
-• "اكتب كود JavaScript لحساب المتوسط"
-• "أنشئ دالة Python لفرز القوائم"
-• "كود HTML لصفحة ويب بسيطة"
-• "استعلام SQL للبحث في قاعدة البيانات"
-
-كيف يمكنني مساعدتك في البرمجة اليوم؟ 🤖✨`,
-                sender: 'ai',
-                timestamp: getCurrentTime()
-            });
-
-            bindEvents();
-            updateEngineUI();
-        }
-
-        // Bind Events
-        function bindEvents() {
-            sendBtn.addEventListener('click', handleSendMessage);
-            messageInput.addEventListener('keypress', handleKeyPress);
-            messageInput.addEventListener('input', autoResizeTextarea);
-            recordBtn.addEventListener('click', toggleRecording);
-            switchEngineBtn.addEventListener('click', switchEngine);
-            darkModeBtn.addEventListener('click', toggleDarkMode);
-            companyInfoBtn.addEventListener('click', toggleCompanyInfo);
-            settingsBtn.addEventListener('click', toggleSettings);
-        }
-
-        // Handle Key Press
-        function handleKeyPress(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage();
-            }
-        }
-
-        // Auto Resize Textarea
-        function autoResizeTextarea() {
-            messageInput.style.height = 'auto';
-            messageInput.style.height = Math.min(messageInput.scrollHeight, 200) + 'px';
-        }
-
-        // Get Current Time
-        function getCurrentTime() {
-            return new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-        }
-
-        // التعرف على طلبات البرمجة
-        function isProgrammingRequest(text) {
-            const lowerText = text.toLowerCase();
-            return PROGRAMMING_KEYWORDS.some(keyword => 
-                lowerText.includes(keyword.toLowerCase())
-            );
-        }
-
-        // تحديد لغة البرمجة من النص
-        function detectProgrammingLanguage(text) {
-            const lowerText = text.toLowerCase();
-            
-            // البحث عن لغة محددة في النص
-            for (const [key, lang] of Object.entries(PROGRAMMING_LANGUAGES)) {
-                if (lowerText.includes(key) || lowerText.includes(lang.name.toLowerCase())) {
-                    return key;
-                }
-            }
-            
-            // التحقق من الكلمات المرتبطة بلغات معينة
-            if (lowerText.includes('موقع') || lowerText.includes('صفحة ويب') || lowerText.includes('website') || lowerText.includes('web page')) {
-                return 'html';
-            }
-            if (lowerText.includes('تصميم') || lowerText.includes('تنسيق') || lowerText.includes('styling') || lowerText.includes('design')) {
-                return 'css';
-            }
-            if (lowerText.includes('قاعدة بيانات') || lowerText.includes('استعلام') || lowerText.includes('database') || lowerText.includes('query')) {
-                return 'sql';
-            }
-            if (lowerText.includes('تعلم آلة') || lowerText.includes('ذكاء اصطناعي') || lowerText.includes('machine learning') || lowerText.includes('ai')) {
-                return 'python';
-            }
-            
-            return 'javascript'; // افتراضي
-        }
-
-        // إنشاء كتلة الكود
-        function createCodeBlock(code, language = 'javascript', explanation = '') {
-            const langInfo = PROGRAMMING_LANGUAGES[language] || PROGRAMMING_LANGUAGES['javascript'];
-            const codeId = 'code-' + Date.now();
-            
-            return `
-                <div class="code-block">
-                    <div class="code-header">
-                        <div class="code-language">
-                            <span class="language-icon" style="background: ${langInfo.color}">${langInfo.icon}</span>
-                            ${langInfo.name}
-                        </div>
-                        <button class="copy-code-btn" onclick="copyCode('${codeId}')">
-                            <i class="fas fa-copy"></i>
-                            نسخ الكود
-                        </button>
-                    </div>
-                    <div class="code-content">
-                        <pre><code id="${codeId}" class="${language}">${escapeHtml(code)}</code></pre>
-                    </div>
-                    <div class="code-actions">
-                        <button class="code-action-btn" onclick="explainCode('${escapeForJs(code)}', '${language}')">
-                            <i class="fas fa-question-circle"></i>
-                            شرح الكود
-                        </button>
-                        <button class="code-action-btn" onclick="improveCode('${escapeForJs(code)}', '${language}')">
-                            <i class="fas fa-magic"></i>
-                            تحسين الكود
-                        </button>
-                        <button class="code-action-btn" onclick="runCode('${escapeForJs(code)}', '${language}')">
-                            <i class="fas fa-play"></i>
-                            تشغيل
-                        </button>
-                    </div>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">الإعدادات</h3>
+                <div class="settings-controls">
+                    <label>
+                        <input type="checkbox" id="autoSpeak"> النطق التلقائي
+                    </label>
+                    <label>
+                        <input type="checkbox" id="saveConversations" checked> حفظ المحادثات
+                    </label>
                 </div>
-                ${explanation ? `<div style="margin-top: 1rem; padding: 1rem; background: var(--background-tertiary); border-radius: var(--radius-lg); border-left: 4px solid var(--primary-blue);"><strong>شرح الكود:</strong><br>${explanation}</div>` : ''}
-            `;
-        }
-
-        // Escape HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Escape for JavaScript
-        function escapeForJs(text) {
-            return text.replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
-        }
-
-        // نسخ الكود
-        function copyCode(codeId) {
-            const codeElement = document.getElementById(codeId);
-            if (codeElement) {
-                const code = codeElement.textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    showNotification('تم نسخ الكود بنجاح! 📋', 'success');
-                    
-                    // تغيير زر النسخ مؤقتاً
-                    const copyBtn = codeElement.closest('.code-block').querySelector('.copy-code-btn');
-                    const originalHTML = copyBtn.innerHTML;
-                    copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
-                    copyBtn.classList.add('success');
-                    
-                    setTimeout(() => {
-                        copyBtn.innerHTML = originalHTML;
-                        copyBtn.classList.remove('success');
-                    }, 2000);
-                }).catch(() => {
-                    showNotification('فشل في نسخ الكود', 'error');
-                });
-            }
-        }
-
-        // شرح الكود
-        async function explainCode(code, language) {
-            const explanation = `شرح الكود بلغة ${PROGRAMMING_LANGUAGES[language]?.name || language}:\n\n${code}`;
-            
-            addMessage({
-                text: explanation,
-                sender: 'user',
-                timestamp: getCurrentTime()
-            });
-
-            isTyping = true;
-            showTypingIndicator();
-
-            try {
-                const response = await callAIForCodeExplanation(code, language);
-                hideTypingIndicator();
-                addMessage({
-                    text: response,
-                    sender: 'ai',
-                    timestamp: getCurrentTime()
-                });
-            } catch (error) {
-                hideTypingIndicator();
-                addMessage({
-                    text: 'عذراً، حدث خطأ في شرح الكود. يرجى المحاولة مرة أخرى.',
-                    sender: 'ai',
-                    timestamp: getCurrentTime()
-                });
-            } finally {
-                isTyping = false;
-            }
-        }
-
-        // تحسين الكود
-        async function improveCode(code, language) {
-            const improvementRequest = `حسن هذا الكود بلغة ${PROGRAMMING_LANGUAGES[language]?.name || language}:\n\n${code}`;
-            
-            addMessage({
-                text: improvementRequest,
-                sender: 'user',
-                timestamp: getCurrentTime()
-            });
-
-            isTyping = true;
-            showTypingIndicator();
-
-            try {
-                const response = await callAIForCodeImprovement(code, language);
-                hideTypingIndicator();
-                addMessage({
-                    text: response,
-                    sender: 'ai',
-                    timestamp: getCurrentTime()
-                });
-            } catch (error) {
-                hideTypingIndicator();
-                addMessage({
-                    text: 'عذراً، حدث خطأ في تحسين الكود. يرجى المحاولة مرة أخرى.',
-                    sender: 'ai',
-                    timestamp: getCurrentTime()
-                });
-            } finally {
-                isTyping = false;
-            }
-        }
-
-        // تشغيل الكود (محاكاة)
-        function runCode(code, language) {
-            if (language === 'javascript') {
-                try {
-                    // تشغيل JavaScript بحذر
-                    const result = eval(code);
-                    showNotification(`نتيجة تشغيل الكود: ${result}`, 'info');
-                } catch (error) {
-                    showNotification(`خطأ في تشغيل الكود: ${error.message}`, 'error');
-                }
-            } else {
-                showNotification(`تشغيل ${PROGRAMMING_LANGUAGES[language]?.name || language} غير مدعوم حالياً في المتصفح`, 'info');
-            }
-        }
-
-        // عرض الإشعارات
-        function showNotification(message, type = 'info') {
-            notification.textContent = message;
-            notification.className = `notification ${type} show`;
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Add Message
-        function addMessage(message) {
-            messages.push(message);
-            renderMessage(message);
-            scrollToBottom();
-        }
-
-        // معالجة النصوص التي تحتوي على كود
-        function processCodeInText(text) {
-            // البحث عن كتل الكود
-            const codeBlockRegex = /```(\w+)?\n([\s\S]*?)\n```/g;
-            const inlineCodeRegex = /`([^`]+)`/g;
-            
-            // معالجة كتل الكود
-            text = text.replace(codeBlockRegex, (match, language, code) => {
-                const lang = language || 'javascript';
-                return createCodeBlock(code.trim(), lang);
-            });
-            
-            // معالجة الكود المضمن
-            text = text.replace(inlineCodeRegex, (match, code) => {
-                return `<span class="inline-code">${escapeHtml(code)}</span>`;
-            });
-            
-            return text;
-        }
-
-        // Render Message
-        function renderMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${message.sender}`;
-            
-            let processedText = message.text;
-            
-            // معالجة الكود في النص
-            if (message.sender === 'ai') {
-                processedText = processCodeInText(processedText);
-            }
-            
-            messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <i class="fas ${message.sender === 'user' ? 'fa-user' : 'fa-robot'}"></i>
-                </div>
-                <div class="message-content">
-                    <div class="message-bubble">
-                        ${message.imageUrl ? `
-                            <div style="margin-bottom: 1rem;">
-                                <img src="${message.imageUrl}" alt="صورة مولدة" style="width: 100%; max-width: 400px; border-radius: 0.75rem; box-shadow: var(--shadow-md);" loading="lazy">
+            </div>
+        </aside>
+        
+        <!-- Sidebar Overlay for Mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="chat-area">
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Welcome Message -->
+                    <div class="message assistant" id="welcomeMessage">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span>هايبر شات</span>
+                                <span class="message-engine">مساعد ذكي متطور</span>
                             </div>
-                        ` : ''}
-                        
-                        <div class="message-text">${processedText}</div>
-                        
-                        <div class="message-meta">
-                            <span class="message-time">${message.timestamp}</span>
-                            ${message.sender === 'ai' ? `
-                                <div class="message-actions">
-                                    <button class="action-btn" onclick="playTextToSpeech('${escapeForJs(message.text)}')" title="تشغيل الصوت">
-                                        <i class="fas fa-volume-up"></i>
-                                    </button>
-                                    <button class="action-btn" onclick="copyMessage('${escapeForJs(message.text)}')" title="نسخ">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                    <button class="action-btn" onclick="regenerateResponse(${messages.length - 1})" title="إعادة توليد">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </div>
-                            ` : ''}
+                            <div class="message-text">
+                                <h2>مرحباً بك في هايبر شات! 🚀</h2>
+                                <p>أنا مساعدك الذكي المتطور مع قدرات متقدمة في:</p>
+                                <ul>
+                                    <li>🧠 <strong>ثلاثة محركات ذكاء اصطناعي:</strong> GPT-4، Gemini، والمحرك الذكي</li>
+                                    <li>🎵 <strong>تحويل النص إلى صوت واقعي</strong> بجودة عالية</li>
+                                    <li>💻 <strong>البرمجة والتطوير</strong> بأكثر من 25 لغة</li>
+                                    <li>📊 <strong>تحليل الملفات والبيانات</strong> والصور</li>
+                                    <li>🎨 <strong>إنشاء المحتوى</strong> والتصاميم</li>
+                                    <li>🔍 <strong>البحث والتحليل</strong> المتقدم</li>
+                                </ul>
+                                <p><strong>كيف يمكنني مساعدتك اليوم؟</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            `;
-
-            messagesContainer.appendChild(messageDiv);
-            
-            // تطبيق highlight.js على الكود الجديد
-            if (message.sender === 'ai') {
-                messageDiv.querySelectorAll('pre code').forEach((block) => {
-                    hljs.highlightElement(block);
-                });
-            }
-        }
-
-        // Show Typing Indicator
-        function showTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.id = 'typingIndicator';
-            
-            typingDiv.innerHTML = `
-                <div class="typing-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="typing-content">
+                
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>🤖 يكتب...</span>
                     <div class="typing-dots">
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
                     </div>
                 </div>
-            `;
-
-            messagesContainer.appendChild(typingDiv);
-            scrollToBottom();
-        }
-
-        // Hide Typing Indicator
-        function hideTypingIndicator() {
-            const typingIndicator = document.getElementById('typingIndicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
-        }
-
-        // Scroll to Bottom
-        function scrollToBottom() {
-            setTimeout(() => {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 100);
-        }
-
-        // Check if About Developer
-        function isAboutDeveloper(text) {
-            const aboutKeywords = ['من أنت', 'من صنعك', 'من طورك', 'من المطور', 'معلومات عنك', 'خالد النظاري', 'هايبر مانجر'];
-            return aboutKeywords.some(keyword => text.includes(keyword));
-        }
-
-        // Get Developer Response
-        function getDeveloperResponse() {
-            return `أنا هايبر شات، مساعد ذكي متطور من تطوير شركة هايبر مانجر بقيادة المهندس خالد النظاري.
-
-🏢 **عن الشركة:**
-• **الاسم:** شركة هايبر مانجر
-• **المؤسس:** المهندس خالد النظاري
-• **التخصص:** حلول الذكاء الاصطناعي المتقدمة والبرمجة
-• **الهاتف:** 771774634
-
-💻 **قدراتي الجديدة:**
-• محادثة ذكية متقدمة
-• إنشاء وتحليل الأكواد البرمجية
-• دعم جميع لغات البرمجة الشائعة
-• تسليط الضوء على النحو والتنسيق
-• نسخ الأكواد بسهولة
-• شرح وتحسين الأكواد
-
-🚀 **الرؤية:** ريادة مستقبل التكنولوجيا وتطوير حلول برمجية متطورة`;
-        }
-
-        // Check if Image Request
-        function isImageRequest(text) {
-            const imageKeywords = ['ارسم', 'اصنع صورة', 'أنشئ صورة', 'صورة', 'رسم', 'تصميم', 'draw', 'create image', 'generate image'];
-            return imageKeywords.some(keyword => text.includes(keyword));
-        }
-
-        // تحسين prompt للبرمجة
-        function createProgrammingPrompt(userMessage) {
-            const language = detectProgrammingLanguage(userMessage);
-            const langInfo = PROGRAMMING_LANGUAGES[language];
+            </div>
             
-            return `أنت هايبر شات، مساعد ذكي متطور متخصص في البرمجة من تطوير شركة هايبر مانجر بقيادة المهندس خالد النظاري.
-
-المطلوب: ${userMessage}
-
-تعليمات مهمة للبرمجة:
-1. اكتب كود عالي الجودة وفعال
-2. أضف تعليقات توضيحية بالعربية
-3. استخدم أفضل الممارسات في البرمجة
-4. تنسيق الكود: \`\`\`${language}
-5. اشرح الكود باختصار بعد كتابته
-6. إذا كان الكود معقد، قسمه لأجزاء صغيرة
-
-اللغة المحتملة: ${langInfo?.name || 'JavaScript'}
-استخدم هذا التنسيق للكود:
-\`\`\`${language}
-// الكود هنا
-\`\`\`
-
-تجيب باللغة العربية بطريقة ودودة ومفيدة ودقيقة في البرمجة.`;
-        }
-
-        // Call AI for Code Explanation
-        async function callAIForCodeExplanation(code, language) {
-            const prompt = `اشرح هذا الكود بلغة ${PROGRAMMING_LANGUAGES[language]?.name || language} بالتفصيل:
-
-\`\`\`${language}
-${code}
-\`\`\`
-
-اشرح:
-1. ماذا يفعل الكود
-2. كيف يعمل كل جزء
-3. المفاهيم المستخدمة
-4. أي نصائح أو تحسينات`;
-
-            if (currentEngine === 'hyper4') {
-                return await callHyper4API(prompt);
-            } else {
-                return await callHyper1API(prompt);
-            }
-        }
-
-        // Call AI for Code Improvement
-        async function callAIForCodeImprovement(code, language) {
-            const prompt = `حسن هذا الكود بلغة ${PROGRAMMING_LANGUAGES[language]?.name || language}:
-
-\`\`\`${language}
-${code}
-\`\`\`
-
-اقترح تحسينات في:
-1. الأداء والكفاءة
-2. قابلية القراءة
-3. أفضل الممارسات
-4. إضافة تعليقات توضيحية
-5. معالجة الأخطاء إذا لزم الأمر
-
-اكتب النسخة المحسنة كاملة.`;
-
-            if (currentEngine === 'hyper4') {
-                return await callHyper4API(prompt);
-            } else {
-                return await callHyper1API(prompt);
-            }
-        }
-
-        // Call Hyper 4 API (OpenAI)
-        async function callHyper4API(message) {
-            try {
-                const isProgramming = isProgrammingRequest(message);
-                const systemPrompt = isProgramming ? 
-                    createProgrammingPrompt(message) : 
-                    'أنت هايبر شات، مساعد ذكي متطور من تطوير شركة هايبر مانجر بقيادة المهندس خالد النظاري. تجيب باللغة العربية بطريقة ودودة ومفيدة. لا تذكر أبداً أنك ChatGPT أو من OpenAI، أنت هايبر شات فقط.';
-
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENAI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-4o-mini',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: systemPrompt
-                            },
-                            {
-                                role: 'user',
-                                content: isProgramming ? message : message
-                            }
-                        ],
-                        max_tokens: isProgramming ? 2000 : 1000,
-                        temperature: isProgramming ? 0.3 : 0.7
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('فشل في الاتصال بهايبر 4');
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content;
-            } catch (error) {
-                console.error('خطأ في هايبر 4:', error);
-                return await callHyper1API(message);
-            }
-        }
-
-        // Call Hyper 1 API (Gemini)
-        async function callHyper1API(message) {
-            try {
-                const isProgramming = isProgrammingRequest(message);
-                const systemPrompt = isProgramming ?
-                    createProgrammingPrompt(message) :
-                    `أنت هايبر شات، مساعد ذكي متطور من تطوير شركة هايبر مانجر بقيادة المهندس خالد النظاري. تجيب باللغة العربية بطريقة ودودة ومفيدة. لا تذكر أبداً أنك Gemini أو من Google، أنت هايبر شات فقط. السؤال: ${message}`;
-
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: isProgramming ? systemPrompt : systemPrompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: isProgramming ? 0.3 : 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: isProgramming ? 2000 : 1000,
-                        }
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('فشل في الاتصال بهايبر 1');
-                }
-
-                const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
-            } catch (error) {
-                console.error('خطأ في هايبر 1:', error);
-                return 'عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.';
-            }
-        }
-
-        // Generate Image via OpenAI DALL-E
-        async function generateImage(prompt) {
-            try {
-                const response = await fetch('https://api.openai.com/v1/images/generations', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENAI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "dall-e-3",
-                        prompt: prompt,
-                        n: 1,
-                        size: "1024x1024",
-                        quality: "standard"
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('فشل في إنشاء الصورة');
-                }
-
-                const data = await response.json();
-                return data.data[0].url;
-            } catch (error) {
-                console.error('خطأ في إنشاء الصورة:', error);
-                throw error;
-            }
-        }
-
-        // Handle Send Message
-        async function handleSendMessage() {
-            const text = messageInput.value.trim();
-            if (!text || isTyping) return;
-
-            addMessage({
-                text: text,
-                sender: 'user',
-                timestamp: getCurrentTime()
-            });
-
-            messageInput.value = '';
-            autoResizeTextarea();
-
-            isTyping = true;
-            showTypingIndicator();
-
-            try {
-                let response;
-                let imageUrl = null;
-
-                if (isAboutDeveloper(text)) {
-                    response = getDeveloperResponse();
-                } else if (isImageRequest(text)) {
-                    try {
-                        imageUrl = await generateImage(text);
-                        response = 'تم إنشاء الصورة بنجاح! 🎨✨';
-                    } catch (error) {
-                        response = 'عذراً، حدث خطأ في إنشاء الصورة. يرجى المحاولة مرة أخرى.';
-                    }
-                } else {
-                    if (currentEngine === 'hyper4') {
-                        response = await callHyper4API(text);
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-container">
+                    <div class="input-actions">
+                        <button class="input-btn" id="fileUploadBtn" title="رفع ملف">
+                            📎
+                        </button>
+                        <button class="input-btn" id="voiceBtn" title="تسجيل صوتي">
+                            🎤
+                        </button>
+                    </div>
+                    
+                    <textarea 
+                        class="message-input" 
+                        id="messageInput" 
+                        placeholder="اكتب رسالتك هنا... (اضغط Enter للإرسال، Shift+Enter لسطر جديد)"
+                        rows="1"
+                    ></textarea>
+                    
+                    <button class="input-btn primary" id="sendBtn" title="إرسال">
+                        ➤
+                    </button>
+                </div>
+                
+                <!-- File Preview -->
+                <div class="file-preview" id="filePreview"></div>
+                
+                <!-- Hidden File Input -->
+                <input type="file" class="file-input" id="fileInput" multiple 
+                       accept=".txt,.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.json,.csv,.xlsx">
+            </div>
+        </main>
+    </div>
+    
+    <!-- Audio Element for TTS -->
+    <audio id="audioPlayer" style="display: none;"></audio>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    
+    <!-- Modal for Settings -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إعدادات متقدمة</h3>
+                <button class="modal-close" id="closeSettings">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- سيتم إضافة إعدادات متقدمة هنا -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // تكوين Supabase
+        const SUPABASE_URL = 'https://xarwysphbiuckxeuyknv.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhhcnd5c3BoYml1Y2t4ZXV5a252Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjQ2MDAsImV4cCI6MjA2NzM0MDYwMH0.qFZKPUnqBqXVjZkls5u4d8bp4oWbhQYqN17VFEAU6ec';
+        
+        // تهيئة Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // المتغيرات العامة
+        let currentConversationId = null;
+        let conversations = [];
+        let messages = [];
+        let userSettings = {
+            preferredEngine: 'hyper-4',
+            theme: 'dark',
+            language: 'ar',
+            voiceSettings: {
+                voice_id: 'pNInz6obpgDQGcFmaJgB',
+                speed: 1.0,
+                stability: 0.5,
+                similarity_boost: 0.75
+            },
+            autoSpeak: false,
+            saveConversations: true
+        };
+        
+        // تكوين Marked لـ Markdown
+        if (typeof marked !== 'undefined' && typeof hljs !== 'undefined') {
+            marked.setOptions({
+                highlight: function(code, lang) {
+                    if (lang && hljs.getLanguage(lang)) {
+                        return hljs.highlight(code, {language: lang}).value;
                     } else {
-                        response = await callHyper1API(text);
+                        return hljs.highlightAuto(code).value;
                     }
+                },
+                breaks: true,
+                gfm: true
+            });
+        }
+        
+        // العناصر
+        const elements = {
+            messagesContainer: document.getElementById('messagesContainer'),
+            messageInput: document.getElementById('messageInput'),
+            sendBtn: document.getElementById('sendBtn'),
+            engineSelector: document.getElementById('engineSelector'),
+            themeToggle: document.getElementById('themeToggle'),
+            sidebarToggle: document.getElementById('sidebarToggle'),
+            sidebar: document.getElementById('sidebar'),
+            sidebarOverlay: document.getElementById('sidebarOverlay'),
+            newChatBtn: document.getElementById('newChatBtn'),
+            conversationList: document.getElementById('conversationList'),
+            typingIndicator: document.getElementById('typingIndicator'),
+            fileUploadBtn: document.getElementById('fileUploadBtn'),
+            fileInput: document.getElementById('fileInput'),
+            filePreview: document.getElementById('filePreview'),
+            voiceBtn: document.getElementById('voiceBtn'),
+            audioPlayer: document.getElementById('audioPlayer'),
+            autoSpeak: document.getElementById('autoSpeak'),
+            saveConversations: document.getElementById('saveConversations')
+        };
+        
+        // فئات الإعدادات
+        class SettingsManager {
+            constructor() {
+                this.loadSettings();
+                this.bindEvents();
+            }
+            
+            loadSettings() {
+                const saved = localStorage.getItem('hyperChatSettings');
+                if (saved) {
+                    userSettings = { ...userSettings, ...JSON.parse(saved) };
                 }
-
-                hideTypingIndicator();
-                addMessage({
-                    text: response,
-                    sender: 'ai',
-                    timestamp: getCurrentTime(),
-                    imageUrl: imageUrl
+                this.applySettings();
+            }
+            
+            saveSettings() {
+                localStorage.setItem('hyperChatSettings', JSON.stringify(userSettings));
+            }
+            
+            applySettings() {
+                document.body.setAttribute('data-theme', userSettings.theme);
+                elements.engineSelector.value = userSettings.preferredEngine;
+                elements.autoSpeak.checked = userSettings.autoSpeak;
+                elements.saveConversations.checked = userSettings.saveConversations;
+                this.updateThemeIcon();
+            }
+            
+            updateThemeIcon() {
+                const themes = {
+                    'light': '☀️',
+                    'dark': '🌙',
+                    'colorful': '🎨'
+                };
+                elements.themeToggle.textContent = themes[userSettings.theme] || '🌙';
+            }
+            
+            bindEvents() {
+                elements.themeToggle.addEventListener('click', () => {
+                    const themes = ['dark', 'light', 'colorful'];
+                    const currentIndex = themes.indexOf(userSettings.theme);
+                    userSettings.theme = themes[(currentIndex + 1) % themes.length];
+                    this.applySettings();
+                    this.saveSettings();
                 });
-
-            } catch (error) {
-                console.error('خطأ في إرسال الرسالة:', error);
-                hideTypingIndicator();
-                addMessage({
-                    text: 'عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.',
-                    sender: 'ai',
-                    timestamp: getCurrentTime()
+                
+                elements.engineSelector.addEventListener('change', (e) => {
+                    userSettings.preferredEngine = e.target.value;
+                    this.saveSettings();
                 });
-            } finally {
-                isTyping = false;
+                
+                elements.autoSpeak.addEventListener('change', (e) => {
+                    userSettings.autoSpeak = e.target.checked;
+                    this.saveSettings();
+                });
+                
+                elements.saveConversations.addEventListener('change', (e) => {
+                    userSettings.saveConversations = e.target.checked;
+                    this.saveSettings();
+                });
             }
         }
-
-        // Switch Engine
-        function switchEngine() {
-            currentEngine = currentEngine === 'hyper4' ? 'hyper1' : 'hyper4';
-            updateEngineUI();
-            showNotification(`تم التبديل إلى ${getEngineInfo().name}`, 'info');
-        }
-
-        // Update Engine UI
-        function updateEngineUI() {
-            const engineInfo = getEngineInfo();
-            engineBadge.querySelector('span').textContent = engineInfo.name;
-            currentEngineDisplay.textContent = engineInfo.name;
-            document.getElementById('engineInfo').textContent = `مدعوم بـ ${engineInfo.name} • ${engineInfo.description}`;
-        }
-
-        // Get Engine Info
-        function getEngineInfo() {
-            return currentEngine === 'hyper4' 
-                ? { name: 'هايبر 4', description: 'محرك متقدم للمحادثات المعقدة والبرمجة' }
-                : { name: 'هايبر 1', description: 'محرك سريع للردود الفورية والبرمجة' };
-        }
-
-        // Toggle Dark Mode
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark', isDarkMode);
-            
-            // تغيير theme highlight.js
-            const highlightTheme = document.getElementById('highlight-theme');
-            if (isDarkMode) {
-                highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css';
-            } else {
-                highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
+        
+        // فئة إدارة المحادثات
+        class ConversationManager {
+            constructor() {
+                this.loadConversations();
             }
             
-            // إعادة تطبيق highlight
-            document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightElement(block);
-            });
-            
-            showNotification(`تم تفعيل ${isDarkMode ? 'الوضع المظلم' : 'الوضع المضيء'}`, 'info');
-        }
-
-        // Toggle Company Info
-        function toggleCompanyInfo() {
-            companyInfo.classList.toggle('show');
-            settingsPanel.classList.remove('show');
-        }
-
-        // Toggle Settings
-        function toggleSettings() {
-            settingsPanel.classList.toggle('show');
-            companyInfo.classList.remove('show');
-        }
-
-        // Toggle Recording
-        function toggleRecording() {
-            if (isRecording) {
-                stopRecording();
-            } else {
-                startRecording();
-            }
-        }
-
-        // Start Recording
-        async function startRecording() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                isRecording = true;
-                recordBtn.classList.add('recording');
-                recordBtn.innerHTML = '<i class="fas fa-stop"></i>';
-                
-                showNotification('بدء التسجيل الصوتي...', 'info');
-                
-            } catch (error) {
-                console.error('خطأ في الوصول للميكروفون:', error);
-                showNotification('لا يمكن الوصول إلى الميكروفون', 'error');
-            }
-        }
-
-        // Stop Recording
-        function stopRecording() {
-            isRecording = false;
-            recordBtn.classList.remove('recording');
-            recordBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-            showNotification('تم إيقاف التسجيل', 'info');
-        }
-
-        // Play Text to Speech
-        function playTextToSpeech(text) {
-            if ('speechSynthesis' in window) {
-                // إيقاف أي صوت قيد التشغيل
-                speechSynthesis.cancel();
-                
-                // إزالة الكود من النص للقراءة
-                const cleanText = text.replace(/```[\s\S]*?```/g, 'كود برمجي').replace(/`[^`]+`/g, 'كود');
-                
-                const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'ar-SA';
-                utterance.rate = 0.9;
-                utterance.pitch = 1;
-                
-                speechSynthesis.speak(utterance);
-                showNotification('جاري تشغيل الصوت...', 'info');
-            } else {
-                showNotification('المتصفح لا يدعم تحويل النص إلى صوت', 'error');
-            }
-        }
-
-        // Copy Message
-        function copyMessage(text) {
-            // إزالة HTML tags والكود من النص
-            const cleanText = text.replace(/<[^>]*>/g, '').replace(/```[\s\S]*?```/g, '[كود برمجي]');
-            
-            navigator.clipboard.writeText(cleanText).then(() => {
-                showNotification('تم نسخ الرسالة', 'success');
-            }).catch(() => {
-                showNotification('فشل في نسخ الرسالة', 'error');
-            });
-        }
-
-        // Regenerate Response
-        async function regenerateResponse(messageIndex) {
-            if (messageIndex > 0 && messages[messageIndex - 1]) {
-                const userMessage = messages[messageIndex - 1];
-                
-                isTyping = true;
-                showTypingIndicator();
+            async loadConversations() {
+                if (!userSettings.saveConversations) return;
                 
                 try {
-                    let response;
+                    const { data, error } = await supabase
+                        .from('conversations')
+                        .select('*')
+                        .order('updated_at', { ascending: false })
+                        .limit(20);
                     
-                    if (isAboutDeveloper(userMessage.text)) {
-                        response = getDeveloperResponse();
-                    } else if (isImageRequest(userMessage.text)) {
+                    if (error) throw error;
+                    
+                    conversations = data || [];
+                    this.renderConversationList();
+                    
+                    if (conversations.length === 0) {
+                        this.createNewConversation();
+                    }
+                } catch (error) {
+                    console.error('خطأ في تحميل المحادثات:', error);
+                    this.createNewConversation();
+                }
+            }
+            
+            async createNewConversation(title = 'محادثة جديدة') {
+                try {
+                    // إنشاء محادثة محلياً أولاً
+                    const localConversation = {
+                        id: this.generateId(),
+                        title,
+                        engine_type: userSettings.preferredEngine,
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString(),
+                        user_id: 'anonymous',
+                        is_archived: false,
+                        total_messages: 0
+                    };
+                    
+                    conversations.unshift(localConversation);
+                    currentConversationId = localConversation.id;
+                    messages = [];
+                    
+                    this.renderConversationList();
+                    this.clearMessages();
+                    
+                    // محاولة حفظ في قاعدة البيانات إذا كان مفعلاً
+                    if (userSettings.saveConversations) {
                         try {
-                            const imageUrl = await generateImage(userMessage.text);
-                            response = 'تم إنشاء الصورة بنجاح! 🎨✨';
-                            messages[messageIndex].imageUrl = imageUrl;
-                        } catch (error) {
-                            response = 'عذراً، حدث خطأ في إنشاء الصورة. يرجى المحاولة مرة أخرى.';
-                        }
-                    } else {
-                        if (currentEngine === 'hyper4') {
-                            response = await callHyper4API(userMessage.text);
-                        } else {
-                            response = await callHyper1API(userMessage.text);
+                            const { data, error } = await supabase
+                                .from('conversations')
+                                .insert([{
+                                    title: localConversation.title,
+                                    engine_type: localConversation.engine_type,
+                                    user_id: localConversation.user_id,
+                                    is_archived: localConversation.is_archived,
+                                    total_messages: localConversation.total_messages
+                                }])
+                                .select()
+                                .single();
+                            
+                            if (error) {
+                                console.warn('تحذير: فشل حفظ المحادثة في قاعدة البيانات:', error);
+                            } else {
+                                // تحديث المعرف المحلي بالمعرف من قاعدة البيانات
+                                localConversation.id = data.id;
+                                currentConversationId = data.id;
+                            }
+                        } catch (dbError) {
+                            console.warn('تحذير: مشكلة في قاعدة البيانات:', dbError);
                         }
                     }
                     
-                    hideTypingIndicator();
-                    messages[messageIndex].text = response;
-                    messages[messageIndex].timestamp = getCurrentTime();
+                    return localConversation;
+                } catch (error) {
+                    console.error('خطأ في إنشاء محادثة:', error);
+                    showToast('خطأ في إنشاء محادثة جديدة', 'error');
+                }
+            }
+            
+            async loadConversation(conversationId) {
+                try {
+                    currentConversationId = conversationId;
                     
-                    // Re-render messages
-                    messagesContainer.innerHTML = '';
-                    messages.forEach(msg => renderMessage(msg));
+                    if (userSettings.saveConversations) {
+                        const { data, error } = await supabase
+                            .from('messages')
+                            .select('*')
+                            .eq('conversation_id', conversationId)
+                            .order('message_index', { ascending: true });
+                        
+                        if (error) throw error;
+                        messages = data || [];
+                    } else {
+                        messages = [];
+                    }
+                    
+                    this.renderMessages();
+                    this.renderConversationList();
+                } catch (error) {
+                    console.error('خطأ في تحميل المحادثة:', error);
+                    showToast('خطأ في تحميل المحادثة', 'error');
+                }
+            }
+            
+            async saveMessage(message) {
+                if (!userSettings.saveConversations) return;
+                
+                try {
+                    const messageData = {
+                        conversation_id: currentConversationId,
+                        content: message.content,
+                        role: message.role,
+                        engine_used: message.engine || 'unknown',
+                        tokens_used: message.tokens || 0,
+                        has_audio: message.hasAudio || false,
+                        audio_url: message.audioUrl || null,
+                        message_index: messages.length
+                    };
+                    
+                    const { error } = await supabase
+                        .from('messages')
+                        .insert([messageData]);
+                    
+                    if (error) {
+                        console.warn('تحذير: فشل حفظ الرسالة في قاعدة البيانات:', error);
+                        return; // فشل حفظ لكن لا نوقف التطبيق
+                    }
+                    
+                    // تحديث عدد الرسائل في المحادثة
+                    try {
+                        await supabase
+                            .from('conversations')
+                            .update({ 
+                                total_messages: messages.length,
+                                updated_at: new Date().toISOString()
+                            })
+                            .eq('id', currentConversationId);
+                    } catch (updateError) {
+                        console.warn('تحذير: فشل تحديث عدد الرسائل:', updateError);
+                    }
+                        
+                } catch (error) {
+                    console.warn('تحذير: مشكلة في حفظ الرسالة:', error);
+                    // لا نعرض خطأ للمستخدم، فقط نسجل تحذير
+                }
+            }
+            
+            renderConversationList() {
+                elements.conversationList.innerHTML = '';
+                
+                conversations.forEach(conv => {
+                    const item = document.createElement('div');
+                    item.className = `conversation-item ${conv.id === currentConversationId ? 'active' : ''}`;
+                    item.textContent = conv.title;
+                    item.addEventListener('click', () => this.loadConversation(conv.id));
+                    elements.conversationList.appendChild(item);
+                });
+            }
+            
+            renderMessages() {
+                elements.messagesContainer.innerHTML = '';
+                
+                // رسالة الترحيب
+                if (messages.length === 0) {
+                    this.createWelcomeMessage();
+                    return;
+                }
+                
+                messages.forEach(message => {
+                    this.addMessageToUI(message, false);
+                });
+                
+                this.scrollToBottom();
+            }
+            
+            addMessageToUI(message, animate = true) {
+                const messageEl = document.createElement('div');
+                messageEl.className = `message ${message.role} ${animate ? 'animate' : ''}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = message.role === 'user' ? '👤' : '🤖';
+                
+                const content = document.createElement('div');
+                content.className = 'message-content';
+                
+                const header = document.createElement('div');
+                header.className = 'message-header';
+                
+                const sender = document.createElement('span');
+                sender.textContent = message.role === 'user' ? 'أنت' : 'هايبر شات';
+                
+                const engine = document.createElement('span');
+                engine.className = 'message-engine';
+                engine.textContent = message.engine || userSettings.preferredEngine;
+                
+                header.appendChild(sender);
+                header.appendChild(engine);
+                
+                const text = document.createElement('div');
+                text.className = 'message-text';
+                try {
+                    const content = message.content || '';
+                    if (typeof marked !== 'undefined' && marked.parse) {
+                        text.innerHTML = marked.parse(content);
+                    } else {
+                        text.innerHTML = content.replace(/\n/g, '<br>');
+                    }
+                } catch (e) {
+                    text.innerHTML = (message.content || '').replace(/\n/g, '<br>');
+                }
+                
+                content.appendChild(header);
+                content.appendChild(text);
+                
+                // إضافة أزرار الإجراءات للرسائل من المساعد
+                if (message.role === 'assistant') {
+                    const actions = document.createElement('div');
+                    actions.className = 'message-actions';
+                    
+                    const speakBtn = document.createElement('button');
+                    speakBtn.className = 'action-btn';
+                    speakBtn.textContent = '🔊 نطق';
+                    speakBtn.addEventListener('click', () => this.speakMessage(message.content));
+                    
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'action-btn';
+                    copyBtn.textContent = '📋 نسخ';
+                    copyBtn.addEventListener('click', () => this.copyMessage(message.content));
+                    
+                    actions.appendChild(speakBtn);
+                    actions.appendChild(copyBtn);
+                    content.appendChild(actions);
+                }
+                
+                messageEl.appendChild(avatar);
+                messageEl.appendChild(content);
+                
+                elements.messagesContainer.appendChild(messageEl);
+                
+                if (animate) {
+                    this.scrollToBottom();
+                }
+            }
+            
+            async speakMessage(text) {
+                try {
+                    showToast('جاري تحويل النص إلى صوت...', 'info');
+                    
+                    const response = await supabase.functions.invoke('elevenlabs-tts', {
+                        body: {
+                            text: text,
+                            voice_id: userSettings.voiceSettings.voice_id,
+                            stability: userSettings.voiceSettings.stability,
+                            similarity_boost: userSettings.voiceSettings.similarity_boost
+                        }
+                    });
+                    
+                    if (response.error) throw response.error;
+                    
+                    const { audio_base64 } = response.data;
+                    const audioBlob = this.base64ToBlob(audio_base64, 'audio/mpeg');
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    elements.audioPlayer.src = audioUrl;
+                    elements.audioPlayer.play();
+                    
+                    showToast('تم تشغيل الصوت بنجاح', 'success');
+                } catch (error) {
+                    console.error('خطأ في تحويل النص إلى صوت:', error);
+                    showToast('خطأ في تحويل النص إلى صوت', 'error');
+                }
+            }
+            
+            copyMessage(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('تم نسخ النص', 'success');
+                }).catch(() => {
+                    showToast('خطأ في نسخ النص', 'error');
+                });
+            }
+            
+            clearMessages() {
+                elements.messagesContainer.innerHTML = '';
+                // إنشاء رسالة الترحيب إذا لم تكن موجودة
+                this.createWelcomeMessage();
+            }
+            
+            createWelcomeMessage() {
+                const welcomeHtml = `
+                    <div class=\"message assistant\" id=\"welcomeMessage\">
+                        <div class=\"message-avatar\">🤖</div>
+                        <div class=\"message-content\">
+                            <div class=\"message-header\">
+                                <span>هايبر شات</span>
+                                <span class=\"message-engine\">مساعد ذكي متطور</span>
+                            </div>
+                            <div class=\"message-text\">
+                                <h2>مرحباً بك في هايبر شات! 🚀</h2>
+                                <p>أنا مساعدك الذكي المتطور مع قدرات متقدمة في:</p>
+                                <ul>
+                                    <li>🧠 <strong>ثلاثة محركات ذكاء اصطناعي:</strong> GPT-4، Gemini، والمحرك الذكي</li>
+                                    <li>🎵 <strong>تحويل النص إلى صوت واقعي</strong> بجودة عالية</li>
+                                    <li>💻 <strong>البرمجة والتطوير</strong> بأكثر من 25 لغة</li>
+                                    <li>📊 <strong>تحليل الملفات والبيانات</strong> والصور</li>
+                                    <li>🎨 <strong>إنشاء المحتوى</strong> والتصاميم</li>
+                                    <li>🔍 <strong>البحث والتحليل</strong> المتقدم</li>
+                                </ul>
+                                <p><strong>كيف يمكنني مساعدتك اليوم؟</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                elements.messagesContainer.innerHTML = welcomeHtml;
+            }
+            
+            scrollToBottom() {
+                setTimeout(() => {
+                    elements.messagesContainer.scrollTop = elements.messagesContainer.scrollHeight;
+                }, 100);
+            }
+            
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            
+            base64ToBlob(base64, mimeType) {
+                const byteCharacters = atob(base64);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                return new Blob([byteArray], { type: mimeType });
+            }
+        }
+        
+        // فئة إدارة الرسائل
+        class MessageManager {
+            constructor(conversationManager) {
+                this.conversationManager = conversationManager;
+                this.bindEvents();
+            }
+            
+            bindEvents() {
+                elements.sendBtn.addEventListener('click', () => this.sendMessage());
+                elements.messageInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                
+                elements.messageInput.addEventListener('input', () => {
+                    this.autoResize();
+                });
+            }
+            
+            async sendMessage() {
+                const content = elements.messageInput.value.trim();
+                if (!content) return;
+                
+                const userMessage = {
+                    role: 'user',
+                    content: content,
+                    engine: 'user',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // إضافة رسالة المستخدم
+                messages.push(userMessage);
+                this.conversationManager.addMessageToUI(userMessage);
+                await this.conversationManager.saveMessage(userMessage);
+                
+                // مسح الإدخال
+                elements.messageInput.value = '';
+                this.autoResize();
+                
+                // إظهار مؤشر الكتابة
+                this.showTypingIndicator();
+                
+                try {
+                    // إرسال إلى AI
+                    const response = await this.sendToAI(content);
+                    
+                    const assistantMessage = {
+                        role: 'assistant',
+                        content: response.content || 'لم أتمكن من الحصول على رد',
+                        engine: response.engine || userSettings.preferredEngine,
+                        tokens: response.usage || {},
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    messages.push(assistantMessage);
+                    this.conversationManager.addMessageToUI(assistantMessage);
+                    await this.conversationManager.saveMessage(assistantMessage);
+                    
+                    // النطق التلقائي إذا كان مفعلاً
+                    if (userSettings.autoSpeak) {
+                        this.conversationManager.speakMessage(response.content);
+                    }
                     
                 } catch (error) {
-                    console.error('خطأ في إعادة التوليد:', error);
-                    hideTypingIndicator();
+                    console.error('خطأ في إرسال الرسالة:', error);
+                    showToast('خطأ في إرسال الرسالة: ' + error.message, 'error');
+                    
+                    const errorMessage = {
+                        role: 'assistant',
+                        content: 'عذراً، حدث خطأ في معالجة طلبك. يرجى المحاولة مرة أخرى.',
+                        engine: 'error',
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    messages.push(errorMessage);
+                    this.conversationManager.addMessageToUI(errorMessage);
                 } finally {
-                    isTyping = false;
+                    this.hideTypingIndicator();
+                }
+            }
+            
+            async sendToAI(content) {
+                const engine = userSettings.preferredEngine;
+                const conversation = messages.map(msg => ({
+                    role: msg.role,
+                    content: msg.content
+                }));
+                
+                // إضافة الرسالة الحالية
+                conversation.push({
+                    role: 'user',
+                    content: content
+                });
+                
+                let endpoint;
+                switch (engine) {
+                    case 'hyper-4':
+                        endpoint = 'openai-chat';
+                        break;
+                    case 'hyper-1':
+                        endpoint = 'gemini-chat';
+                        break;
+                    case 'hyper-plus':
+                        endpoint = 'hybrid-chat';
+                        break;
+                    default:
+                        endpoint = 'openai-chat';
+                }
+                
+                const response = await supabase.functions.invoke(endpoint, {
+                    body: {
+                        messages: conversation,
+                        temperature: 0.7
+                    }
+                });
+                
+                console.log('استجابة API:', response);
+                
+                if (response.error) {
+                    throw new Error(response.error.message || 'خطأ في الاتصال بالخدمة');
+                }
+                
+                // التحقق من وجود البيانات
+                if (!response.data || !response.data.data) {
+                    throw new Error('استجابة غير صحيحة من الخادم');
+                }
+                
+                return response.data.data;
+            }
+            
+            showTypingIndicator() {
+                elements.typingIndicator.classList.add('show');
+                this.conversationManager.scrollToBottom();
+            }
+            
+            hideTypingIndicator() {
+                elements.typingIndicator.classList.remove('show');
+            }
+            
+            autoResize() {
+                elements.messageInput.style.height = 'auto';
+                elements.messageInput.style.height = Math.min(elements.messageInput.scrollHeight, 150) + 'px';
+            }
+        }
+        
+        // فئة إدارة الملفات
+        class FileManager {
+            constructor() {
+                this.selectedFiles = [];
+                this.bindEvents();
+            }
+            
+            bindEvents() {
+                elements.fileUploadBtn.addEventListener('click', () => {
+                    elements.fileInput.click();
+                });
+                
+                elements.fileInput.addEventListener('change', (e) => {
+                    this.handleFileSelect(e.target.files);
+                });
+            }
+            
+            handleFileSelect(files) {
+                for (let file of files) {
+                    if (this.validateFile(file)) {
+                        this.selectedFiles.push(file);
+                    }
+                }
+                this.renderFilePreview();
+            }
+            
+            validateFile(file) {
+                const maxSize = 50 * 1024 * 1024; // 50MB
+                const allowedTypes = [
+                    'text/plain',
+                    'application/pdf',
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'image/jpeg',
+                    'image/png',
+                    'image/gif',
+                    'application/json',
+                    'text/csv',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ];
+                
+                if (file.size > maxSize) {
+                    showToast('الملف كبير جداً (الحد الأقصى 50MB)', 'error');
+                    return false;
+                }
+                
+                if (!allowedTypes.includes(file.type)) {
+                    showToast('نوع الملف غير مدعوم', 'error');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            renderFilePreview() {
+                elements.filePreview.innerHTML = '';
+                
+                this.selectedFiles.forEach((file, index) => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    
+                    const fileName = document.createElement('span');
+                    fileName.textContent = `${file.name} (${this.formatFileSize(file.size)})`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'file-remove';
+                    removeBtn.textContent = '×';
+                    removeBtn.addEventListener('click', () => {
+                        this.selectedFiles.splice(index, 1);
+                        this.renderFilePreview();
+                    });
+                    
+                    fileItem.appendChild(fileName);
+                    fileItem.appendChild(removeBtn);
+                    elements.filePreview.appendChild(fileItem);
+                });
+            }
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            async processFiles() {
+                // معالجة الملفات المحددة
+                // يمكن تحسين هذا لاحقاً لتحليل محتوى الملفات
+                const fileInfos = this.selectedFiles.map(file => ({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                }));
+                
+                this.selectedFiles = [];
+                this.renderFilePreview();
+                
+                return fileInfos;
+            }
+        }
+        
+        // فئة إدارة الواجهة
+        class UIManager {
+            constructor() {
+                this.bindEvents();
+                this.handleResponsive();
+            }
+            
+            bindEvents() {
+                elements.sidebarToggle.addEventListener('click', () => {
+                    this.toggleSidebar();
+                });
+                
+                elements.sidebarOverlay.addEventListener('click', () => {
+                    this.closeSidebar();
+                });
+                
+                elements.newChatBtn.addEventListener('click', () => {
+                    conversationManager.createNewConversation();
+                    this.closeSidebar();
+                });
+                
+                window.addEventListener('resize', () => {
+                    this.handleResponsive();
+                });
+                
+                // اختصارات لوحة المفاتيح
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        switch (e.key) {
+                            case 'n':
+                                e.preventDefault();
+                                conversationManager.createNewConversation();
+                                break;
+                            case 'k':
+                                e.preventDefault();
+                                elements.messageInput.focus();
+                                break;
+                        }
+                    }
+                });
+            }
+            
+            toggleSidebar() {
+                elements.sidebar.classList.toggle('open');
+                elements.sidebarOverlay.classList.toggle('show');
+            }
+            
+            closeSidebar() {
+                elements.sidebar.classList.remove('open');
+                elements.sidebarOverlay.classList.remove('show');
+            }
+            
+            handleResponsive() {
+                if (window.innerWidth > 768) {
+                    this.closeSidebar();
                 }
             }
         }
-
-        // إغلاق اللوحات عند النقر خارجها
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.header-controls') && !e.target.closest('.info-panel')) {
-                companyInfo.classList.remove('show');
-                settingsPanel.classList.remove('show');
-            }
+        
+        // وظائف مساعدة
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.getElementById('toastContainer').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        function generateUniqueId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 تشغيل هايبر شات...');
+            
+            // تهيئة المديرين
+            const settingsManager = new SettingsManager();
+            window.conversationManager = new ConversationManager();
+            const messageManager = new MessageManager(conversationManager);
+            const fileManager = new FileManager();
+            const uiManager = new UIManager();
+            
+            // رسالة ترحيب في وحدة التحكم
+            console.log('%c هايبر شات المتطور 🚀', 'color: #007bff; font-size: 16px; font-weight: bold;');
+            console.log('مساعد ذكي متطور بثلاثة محركات AI وقدرات متقدمة');
+            
+            showToast('مرحباً بك في هايبر شات! 🚀', 'success');
         });
-
-        // Initialize App on DOM Content Loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        
+        // التعامل مع الأخطاء العامة
+        window.addEventListener('error', (e) => {
+            console.error('خطأ في التطبيق:', e.error);
+            showToast('حدث خطأ غير متوقع', 'error');
+        });
+        
+        // التعامل مع الوعود المرفوضة
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('وعد مرفوض:', e.reason);
+            showToast('خطأ في معالجة الطلب', 'error');
+            e.preventDefault();
+        });
     </script>
 
 <style>
@@ -1878,6 +1900,11 @@ ${code}
   opacity: 1;
 }
 </style>
+<div id="minimax-floating-ball">
+  <div class="minimax-ball-content">
+    <div class="minimax-logo-wave"></div>
+    <span class="minimax-ball-text">Created by MiniMax Agent</span>
+  </div>
   <div class="minimax-close-icon">×</div>
 </div>
 <script>
