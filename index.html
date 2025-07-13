@@ -2,154 +2,179 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>هايبر شات - تطوير المهندس خالد النضاري</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>هايبر شات - Hyper Chat</title>
+  <meta name="description" content="هايبر شات - مساعدك الذكي بالنص والصورة والصوت. تطوير المهندس خالد النضاري">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712027.png">
-  <meta name="theme-color" content="#181824">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    :root {
+      --main-bg: #191b24;
+      --card-bg: #23263a;
+      --accent: #1de9b6;
+      --accent2: #4647e7;
+      --text-main: #fff;
+      --text-sub: #bbb;
+      --bot-bg: #1de9b6;
+      --bot-text: #222;
+      --user-bg: #4647e7;
+      --user-text: #fff;
+      --radius: 2.1rem;
+      --shadow: 0 4px 24px #0002;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--main-bg);
       font-family: 'Cairo', sans-serif;
-      background: #181824;
-      color: #fff;
-      margin: 0;
+      color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      height: 100%;
+      scroll-behavior: smooth;
     }
     header {
-      background: #202038;
-      padding: 1.5rem 1rem 1rem 1rem;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      padding: 1.7rem 1rem 1.2rem 1rem;
       text-align: center;
-      box-shadow: 0 4px 24px #0002;
-      border-bottom: 1.5px solid #2de9b6;
+      border-bottom: 2px solid var(--accent);
+      border-radius: 0 0 var(--radius) var(--radius);
+      margin-bottom: 0.5rem;
     }
     header h1 {
-      color: #2de9b6;
-      margin: 0 0 8px 0;
-      font-size: 2.2rem;
-      letter-spacing: 1px;
+      margin: 0 0 7px 0;
+      font-size: 2.3rem;
+      color: var(--accent);
+      letter-spacing: 1.5px;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    header span {
+    header .dev {
       font-size: 1.1rem;
       color: #aaffcc;
       font-weight: 700;
+      margin-top: 5px;
+    }
+    header .sub {
+      color: var(--text-sub);
+      font-size: 1.02rem;
+      margin-top: 2px;
+      letter-spacing: .2px;
     }
     .container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 2rem 1rem 7rem 1rem;
       max-width: 650px;
       margin: 0 auto;
-      width: 100%;
+      padding: 2.3rem 1rem 7rem 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 68vh;
+      height: 100%;
     }
     .chat-box {
       width: 100%;
-      background: #22223b;
-      border-radius: 1.7rem;
-      box-shadow: 0 2px 20px #0ef6, 0 0 1px #fff3;
-      padding: 1.2rem 1rem;
-      overflow-y: auto;
-      flex: 1 1 auto;
-      min-height: 280px;
-      max-height: 60vh;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 20px #0ef7, 0 0 1px #fff3;
+      padding: 1.3rem 1rem;
+      min-height: 250px;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
+      overflow-y: auto;
+      transition: background .3s;
     }
     .message {
       display: flex;
       align-items: flex-start;
-      gap: 0.7rem;
-      animation: fadein 0.7s;
+      gap: .8rem;
+      animation: fadein .6s;
     }
-    .message.user {
-      justify-content: flex-end;
-    }
+    .message.user { justify-content: flex-end; }
     .message .bubble {
-      background: #1de9b6;
-      color: #222;
-      border-radius: 2rem 2rem 0 2rem;
-      padding: 0.8rem 1.3rem;
-      font-size: 1.08rem;
-      max-width: 90%;
+      background: var(--bot-bg);
+      color: var(--bot-text);
+      border-radius: var(--radius) var(--radius) 0 var(--radius);
+      padding: .85rem 1.35rem;
+      font-size: 1.07rem;
+      max-width: 90vw;
       word-break: break-word;
-      box-shadow: 0 2px 12px #0003;
-      min-width: 70px;
+      box-shadow: 0 2px 12px #0002;
+      min-width: 60px;
+      line-height: 1.7;
+      transition: background .3s;
     }
     .message.user .bubble {
-      background: #4647e7;
-      color: #fff;
-      border-radius: 2rem 2rem 2rem 0;
+      background: var(--user-bg);
+      color: var(--user-text);
+      border-radius: var(--radius) var(--radius) var(--radius) 0;
       align-self: flex-end;
+      text-align: left;
+      direction: ltr;
+      font-family: 'Cairo', sans-serif;
     }
     .logo {
-      width: 44px;
-      height: 44px;
+      width: 43px; height: 43px;
       border-radius: 50%;
-      background: #1de9b6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 10px #1de9b6b4;
+      flex-shrink: 0;
     }
-    .logo img {
-      width: 34px;
-    }
+    .logo img { width: 32px; }
     .input-area {
       width: 100%;
       max-width: 650px;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #202038f8;
+      bottom: 0; left: 0; right: 0;
+      background: var(--card-bg);
       padding: 1rem 0.7rem;
       box-shadow: 0 -2px 24px #0004;
       display: flex;
-      gap: 0.7rem;
+      gap: .7rem;
       align-items: center;
-      z-index: 10;
+      z-index: 99;
+      border-radius: var(--radius) var(--radius) 0 0;
     }
     .input-area textarea {
       flex: 1;
-      padding: 0.7rem 1rem;
-      border-radius: 2rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius);
       border: none;
       background: #29294a;
       color: #fff;
       font-size: 1.06rem;
       outline: none;
       resize: none;
-      min-height: 44px;
+      min-height: 46px;
       max-height: 120px;
+      font-family: 'Cairo', sans-serif;
+      transition: background .3s;
     }
     .input-area button {
       padding: 0.7rem 1.3rem;
       border: none;
-      border-radius: 2rem;
-      font-size: 1.05rem;
+      border-radius: var(--radius);
+      font-size: 1.03rem;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.22s;
-      box-shadow: 0 1px 8px #1de9b67e;
+      box-shadow: 0 1px 8px #1de9b677;
+      transition: background 0.19s;
+      font-family: inherit;
     }
-    .send-btn { background: #1de9b6; color: #222; }
+    .send-btn { background: var(--accent); color: #212; }
     .send-btn:hover { background: #17b594; }
-    .clear-btn { background: #4647e7; color: #fff; }
-    .voice-btn { background: #ffb13b; color: #222; }
-    .img-btn { background: #22223b; color: #1de9b6; border: 1.5px solid #1de9b6;}
+    .clear-btn { background: var(--accent2); color: #fff; }
+    .img-btn { background: var(--card-bg); color: var(--accent); border: 1.3px solid var(--accent);}
+    .voice-btn { background: #ffb13b; color: #222;}
     .typing-indicator {
       display: flex;
       gap: 5px;
       align-items: center;
       margin: 4px 0 0 0;
     }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #1de9b6; animation: blink 1.5s infinite;}
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1.5s infinite;}
     .dot:nth-child(2){animation-delay:.3s;} .dot:nth-child(3){animation-delay:.6s;}
     @keyframes blink { 0%, 80%, 100% { opacity: .35; } 40% { opacity: 1; } }
     @keyframes fadein { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
@@ -157,15 +182,18 @@
       margin-top: auto;
       text-align: center;
       font-size: 1rem;
-      background: #22223b;
-      color: #1de9b6;
+      background: var(--card-bg);
+      color: var(--accent);
       padding: 1rem 0 0.7rem 0;
-      letter-spacing: 0.5px;
+      letter-spacing: .5px;
+      border-radius: var(--radius) var(--radius) 0 0;
     }
     @media (max-width:700px) {
       .container, .input-area { max-width: 100vw; }
-      .chat-box { min-height: 180px; max-height: 48vh;}
+      .chat-box { min-height: 140px;}
       header h1 { font-size: 1.3rem; }
+      .logo { width: 33px; height: 33px;}
+      .logo img { width: 22px;}
     }
     @media (max-width:400px) {
       header h1 { font-size: 1rem;}
@@ -175,23 +203,21 @@
 </head>
 <body>
   <header>
-    <h1>🤖 هايبر شات</h1>
-    <span>تطوير المهندس خالد النضاري</span>
-    <div style="color:#bbb; font-size:.96rem; margin-top: 8px;">
-      مساعدك الذكي بالصوت والصورة والنص 🔥
-    </div>
+    <h1>هايبر شات 🤖</h1>
+    <div class="dev">تطوير المهندس خالد النضاري</div>
+    <div class="sub">مساعدك الذكي بالصوت والصورة والنص 🔥</div>
   </header>
-  <div class="container">
+  <main class="container">
     <div class="chat-box" id="chatBox">
       <div class="message ai">
         <div class="logo"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="Hyper Chat"></div>
         <div class="bubble">مرحباً 👋<br>أنا <b>هايبر شات</b>، مساعدك الذكي.<br>اسألني، احكي لي صوت، أو اطلب صورة إبداعية!</div>
       </div>
     </div>
-  </div>
+  </main>
   <form class="input-area" id="chatForm" autocomplete="off">
     <button type="button" class="voice-btn" id="recordBtn" title="تسجيل صوت"><span>🎙️</span></button>
-    <textarea id="userInput" rows="1" placeholder="اكتب رسالتك أو اضغط 🎙️"></textarea>
+    <textarea id="userInput" rows="1" placeholder="اكتب رسالتك أو اضغط 🎙️ ..."></textarea>
     <button type="submit" class="send-btn">إرسال</button>
     <button type="button" class="img-btn" id="imgBtn" title="إنشاء صورة">🖼️</button>
     <button type="button" class="clear-btn" id="clearBtn">إعادة ضبط</button>
@@ -200,8 +226,7 @@
     جميع الحقوق محفوظة &copy; 2025 &mdash; تطوير المهندس خالد النضاري 🚀
   </footer>
   <script>
-    // إعدادات
-    const backend = "https://your-proxy-backend.com"; // هنا ضع رابط سيرفرك (سأعطيك سكربت backend بعد قليل)
+    // إعدادات (بدون backend - فقط شكل واجهة للاستخدام التجريبي)
     const chatBox = document.getElementById('chatBox');
     const chatForm = document.getElementById('chatForm');
     const userInput = document.getElementById('userInput');
@@ -211,13 +236,14 @@
     let messages = [
       { role: "system", content: "أنت مساعد ذكي عربي اسمه هايبر شات، تجاوب بإحتراف وباختصار وتكتب بلغة عربية سليمة وتستخدم الإيموجي واللغة العصرية حسب السياق." }
     ];
-    // ===================== واجهة المستخدم ====================
+
+    // الرسائل
     function addMessage(role, content, isImage = false) {
       const msg = document.createElement('div');
       msg.className = 'message ' + role;
       msg.innerHTML = role === 'user'
         ? `<div class="bubble">${content}</div>`
-        : `<div class="logo"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"></div><div class="bubble">${isImage ? `<img src="${content}" style="max-width:200px;border-radius:1rem;margin-top:4px;">` : content}</div>`;
+        : `<div class="logo"><img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"></div><div class="bubble">${isImage ? `<img src="${content}" style="max-width:180px;border-radius:1rem;margin-top:4px;">` : content}</div>`;
       chatBox.appendChild(msg);
       chatBox.scrollTop = chatBox.scrollHeight;
     }
@@ -234,7 +260,8 @@
       return typing;
     }
     function removeTyping(typingElem) { typingElem && typingElem.remove(); }
-    // ===================== نص -> ذكاء اصطناعي ====================
+
+    // رسائل نصية (تجريبية)
     chatForm.onsubmit = async (e) => {
       e.preventDefault();
       let text = userInput.value.trim();
@@ -244,58 +271,32 @@
       userInput.value = '';
       userInput.focus();
       const typingElem = addTyping();
-      // الطلب يرسل لـbackend فقط (لحماية API Key)
-      let reply = "";
-      try {
-        const res = await fetch(backend + "/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages })
-        });
-        const data = await res.json();
-        if (data.reply) {
-          reply = data.reply;
-          messages.push({ role: "assistant", content: reply });
-        } else {
-          reply = "❗ حدث خطأ في التواصل مع الذكاء الاصطناعي.";
-        }
-      } catch (err) {
-        reply = "❗ حدث خطأ أثناء الاتصال بالخادم، تأكد من الإنترنت أو حاول لاحقاً.";
-      }
-      removeTyping(typingElem);
-      setTimeout(() => addMessage('ai', reply), 300);
+
+      // رد تجريبي (اكتب هنا ربط API لو فعلت backend)
+      setTimeout(() => {
+        removeTyping(typingElem);
+        addMessage('ai', "👋 تم استلام رسالتك: <b>" + text + "</b><br> *(واجهة عرض فقط - أضف backend للذكاء الاصطناعي)*");
+      }, 1200);
     };
-    // ===================== إنشاء صورة ذكاء اصطناعي ====================
+
+    // توليد صورة (تجريبية)
     imgBtn.onclick = async () => {
       let prompt = prompt("صف الصورة المراد إنشاؤها (مثال: روبوت عربي ذكي في الصحراء):");
       if (!prompt) return;
       addMessage('user', "🖼️ " + prompt);
       const typingElem = addTyping();
-      try {
-        const res = await fetch(backend + "/image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt })
-        });
-        const data = await res.json();
-        if (data.image_url) {
-          addMessage('ai', data.image_url, true);
-        } else {
-          addMessage('ai', "❗ تعذر إنشاء الصورة. جرب وصف مختلف.");
-        }
-      } catch {
-        addMessage('ai', "❗ تعذر الاتصال بخدمة الصور.");
-      }
-      removeTyping(typingElem);
+      setTimeout(() => {
+        removeTyping(typingElem);
+        addMessage('ai', "https://cdn.pixabay.com/photo/2016/11/29/03/43/robot-1867984_1280.jpg", true);
+      }, 1200);
     };
-    // ===================== محادثة صوتية (STT & TTS) ====================
+
+    // تسجيل صوتي (STT) + نطق (TTS)
     let recognizing = false, recognition;
     recordBtn.onclick = () => {
-      if (recognizing) {
-        recognition.stop(); return;
-      }
+      if (recognizing) { recognition.stop(); return; }
       if (!('webkitSpeechRecognition' in window)) {
-        alert("متصفحك لا يدعم تحويل الصوت إلى نص. استخدم Chrome.");
+        alert("متصفحك لا يدعم تحويل الصوت إلى نص. استخدم Google Chrome.");
         return;
       }
       recognition = new webkitSpeechRecognition();
@@ -317,20 +318,20 @@
       };
       recognition.start();
     };
-    // تحويل الرد للنطق الصوتي
+    // نطق صوتي لأي رسالة (دبل كلك)
     function speak(text) {
       if (!('speechSynthesis' in window)) return;
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = "ar-SA";
       window.speechSynthesis.speak(utter);
     }
-    // الضغط مرتين على أي رسالة للرد الصوتي
     chatBox.addEventListener('dblclick', e => {
       if (e.target.classList.contains('bubble')) {
         speak(e.target.textContent);
       }
     });
-    // ===================== إعادة ضبط ====================
+
+    // إعادة ضبط
     clearBtn.onclick = () => {
       chatBox.innerHTML = `
         <div class="message ai">
