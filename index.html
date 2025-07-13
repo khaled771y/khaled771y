@@ -2,12 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"/>
-<title>هايبر شات Ultra-4K | الذاكرة الخارقة</title>
+<title>هايبر شات Ultra-4K Pro</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="مساعد ذكي يتذكّر ويتفاعل معك – من تطوير هايبر مانجر"/>
+<meta name="description" content="مساعد ذكي يتعلّم ويتذكّر ويتفاعل بأناقة"/>
 <meta name="theme-color" content="#0d1117"/>
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi2KfZhNiq2K3Yp9mEINin2YTYqtmF2KfZhtin2YciLCJzaG9ydF9uYW1lIjoi2KfZhNiq2K3Yp9mEIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZDExMTciLCJ0aGVtZV9jb2xvciI6IiMyNTYzZWIifQ=="/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧠%3C/text%3E%3C/svg%3E"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Cairo:wght@300..900&family=JetBrains+Mono:wght@300..700&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"/>
@@ -90,11 +90,12 @@ textarea{flex:1;border:none;background:transparent;resize:none;max-height:10rem;
   <div class="header-inner">
     <div class="logo">
       <i class="fas fa-rocket"></i>
-      <span>هايبر شات Ultra-4K</span>
+      <span>هايبر شات Ultra-4K Pro</span>
     </div>
     <div class="controls">
       <button class="btn-icon" id="btnTheme" title="الوضع المظلم"><i class="fas fa-moon"></i></button>
       <button class="btn-icon" id="btnInfo" title="عن الشركة"><i class="fas fa-info-circle"></i></button>
+      <button class="btn-icon" id="btnExport" title="تصدير المحادثة"><i class="fas fa-download"></i></button>
     </div>
   </div>
 </header>
@@ -115,29 +116,30 @@ textarea{flex:1;border:none;background:transparent;resize:none;max-height:10rem;
 
 <script>
 /* ---------- CONFIG ---------- */
-const GEMINI_KEY   = 'AIzaSyBq-vfVMJWeN3r1DA4prKzfx1UhpMiKZwM';   // Gemini fallback
-const OPENAI_KEY   = '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'; // GPT-4o
+const GEMINI_KEY = 'AIzaSyBq-vfVMJWeN3r1DA4prKzfx1UhpMiKZwM';
+const OPENAI_KEY = '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';
 const $ = sel => document.querySelector(sel);
+const STORAGE_KEY = "hyperChat_memory_v3";
 
 /* ---------- THEME ---------- */
 const applyTheme = () => {
-  const dark = localStorage.theme === "dark" || 
-               (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const dark = localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
   document.body.dataset.theme = dark ? "dark" : "light";
   $("#btnTheme i").className = dark ? "fas fa-sun" : "fas fa-moon";
 };
 applyTheme();
-$("#btnTheme").onclick = () => {
-  localStorage.theme = localStorage.theme === "dark" ? "light" : "dark";
-  applyTheme();
-};
+$("#btnTheme").onclick = () => { localStorage.theme = localStorage.theme === "dark" ? "light" : "dark"; applyTheme(); };
 
-/* ---------- MEMORY ---------- */
-const STORAGE_KEY = "hyperChat_memory";
+/* ---------- MEMORY & LEARNING ---------- */
 const loadMemory = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 const saveMemory = msgs => localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
+const addMemory = (text, sender) => {
+  const memory = loadMemory();
+  memory.push({ text, sender, ts: Date.now() });
+  saveMemory(memory);
+};
 
-/* ---------- UI HELPERS ---------- */
+/* ---------- UI ---------- */
 const scrollBottom = () => $("#messages").scrollTop = $("#messages").scrollHeight;
 const addMsg = (html, sender = "ai", img = "") => {
   const el = document.createElement("div");
@@ -158,7 +160,7 @@ const typing = () => {
 };
 
 /* ---------- API ---------- */
-const askGPT = async (messages) => {
+const askGPT = async messages => {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${OPENAI_KEY}` },
@@ -168,7 +170,7 @@ const askGPT = async (messages) => {
   const data = await res.json();
   return data.choices[0].message.content;
 };
-const askGemini = async (text) => {
+const askGemini = async text => {
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -197,7 +199,7 @@ const toggleMic = () => {
 };
 $("#btnMic").onclick = toggleMic;
 
-/* ---------- IMAGE GENERATION ---------- */
+/* ---------- IMAGE ---------- */
 const generateImage = async prompt => {
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
@@ -208,30 +210,37 @@ const generateImage = async prompt => {
   return data.data[0].url;
 };
 
-/* ---------- CHAT LOGIC ---------- */
+/* ---------- EXPORT ---------- */
+$("#btnExport").onclick = () => {
+  const memory = loadMemory();
+  const blob = new Blob([JSON.stringify(memory, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "hyper-chat.json";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+/* ---------- SYSTEM PROMPT ---------- */
 const systemPrompt = () => `
 أنا هايبر شات، مساعد ذكي متطور من **شركة هايبر مانجر** بقيادة **المهندس خالد النظاري** – رائد تقني يجمع بين الإبداع والدقة، يصنع مستقبلاً أكثر ذكاءً لخدمة الإنسان.
 إذا سُئلت عن نفسك أجب دائماً:
 "أنا هايبر شات، مساعد ذكي من تطوير شركة هايبر مانجر بقيادة المهندس خالد النظاري، رائد في حلول الذكاء الاصطناعي المتقدمة."
 تتذكر المحادثة بالكامل وتتابع سياقها.
 `;
+
+/* ---------- LOAD / SAVE CHAT ---------- */
 const loadChat = () => {
   const memory = loadMemory();
   memory.forEach(m => addMsg(m.text, m.sender));
   if (!memory.length) addMsg("مرحباً! أنا هايبر شات، مساعدك الذكي من تطوير المهندس خالد النظاري. كيف أخدمك اليوم؟");
 };
-const saveChat = (text, sender) => {
-  const memory = loadMemory();
-  memory.push({ text, sender });
-  saveMemory(memory);
-};
-
-/* ---------- SEND ---------- */
-const handleSend = async () => {
+const sendMessage = async () => {
   const val = $("#input").value.trim();
   if (!val) return;
   addMsg(val, "user");
-  saveChat(val, "user");
+  addMemory(val, "user");
   $("#input").value = "";
   const stopTyping = typing();
   try {
@@ -240,25 +249,25 @@ const handleSend = async () => {
       const url = await generateImage(val);
       stopTyping();
       addMsg("إليك الصورة المطلوبة:", "ai", url);
-      saveChat("إليك الصورة المطلوبة:", "ai");
+      addMemory("إليك الصورة المطلوبة:", "ai");
       return;
     }
-    // GPT-4o أولاً، Gemini fallback
-    try {
-      reply = await askGPT([{ role: "system", content: systemPrompt() }, ...loadMemory().map(m => ({ role: m.sender, content: m.text }))]);
-    } catch {
-      reply = await askGemini(systemPrompt() + "\n\n" + loadMemory().map(m => `${m.sender}: ${m.text}`).join("\n") + `\n\nuser: ${val}`);
-    }
+    const messages = [
+      { role: "system", content: systemPrompt() },
+      ...loadMemory().map(m => ({ role: m.sender, content: m.text }))
+    ];
+    try { reply = await askGPT(messages); }
+    catch { reply = await askGemini(systemPrompt() + "\n\n" + loadMemory().map(m => `${m.sender}: ${m.text}`).join("\n") + `\n\nuser: ${val}`); }
     stopTyping();
     addMsg(reply);
-    saveChat(reply, "ai");
+    addMemory(reply, "ai");
   } catch {
     stopTyping();
     addMsg("⚠️ حدث خطأ، جرب لاحقًا.");
   }
 };
-$("#btnSend").onclick = handleSend;
-$("#input").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+$("#btnSend").onclick = sendMessage;
+$("#input").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
 
 /* ---------- INIT ---------- */
 loadChat();
