@@ -639,14 +639,14 @@
             <div class="login-box">
                 <h2 class="login-title">تسجيل الدخول</h2>
                 <div class="user-type">
-                    <button class="user-type-btn active" onclick="setUserType('teacher')">
+                    <button class="user-type-btn active" id="teacherBtn">
                         <i class="fas fa-chalkboard-teacher"></i> معلم
                     </button>
-                    <button class="user-type-btn" onclick="setUserType('parent')">
+                    <button class="user-type-btn" id="parentBtn">
                         <i class="fas fa-user-tie"></i> ولي أمر
                     </button>
                 </div>
-                <form class="login-form">
+                <form class="login-form" id="loginForm">
                     <div class="form-group">
                         <label for="username">اسم المستخدم</label>
                         <input type="text" id="username" placeholder="أدخل اسم المستخدم">
@@ -1023,38 +1023,34 @@
     <!-- السكريبتات -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // تبديل بين أنواع المستخدمين
-        function setUserType(type) {
-            const teacherBtn = document.querySelector('.user-type-btn:nth-child(1)');
-            const parentBtn = document.querySelector('.user-type-btn:nth-child(2)');
-            
-            if (type === 'teacher') {
-                teacherBtn.classList.add('active');
-                parentBtn.classList.remove('active');
-            } else {
-                teacherBtn.classList.remove('active');
-                parentBtn.classList.add('active');
-            }
-        }
+        // تحديد نوع المستخدم
+        const teacherBtn = document.getElementById('teacherBtn');
+        const parentBtn = document.getElementById('parentBtn');
+        let userType = 'teacher';
 
-        // تسجيل الدخول (للعرض فقط)
-        document.querySelector('.login-form').addEventListener('submit', function(e) {
+        teacherBtn.addEventListener('click', () => {
+            teacherBtn.classList.add('active');
+            parentBtn.classList.remove('active');
+            userType = 'teacher';
+        });
+
+        parentBtn.addEventListener('click', () => {
+            parentBtn.classList.add('active');
+            teacherBtn.classList.remove('active');
+            userType = 'parent';
+        });
+
+        // تسجيل الدخول
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const isTeacher = document.querySelector('.user-type-btn:nth-child(1)').classList.contains('active');
+            document.getElementById('loginPage').style.display = 'none';
             
-            if (username && password) {
-                document.getElementById('loginPage').style.display = 'none';
-                if (isTeacher) {
-                    document.getElementById('teacherDashboard').style.display = 'flex';
-                    renderTeacherCharts();
-                } else {
-                    document.getElementById('parentDashboard').style.display = 'flex';
-                    renderParentCharts();
-                }
+            if (userType === 'teacher') {
+                document.getElementById('teacherDashboard').style.display = 'flex';
+                renderTeacherCharts();
             } else {
-                alert('الرجاء إدخال اسم المستخدم وكلمة المرور');
+                document.getElementById('parentDashboard').style.display = 'flex';
+                renderParentCharts();
             }
         });
 
