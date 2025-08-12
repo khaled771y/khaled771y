@@ -314,6 +314,36 @@
             text-align: center;
         }
 
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        font-size: 20px;
+        cursor: pointer;
+        margin-right: 10px;
+        }
+
+        /* Collapsed sidebar style */
+        .sidebar.collapsed {
+            width: 70px;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-header h3,
+        .sidebar.collapsed .menu-item span {
+            display: none;
+        }
+
+        /* Make table scrollable on small screens */
+        @media (max-width: 576px) {
+            .students-table table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
         .main-content {
             flex: 1;
             padding: 20px;
@@ -581,7 +611,7 @@
         /* Chart container */
         .charts-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -750,6 +780,10 @@
                 <div class="dashboard-header">
                     <h2 class="page-title">لوحة التحكم - الصف الأول أ</h2>
                     <div style="display: flex; align-items: center; gap: 10px;">
+                        <!-- Sidebar toggle for teacher dashboard -->
+                        <button class="sidebar-toggle" id="sidebarToggle" title="إظهار/إخفاء القائمة">
+                            <i class="fas fa-bars"></i>
+                        </button>
                         <div class="notification-bell">
                             <i class="fas fa-bell"></i>
                             <span class="notification-count" id="teacherNotificationCount">3</span>
@@ -813,6 +847,11 @@
                         <h3 class="chart-title">تقييم السلوك</h3>
                         <canvas id="behaviorChart" width="400" height="200"></canvas>
                     </div>
+                    <!-- New chart card for score distribution -->
+                    <div class="chart-card">
+                        <h3 class="chart-title">توزيع الدرجات</h3>
+                        <canvas id="scoreChart" width="400" height="200"></canvas>
+                    </div>
                 </div>
                 <!-- Student list -->
                 <div class="students-table">
@@ -825,6 +864,10 @@
                             <button class="btn btn-primary" id="addStudentBtn">
                                 <i class="fas fa-plus"></i> إضافة طالب
                             </button>
+                            <!-- Export to CSV button -->
+                            <button class="btn btn-secondary" id="exportCsvBtn">
+                                <i class="fas fa-file-download"></i> تصدير CSV
+                            </button>
                         </div>
                     </div>
                     <!-- Search bar -->
@@ -834,12 +877,13 @@
                     <table id="studentsTable">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>اسم الطالب</th>
-                                <th>الحضور</th>
-                                <th>الكتاب</th>
-                                <th>السلوك</th>
-                                <th>التقييم</th>
+                                <!-- The data-sort attributes below define which field is sorted when clicking the header.  -->
+                                <th data-sort="index">#</th>
+                                <th data-sort="name">اسم الطالب</th>
+                                <th data-sort="attendance">الحضور</th>
+                                <th data-sort="book">الكتاب</th>
+                                <th data-sort="behavior">السلوك</th>
+                                <th data-sort="score">التقييم</th>
                                 <th>إجراءات</th>
                             </tr>
                         </thead>
@@ -891,9 +935,15 @@
             <div class="main-content">
                 <div class="dashboard-header">
                     <h2 class="page-title">متابعة الطالب: محمد وليد</h2>
-                    <div class="notification-bell">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-count" id="parentNotificationCount">2</span>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <!-- Sidebar toggle for parent dashboard -->
+                        <button class="sidebar-toggle" id="parentSidebarToggle" title="إظهار/إخفاء القائمة">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="notification-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count" id="parentNotificationCount">2</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Statistic cards -->
@@ -1018,6 +1068,10 @@
         let students = [];
         let attendanceChartInstance = null;
         let behaviorChartInstance = null;
+        let scoreChartInstance = null; // chart for score distribution
+        // Sorting and filtering state
+        let sortState = { field: null, asc: true };
+        let filterMode = 'all'; // 'all' or 'flagged'
 
         // --- Sample initial data ---
         const defaultStudents = [
@@ -1050,6 +1104,10 @@
             const tbody = document.getElementById('studentsBody');
             tbody.innerHTML = '';
             students.forEach((student, index) => {
+                // Apply flagged filter: only show students with any negative status
+                if (filterMode === 'flagged' && student.attendance === 'present' && student.book === 'present' && student.behavior === 'good') {
+                    return;
+                }
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${index + 1}</td>
@@ -1092,8 +1150,127 @@
                 behaviorChartInstance.data.datasets[0].data = [goodCount, warnCount];
                 behaviorChartInstance.update();
             }
+            // Update score distribution chart
+            if (scoreChartInstance) {
+                // categorize scores: high (>=85), mid (70-84), low (<70)
+                let high = 0, mid = 0, low = 0;
+                students.forEach(s => {
+                    if (s.score >= 85) high++;
+                    else if (s.score >= 70) mid++;
+                    else low++;
+                });
+                scoreChartInstance.data.datasets[0].data = [high, mid, low];
+                scoreChartInstance.update();
+            }
         }
 
+        // Sort students by a given field. Toggling the same field reverses sort order.
+        function sortStudents(field) {
+            // Determine ascending/descending
+            if (sortState.field === field) {
+                sortState.asc = !sortState.asc;
+            } else {
+                sortState.field = field;
+                sortState.asc = true;
+            }
+            // Sort based on field type
+            students.sort((a, b) => {
+                let valA, valB;
+                if (field === 'index') {
+                    // Compare by original index (position in array)
+                    valA = students.indexOf(a);
+                    valB = students.indexOf(b);
+                } else {
+                    valA = a[field];
+                    valB = b[field];
+                }
+                // Convert statuses to comparable strings/numbers
+                if (field === 'name') {
+                    valA = valA.toString();
+                    valB = valB.toString();
+                } else if (field === 'attendance' || field === 'book' || field === 'behavior') {
+                    // Use boolean ordering: present/good first
+                    const order = { 'present': 0, 'good': 0 };
+                    const ordA = order[valA] !== undefined ? order[valA] : 1;
+                    const ordB = order[valB] !== undefined ? order[valB] : 1;
+                    valA = ordA;
+                    valB = ordB;
+                } else if (field === 'score') {
+                    valA = Number(valA);
+                    valB = Number(valB);
+                }
+                if (valA < valB) return sortState.asc ? -1 : 1;
+                if (valA > valB) return sortState.asc ? 1 : -1;
+                return 0;
+            });
+            saveStudents();
+            renderStudents();
+        }
+
+        // Attach click handlers to sortable table headers
+        function initTableSort() {
+            const headers = document.querySelectorAll('#studentsTable thead th[data-sort]');
+            headers.forEach(th => {
+                th.style.cursor = 'pointer';
+                th.addEventListener('click', () => {
+                    const field = th.dataset.sort;
+                    sortStudents(field);
+                });
+            });
+        }
+
+        // Toggle filter between showing all students and only flagged ones (absent/no-book/warning)
+        function toggleFilter() {
+            const button = document.getElementById('filterButton');
+            if (filterMode === 'all') {
+                filterMode = 'flagged';
+                button.innerHTML = '<i class="fas fa-filter"></i> إظهار الملاحظات';
+            } else {
+                filterMode = 'all';
+                button.innerHTML = '<i class="fas fa-filter"></i> تصفية';
+            }
+            renderStudents();
+            // After filtering, apply search filter again
+            filterStudents();
+        }
+
+        // Export student table to CSV file
+        function exportCsv() {
+            let csv = 'اسم الطالب,الحضور,الكتاب,السلوك,التقييم\n';
+            students.forEach(s => {
+                const attendanceText = s.attendance === 'present' ? 'حاضر' : 'غائب';
+                const bookText = s.book === 'present' ? 'أحضر' : 'نسي';
+                const behaviorText = s.behavior === 'good' ? 'جيد' : 'تحذير';
+                csv += `${s.name},${attendanceText},${bookText},${behaviorText},${s.score}%\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'students.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Sidebar toggle for teacher and parent dashboards
+        function initSidebarToggle() {
+            const teacherToggle = document.getElementById('sidebarToggle');
+            if (teacherToggle) {
+                teacherToggle.addEventListener('click', () => {
+                    const sidebar = document.querySelector('#teacherDashboard .sidebar');
+                    if (sidebar) sidebar.classList.toggle('collapsed');
+                });
+            }
+            const parentToggle = document.getElementById('parentSidebarToggle');
+            if (parentToggle) {
+                parentToggle.addEventListener('click', () => {
+                    const sidebar = document.querySelector('#parentDashboard .sidebar');
+                    if (sidebar) sidebar.classList.toggle('collapsed');
+                });
+            }
+        }
         // Filter students in table based on search query
         function filterStudents() {
             const query = document.getElementById('studentSearch').value.toLowerCase();
@@ -1202,6 +1379,23 @@
                     scales: { y: { beginAtZero: true } }
                 }
             });
+            // Create score distribution chart
+            const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+            scoreChartInstance = new Chart(scoreCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['عالي', 'متوسط', 'منخفض'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: [varFn('--success-color'), varFn('--secondary-color'), varFn('--danger-color')],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
             refreshStatsAndCharts();
         }
 
@@ -1284,16 +1478,25 @@
         // Theme toggle functionality
         function initThemeToggle() {
             const toggle = document.getElementById('themeToggle');
+            // On load, apply stored theme
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark') {
+                document.body.classList.add('dark');
+                const icon = toggle.querySelector('i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
             toggle.addEventListener('click', () => {
                 document.body.classList.toggle('dark');
-                // change icon accordingly
                 const icon = toggle.querySelector('i');
                 if (document.body.classList.contains('dark')) {
                     icon.classList.remove('fa-moon');
                     icon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
                 } else {
                     icon.classList.remove('fa-sun');
                     icon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
                 }
                 // update chart colours on theme change
                 refreshStatsAndCharts();
@@ -1323,7 +1526,7 @@
                     document.getElementById('loginPage').style.display = 'none';
                     if (userType === 'teacher') {
                         document.getElementById('teacherDashboard').style.display = 'flex';
-                        // Ensure charts render only if Chart library is available
+                        // Render charts and students
                         renderTeacherCharts();
                         renderStudents();
                         // Attach event listeners for teacher dashboard
@@ -1331,10 +1534,19 @@
                         document.getElementById('studentsBody').addEventListener('click', handleActionClick);
                         document.getElementById('studentSearch').addEventListener('input', filterStudents);
                         document.getElementById('addStudentBtn').addEventListener('click', addStudent);
+                        // Filtering, sorting and export
+                        const filterBtn = document.getElementById('filterButton');
+                        if (filterBtn) filterBtn.addEventListener('click', toggleFilter);
+                        const exportBtn = document.getElementById('exportCsvBtn');
+                        if (exportBtn) exportBtn.addEventListener('click', exportCsv);
+                        // Initialise table sort and sidebar toggle
+                        initTableSort();
+                        initSidebarToggle();
                     } else {
                         document.getElementById('parentDashboard').style.display = 'flex';
                         renderParentCharts();
                         initParentNotifications();
+                        initSidebarToggle();
                     }
                 });
             }
